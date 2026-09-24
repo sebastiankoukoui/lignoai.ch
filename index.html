@@ -1263,7 +1263,11 @@
             <div class="card" id="licenseBox" aria-live="polite"></div>
             <div class="card">
               <h3>So meldest du dich in der App an</h3>
-              <p class="sub" style="margin-bottom: 0;">In LignoCAD meldest du dich mit derselben E-Mail-Adresse an wie hier. Deine Projekte und CAD-Dateien bleiben dabei immer auf deinem Rechner.</p>
+              <p class="sub" style="margin-bottom: 0;">In LignoCAD meldest du dich mit derselben E-Mail-Adresse und demselben Passwort an wie hier. Deine Projekte und CAD-Dateien bleiben dabei immer auf deinem Rechner.</p>
+              <div data-app-open hidden style="margin-top: 16px;">
+                <a class="btn btn-primary" href="lignocad://open">LignoCAD öffnen</a>
+                <p class="sub" style="margin: 10px 0 0;">Die App übernimmt deine Anmeldung von hier. Dein Browser fragt kurz, ob er LignoCAD öffnen darf.</p>
+              </div>
             </div>
             <div class="card">
               <h3>Open MCP CAD</h3>
@@ -1824,6 +1828,7 @@
     var SUPABASE_KEY = 'sb_publishable_ON8omA_Oi-uwTLBkQE6_5A_35SmXxpf';
     var LICENSE_STATUS_URL = SUPABASE_URL + '/functions/v1/license-status';
     var TRAGWERK_DOWNLOAD_URL = 'https://github.com/sebastiankoukoui/lignocad-download/releases/download/v4.0.1-beta.8/LignoCAD-Tragwerk-4.0.1-beta.8-x64-Setup.exe';   // GitHub-Release im Repo lignocad-download, bei neuer Version auch den Knopf oben und download/ anpassen
+    var APP_HANDOFF_READY = false;   // auf true setzen, sobald die veröffentlichte App lignocad://open und Übergabecodes kann (ab 4.0.1-beta.9)
     var TRAGWERK_VERSION_NOTE = 'Studien-Beta · Windows x64 · Version 4.0.1-beta.8';
     var CONTACT_MAIL = 'info@lignoai.ch';
     var TERMS_VERSION = '2026-09-24';   // bei jeder wesentlichen Änderung der Nutzungsbedingungen erhöhen
@@ -2165,6 +2170,7 @@
       $('#pfOrg').value = m.organization || ''; $('#pfRole').value = m.account_type || 'other';
       $('#pfNews').checked = !!m.newsletter;
       $('#termsForm').hidden = m.terms_version === TERMS_VERSION;
+      $$('[data-app-open]').forEach(function (el) { el.hidden = !APP_HANDOFF_READY; });
       var del = $('[data-delete-request]');
       del.href = 'mailto:' + CONTACT_MAIL + '?subject=' + encodeURIComponent('Konto löschen') +
         '&body=' + encodeURIComponent('Bitte lösche mein LignoPlan-Konto (' + user.email + ').');

@@ -2,12 +2,12 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),path=require('node:path'),crypto=require('node:crypto');
 const source=fs.readFileSync(path.join(__dirname,'../desktop-login.js'),'utf8');
 const state='a'.repeat(32),challenge='b'.repeat(43);
-function page(query,session={}){
+function page(query,session={},extra={}){
   const nodes=new Map(),calls=[];
   const document={getElementById(id){if(!nodes.has(id))nodes.set(id,{hidden:true,disabled:false,textContent:'',value:'test@example.test',handlers:{},addEventListener(k,v){this.handlers[k]=v;},reportValidity:()=>true});return nodes.get(id);}};
   const sessionStorage={getItem:k=>k in session?session[k]:null,setItem(k,v){session[k]=String(v);},removeItem(k){delete session[k];}};
   const location={search:query,pathname:'/desktop-login.html',origin:'https://lignoai.ch',assign(u){calls.push(['assign',u]);},replace(u){calls.push(['replace',u]);}};
-  const scope={URL,URLSearchParams,AbortSignal,TextEncoder,Uint8Array,Uint32Array,DataView,Math,JSON,document,sessionStorage,location,history:{replaceState(...args){calls.push(['history',...args]);}},fetch:async(url,options)=>{calls.push(['request',url,options]);return {ok:true,json:async()=>({})};}};
+  const scope={URL,URLSearchParams,AbortSignal,TextEncoder,Uint8Array,Uint32Array,DataView,Math,JSON,document,sessionStorage,location,history:{replaceState(...args){calls.push(['history',...args]);}},fetch:async(url,options)=>{calls.push(['request',url,options]);return {ok:true,json:async()=>(extra.reply||{})};},...(extra.window?{window:extra.window}:{})};
   vm.runInNewContext(source,scope);return {nodes:{get:id=>document.getElementById(id)},calls,session};
 }
 const sha224=s=>crypto.createHash('sha224').update(s).digest('hex');
@@ -60,6 +60,26 @@ const sha224=s=>crypto.createHash('sha224').update(s).digest('hex');
  const signup=JSON.parse(login.calls.filter(c=>c[0]==='request').at(-1)[2].body);
  assert.equal(signup.create_user,true);assert.equal(signup.data.terms_version,'2026-09-24');assert.equal(signup.data.signup_source,'desktop');assert.ok(signup.data.consent_at);
  assert.equal('data' in body,false,'login request carries no metadata');
+ // Signed in on the website: offer a handoff, but only when the app announces support (&handoff=1)
+ const signedInWindow={supabase:{createClient:()=>({auth:{getSession:async()=>({data:{session:{access_token:'web-token',user:{email:'person@example.test'}}}})}})}};
+ const tick=()=>new Promise(r=>setTimeout(r,0));
+ const oldApp=page('?state='+state+'&code_challenge='+challenge,{},{window:signedInWindow});await tick();
+ assert.equal(oldApp.nodes.get('continue').hidden,true,'older apps keep the normal login');
+ const handoffCode='h'.repeat(43);
+ const ho=page('?state='+state+'&code_challenge='+challenge+'&handoff=1',{},{window:signedInWindow,reply:{code:handoffCode}});await tick();
+ assert.equal(ho.nodes.get('continue').hidden,false);assert.equal(ho.nodes.get('login').hidden,true);
+ assert.equal(ho.nodes.get('continueEmail').textContent,'person@example.test');
+ await ho.nodes.get('continueBtn').handlers.click();
+ const hreq=ho.calls.find(c=>c[0]==='request');
+ assert.ok(hreq[1].endsWith('/functions/v1/app-handoff'));assert.equal(hreq[2].headers.Authorization,'Bearer web-token');
+ assert.deepEqual(JSON.parse(hreq[2].body),{type:'create',state,code_challenge:challenge});
+ const back=new URL(ho.calls.find(c=>c[0]==='assign')[1]);
+ assert.equal(back.protocol+'//'+back.host+back.pathname,'lignocad://auth/callback');assert.equal(back.searchParams.get('state'),state);assert.equal(back.searchParams.get('handoff'),handoffCode);
+ assert.equal(back.searchParams.has('code'),false,'no session token or auth code in the return URL');
+ const auto=page('?state='+state+'&code_challenge='+challenge+'&handoff=1&auto=1',{},{window:signedInWindow,reply:{code:handoffCode}});await tick();await tick();
+ assert.ok(auto.calls.some(c=>c[0]==='assign'),'auto=1 continues without a click');
+ const other=page('?state='+state+'&code_challenge='+challenge+'&handoff=1',{},{window:signedInWindow});await tick();
+ other.nodes.get('otherAccount').handlers.click({preventDefault(){}});assert.equal(other.nodes.get('login').hidden,false);
  // The app can open the page straight in registration mode
  const reg=page('?state='+state+'&code_challenge='+challenge+'&mode=register');
  assert.equal(reg.nodes.get('termsRow').hidden,false);assert.equal(reg.nodes.get('tabRegister').className,'on');
@@ -71,5 +91,5 @@ const sha224=s=>crypto.createHash('sha224').update(s).digest('hex');
  assert.equal(returned.calls.find(c=>c[0]==='history').at(-1),'/desktop-login.html','callback code removed from address bar');
  const invalid=page('?code='+code);assert.match(invalid.nodes.get('status').textContent,/Öffne LignoCAD/);
  const expired=page('?state='+state+'&error=access_denied');assert.match(expired.nodes.get('status').textContent,/abgelaufen/);
- console.log('PASS: website login/registration, terms consent on registration, register mode and tabs, e-mail code as link token, type retry, app PKCE challenge, fixed return target, expired and malformed callbacks');
+ console.log('PASS: website login/registration, terms consent on registration, register mode and tabs, website session handoff, e-mail code as link token, type retry, app PKCE challenge, fixed return target, expired and malformed callbacks');
 })().catch(e=>{console.error(e);process.exitCode=1;});

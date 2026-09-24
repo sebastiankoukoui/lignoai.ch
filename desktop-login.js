@@ -62,6 +62,42 @@
   el('tabLogin').addEventListener('click',()=>setMode(false));
   el('tabRegister').addEventListener('click',()=>setMode(true));
   if(q.get('mode')==='register')setMode(true);
+
+  // Already signed in on lignoai.ch? Offer a one-time handoff instead of a new login.
+  // Only when the app says it can redeem handoff codes (&handoff=1, LignoCAD from 4.0.1-beta.9).
+  const lib=typeof window!=='undefined'&&window.supabase;
+  if(q.get('handoff')==='1'&&lib&&!create){
+    const sb=lib.createClient(base,key,{auth:{flowType:'pkce',persistSession:true,autoRefreshToken:false,detectSessionInUrl:false,storageKey:'lignoplan-auth'}});
+    sb.auth.getSession().then(({data})=>{
+      const session=data&&data.session;
+      if(!session||!session.user)return;
+      el('continueEmail').textContent=session.user.email;
+      el('continue').hidden=false;el('login').hidden=true;el('tabs').hidden=true;
+      el('heading').textContent='In LignoCAD anmelden';
+      el('intro').textContent='Du kannst dein Konto von der Website direkt in die App übernehmen.';
+      const go=async()=>{
+        el('continueBtn').disabled=true;message('Anmeldung wird an LignoCAD übergeben …');
+        try{
+          const res=await fetch(base+'/functions/v1/app-handoff',{method:'POST',signal:AbortSignal.timeout(20000),
+            headers:{apikey:key,Authorization:'Bearer '+session.access_token,'Content-Type':'application/json'},
+            body:JSON.stringify({type:'create',state,code_challenge:challenge})});
+          const out=await res.json().catch(()=>({}));
+          if(!res.ok||!/^[A-Za-z0-9_-]{43}$/.test(out.code||''))throw Error();
+          const target=new URL('lignocad://auth/callback');target.searchParams.set('state',state);target.searchParams.set('handoff',out.code);
+          el('continue').hidden=true;el('openApp').href=target.href;el('openApp').hidden=false;el('help').hidden=false;
+          el('heading').textContent='Zurück zu LignoCAD';
+          message('Klicke auf «LignoCAD öffnen», falls sich die App nicht von selbst meldet. Der Code gilt 5 Minuten.');
+          location.assign(target.href);
+        }catch{
+          el('continueBtn').disabled=false;
+          message('Die Übergabe hat nicht geklappt. Melde dich unten mit «Anderes Konto verwenden» an.');
+        }
+      };
+      el('continueBtn').addEventListener('click',go);
+      el('otherAccount').addEventListener('click',event=>{event.preventDefault();el('continue').hidden=true;el('login').hidden=false;el('tabs').hidden=false;message('');});
+      if(q.get('auto')==='1')go();
+    });
+  }
   let sentTo='';
   el('login').addEventListener('submit',async event=>{
     event.preventDefault();if(!el('login').reportValidity())return;
