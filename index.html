@@ -439,6 +439,16 @@
     .check a { color: var(--green-700); }
     .divider { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: .8rem; margin: 20px 0; }
     .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+    .label-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+    .small-link { font-size: .8rem; font-weight: 700; color: var(--green-700); text-decoration: none; }
+    .small-link:hover { text-decoration: underline; }
+    .link-btn { display: block; margin: 14px auto 0; background: none; border: 0; font: inherit; font-size: .88rem; font-weight: 700; color: var(--green-700); cursor: pointer; }
+    .link-btn:hover { text-decoration: underline; }
+    .switch-box { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 26px; padding: 16px 18px; border: 1px solid var(--green-100); background: var(--green-50); border-radius: 12px; }
+    .switch-box strong { display: block; font-size: .95rem; }
+    .switch-box span { display: block; font-size: .84rem; color: var(--ink-2); }
+    .switch-box .btn { flex-shrink: 0; }
+    @media (max-width: 480px) { .switch-box { flex-direction: column; align-items: stretch; text-align: center; } }
     .auth-alt { text-align: center; font-size: .9rem; color: var(--muted); margin-top: 22px; }
     .auth-alt a { color: var(--green-700); font-weight: 700; text-decoration: none; }
     .link-row { display: flex; justify-content: space-between; align-items: center; margin: -4px 0 18px; font-size: .85rem; }
@@ -1054,13 +1064,21 @@
       <div class="auth-card">
         <div data-step="form">
           <h1>Anmelden</h1>
-          <p class="sub">Wir schicken dir einen Anmeldelink per E-Mail. Ein Passwort brauchst du dafür nicht.</p>
+          <p class="sub">Mit deinem LignoPlan-Konto für Website und App.</p>
           <form id="loginForm" novalidate>
             <div class="field"><label for="liEmail">E-Mail</label><input id="liEmail" type="email" autocomplete="email" placeholder="name@buero.ch" required></div>
+            <div class="field">
+              <div class="label-row"><label for="liPassword">Passwort</label><a class="small-link" href="#/passwort-vergessen">Passwort vergessen?</a></div>
+              <input id="liPassword" type="password" autocomplete="current-password" required>
+            </div>
             <div class="form-msg" role="alert" hidden></div>
-            <button class="btn btn-primary btn-block btn-lg" type="submit">Anmeldelink senden</button>
+            <button class="btn btn-primary btn-block btn-lg" type="submit">Anmelden</button>
           </form>
-          <p class="auth-alt">Noch kein Konto? <a href="#/registrieren">Jetzt registrieren</a></p>
+          <button class="link-btn" type="button" data-otp-login>Ohne Passwort: Code per E-Mail erhalten</button>
+          <div class="switch-box">
+            <div><strong>Neu hier?</strong><span>Konto erstellen und LignoCAD sofort 14 Tage nutzen.</span></div>
+            <a class="btn btn-outline" href="#/registrieren">Konto erstellen</a>
+          </div>
         </div>
         <div data-step="sent" hidden>
           <div class="mail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></div>
@@ -1118,13 +1136,21 @@
               <input id="rgEmail" type="email" autocomplete="email" placeholder="vorname.name@students.bfh.ch" required>
               <span class="hint" id="rgEmailHint">Mit der Hochschul-Adresse können wir deine Registrierung schneller prüfen.</span>
             </div>
+            <div class="field">
+              <label for="rgPassword">Passwort</label>
+              <input id="rgPassword" type="password" autocomplete="new-password" minlength="8" required>
+              <span class="hint">Mindestens 8 Zeichen.</span>
+            </div>
             <div class="field"><label for="rgOrg" id="rgOrgLabel">Hochschule</label><input id="rgOrg" autocomplete="organization" maxlength="120" placeholder="BFH Biel"></div>
             <label class="check"><input type="checkbox" id="rgConsent" required> <span>Ich akzeptiere die <a href="#/nutzungsbedingungen" target="_blank" rel="noopener">Nutzungsbedingungen</a> inklusive Lizenzbedingungen und habe die <a href="#/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a> gelesen.</span></label>
             <label class="check"><input type="checkbox" id="rgNews" checked> <span>Informiert mich, wenn neue LignoPlan-Module erscheinen.</span></label>
             <div class="form-msg" role="alert" hidden></div>
             <button class="btn btn-primary btn-block btn-lg" type="submit" style="margin-top: 8px;">Konto erstellen</button>
           </form>
-          <p class="auth-alt">Schon registriert? <a href="#/anmelden">Anmelden</a></p>
+          <div class="switch-box">
+            <div><strong>Schon ein Konto?</strong><span>Melde dich mit E-Mail und Passwort an.</span></div>
+            <a class="btn btn-outline" href="#/anmelden">Anmelden</a>
+          </div>
         </div>
         <div data-step="sent" hidden>
           <div class="mail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></div>
@@ -1144,6 +1170,52 @@
           <button class="btn btn-outline btn-block" type="button" data-resend>E-Mail nochmals senden</button>
           <p class="auth-alt"><a href="#/registrieren" data-restart>Angaben korrigieren</a></p>
         </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- VIEW: PASSWORT VERGESSEN (Code oder Link per E-Mail)               -->
+  <!-- ================================================================= -->
+  <main class="view" id="view-passwort-vergessen">
+    <div class="auth-wrap">
+      <div class="auth-card">
+        <div data-step="form">
+          <h1>Passwort vergessen</h1>
+          <p class="sub">Wir schicken dir eine E-Mail mit einem Code und einem Link. Damit setzt du ein neues Passwort.</p>
+          <form id="forgotForm" novalidate>
+            <div class="field"><label for="fgEmail">E-Mail</label><input id="fgEmail" type="email" autocomplete="email" placeholder="name@buero.ch" required></div>
+            <div class="form-msg" role="alert" hidden></div>
+            <button class="btn btn-primary btn-block btn-lg" type="submit">E-Mail senden</button>
+          </form>
+          <p class="auth-alt"><a href="#/anmelden">Zurück zur Anmeldung</a></p>
+        </div>
+        <div data-step="sent" hidden>
+          <div class="mail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></div>
+          <h1>Neues Passwort setzen</h1>
+          <p class="sub">Wir haben dir eine E-Mail an <strong data-sent-email></strong> geschickt. Gib den Code daraus hier ein oder klicke auf den Link in der E-Mail.</p>
+          <form id="resetCodeForm" novalidate>
+            <div class="field"><label for="fgCode">Code aus der E-Mail</label><input id="fgCode" class="code-input" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="12345678"></div>
+            <div class="field"><label for="fgPassword">Neues Passwort</label><input id="fgPassword" type="password" autocomplete="new-password" minlength="8"><span class="hint">Mindestens 8 Zeichen.</span></div>
+            <div class="form-msg" role="alert" hidden></div>
+            <button class="btn btn-primary btn-block btn-lg" type="submit">Passwort speichern</button>
+          </form>
+          <p class="auth-alt"><a href="#/passwort-vergessen" data-restart>Andere E-Mail-Adresse verwenden</a></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <main class="view" id="view-passwort-neu">
+    <div class="auth-wrap">
+      <div class="auth-card">
+        <h1>Neues Passwort</h1>
+        <p class="sub">Wähle ein neues Passwort für dein Konto.</p>
+        <form id="newPasswordForm" novalidate>
+          <div class="field"><label for="npPassword">Neues Passwort</label><input id="npPassword" type="password" autocomplete="new-password" minlength="8"><span class="hint">Mindestens 8 Zeichen.</span></div>
+          <div class="form-msg" role="alert" hidden></div>
+          <button class="btn btn-primary btn-block btn-lg" type="submit">Passwort speichern</button>
+        </form>
       </div>
     </div>
   </main>
@@ -1219,7 +1291,14 @@
           <!-- Sicherheit -->
           <section class="acc-panel" data-panel="sicherheit">
             <h1>Sicherheit</h1>
-            <p class="sub">Anmeldung und Abmeldung.</p>
+            <p class="sub">Passwort, Anmeldung und Abmeldung.</p>
+            <form class="card" id="passwordForm" novalidate>
+              <h3>Passwort</h3>
+              <p class="sub">Damit meldest du dich auf der Website an. Hast du noch keins, legst du es hier fest.</p>
+              <div class="field"><label for="pwNew">Neues Passwort</label><input id="pwNew" type="password" autocomplete="new-password" minlength="8"><span class="hint">Mindestens 8 Zeichen.</span></div>
+              <div class="form-msg" role="alert" hidden></div>
+              <button class="btn btn-primary" type="submit">Passwort speichern</button>
+            </form>
             <div class="card">
               <h3>In diesem Browser abmelden</h3>
               <p class="sub">Die LignoCAD-App auf deinem Rechner bleibt angemeldet.</p>
@@ -1751,6 +1830,16 @@
         return 'Keine Verbindung zum Server. Bitte prüfe deine Internetverbindung und versuche es nochmals.';
       if (code === 'over_email_send_rate_limit' || code === 'over_request_rate_limit' || status === 429 || /rate limit|only request this after/i.test(msg))
         return 'Es wurden gerade zu viele E-Mails angefordert. Bitte warte ein paar Minuten und versuche es dann nochmals.';
+      if (code === 'invalid_credentials' || /invalid login credentials/i.test(msg))
+        return 'E-Mail oder Passwort stimmt nicht. Noch kein Passwort gesetzt? Nutze «Passwort vergessen» oder den Code per E-Mail.';
+      if (code === 'email_not_confirmed' || /email not confirmed/i.test(msg))
+        return 'Bitte bestätige zuerst deine E-Mail-Adresse mit dem Link aus unserer E-Mail. Du kannst auch einen Code per E-Mail anfordern.';
+      if (code === 'weak_password' || /password should be|weak password/i.test(msg))
+        return 'Das Passwort ist zu schwach. Nimm mindestens 8 Zeichen.';
+      if (code === 'same_password') return 'Das neue Passwort muss sich vom bisherigen unterscheiden.';
+      if (code === 'reauthentication_needed') return 'Bitte melde dich kurz neu an und ändere das Passwort dann nochmals.';
+      if (context === 'recovery' && (code === 'otp_expired' || status === 403 || /expired|invalid/i.test(msg)))
+        return 'Der Code stimmt nicht oder ist abgelaufen. Fordere einfach eine neue E-Mail an.';
       if (code === 'otp_disabled' || code === 'signup_disabled' || code === 'user_not_found' || /Signups not allowed/i.test(msg))
         return context === 'login' ? 'NO_ACCOUNT' : 'Neue Registrierungen sind im Moment geschlossen. Schreib uns, dann richten wir dein Konto ein.';
       if (context === 'code' && (code === 'otp_expired' || code === 'otp_invalid' || status === 403 || /expired|invalid/i.test(msg)))
@@ -1819,18 +1908,44 @@
       startCooldown(view);
     }
 
+    function signedIn(u, text) {
+      user = u; renderUser();
+      location.hash = nextAfterAuth ? '#/' + nextAfterAuth : '#/konto';
+      toast(text || 'Willkommen, du bist angemeldet.');
+    }
+    function checkPassword(box, pw) {
+      if (pw.length < 8) { showMsg(box, 'Das Passwort braucht mindestens 8 Zeichen.', 'error'); return false; }
+      return true;
+    }
+
     $('#loginForm').addEventListener('submit', function (e) {
       e.preventDefault();
       var box = $('#loginForm .form-msg'), btn = $('#loginForm button[type="submit"]');
-      var email = $('#liEmail').value.trim().toLowerCase();
+      var email = $('#liEmail').value.trim().toLowerCase(), pw = $('#liPassword').value;
       if (!validEmail(email)) { showMsg(box, 'Bitte gib eine gültige E-Mail-Adresse ein.', 'error'); return; }
+      if (!pw) { showMsg(box, 'Bitte gib dein Passwort ein.', 'error'); return; }
       if (!sb) { showMsg(box, 'Die Anmeldung ist gerade nicht erreichbar. Bitte lade die Seite neu.', 'error'); return; }
-      showMsg(box, ''); setBusy(btn, true, 'Link wird gesendet …');
-      requestOtp({ email: email, create: false, view: 'anmelden' }).then(function (res) {
+      showMsg(box, ''); setBusy(btn, true, 'Anmelden …');
+      sb.auth.signInWithPassword({ email: email, password: pw }).then(function (res) {
         setBusy(btn, false);
+        if (res.error) { showMsg(box, friendlyError(res.error, 'password'), 'error'); return; }
+        $('#liPassword').value = '';
+        signedIn(res.data.user);
+      }, function (err) { setBusy(btn, false); showMsg(box, friendlyError(err, 'password'), 'error'); });
+    });
+
+    // Ausweg ohne Passwort (auch für ältere Konten, die noch keins haben)
+    $('[data-otp-login]').addEventListener('click', function () {
+      var box = $('#loginForm .form-msg'), btn = this;
+      var email = $('#liEmail').value.trim().toLowerCase();
+      if (!validEmail(email)) { showMsg(box, 'Gib oben deine E-Mail-Adresse ein, dann schicken wir dir einen Code.', 'error'); $('#liEmail').focus(); return; }
+      if (!sb) { showMsg(box, 'Die Anmeldung ist gerade nicht erreichbar. Bitte lade die Seite neu.', 'error'); return; }
+      showMsg(box, ''); btn.disabled = true;
+      requestOtp({ email: email, create: false, view: 'anmelden' }).then(function (res) {
+        btn.disabled = false;
         if (res.error) { showMsg(box, friendlyError(res.error, 'login'), 'error'); return; }
         afterSent('anmelden', email);
-      }, function (err) { setBusy(btn, false); showMsg(box, friendlyError(err, 'login'), 'error'); });
+      }, function (err) { btn.disabled = false; showMsg(box, friendlyError(err, 'login'), 'error'); });
     });
 
     function syncRoleHints() {
@@ -1849,6 +1964,8 @@
       var email = $('#rgEmail').value.trim().toLowerCase();
       if (!first || !last) { showMsg(box, 'Bitte gib Vor- und Nachnamen an.', 'error'); return; }
       if (!validEmail(email)) { showMsg(box, 'Bitte gib eine gültige E-Mail-Adresse ein.', 'error'); return; }
+      var pw = $('#rgPassword').value;
+      if (!checkPassword(box, pw)) return;
       if (!$('#rgConsent').checked) { showMsg(box, 'Bitte akzeptiere die Nutzungsbedingungen, damit wir dein Konto erstellen können.', 'error'); return; }
       if (!sb) { showMsg(box, 'Die Registrierung ist gerade nicht erreichbar. Bitte lade die Seite neu.', 'error'); return; }
       var data = {
@@ -1861,9 +1978,15 @@
         signup_source: 'website'
       };
       showMsg(box, ''); setBusy(btn, true, 'Konto wird erstellt …');
-      requestOtp({ email: email, create: true, data: data, view: 'registrieren' }).then(function (res) {
+      pendingOtp = { email: email, view: 'registrieren', signup: true };
+      sb.auth.signUp({ email: email, password: pw, options: { data: data, emailRedirectTo: authRedirectUrl() } }).then(function (res) {
         setBusy(btn, false);
         if (res.error) { showMsg(box, friendlyError(res.error, 'signup'), 'error'); return; }
+        // Supabase verrät nicht, ob es die Adresse schon gibt. Ein Konto ohne neue Identität ist ein bestehendes.
+        if (res.data && res.data.user && res.data.user.identities && res.data.user.identities.length === 0) {
+          showMsg(box, 'Zu dieser E-Mail-Adresse gibt es schon ein Konto. Melde dich an oder nutze «Passwort vergessen».', 'error'); return;
+        }
+        $('#rgPassword').value = '';
         afterSent('registrieren', email);
       }, function (err) { setBusy(btn, false); showMsg(box, friendlyError(err, 'signup'), 'error'); });
     });
@@ -1873,7 +1996,9 @@
         var view = btn.closest('.view').id.replace('view-', ''), box = btn.parentNode.querySelector(':scope > .form-msg');
         if (!pendingOtp) { showStep(view, 'form'); return; }
         btn.disabled = true;
-        requestOtp(pendingOtp).then(function (res) {
+        (pendingOtp.signup
+          ? sb.auth.resend({ type: 'signup', email: pendingOtp.email, options: { emailRedirectTo: authRedirectUrl() } })
+          : requestOtp(pendingOtp)).then(function (res) {
           if (res.error) { btn.disabled = false; showMsg(box, friendlyError(res.error, pendingOtp.create ? 'signup' : 'login'), 'error'); return; }
           showMsg(box, 'Wir haben die E-Mail nochmals geschickt.', 'ok'); startCooldown(view);
         }, function (err) { btn.disabled = false; showMsg(box, friendlyError(err), 'error'); });
@@ -1887,15 +2012,64 @@
         if (!pendingOtp) { showMsg(box, 'Bitte fordere zuerst eine E-Mail an.', 'error'); return; }
         if (token.length < 6) { showMsg(box, 'Bitte gib den ganzen Code aus der E-Mail ein.', 'error'); return; }
         showMsg(box, ''); setBusy(btn, true, 'Code wird geprüft …');
-        sb.auth.verifyOtp({ email: pendingOtp.email, token: token, type: 'email' }).then(function (res) {
+        sb.auth.verifyOtp({ email: pendingOtp.email, token: token, type: pendingOtp.signup ? 'signup' : 'email' }).then(function (res) {
           setBusy(btn, false);
           if (res.error) { showMsg(box, friendlyError(res.error, 'code'), 'error'); return; }
-          user = res.data.user; renderUser();
-          location.hash = '#/konto';
-          toast('Willkommen, du bist angemeldet.');
+          signedIn(res.data.user);
         }, function (err) { setBusy(btn, false); showMsg(box, friendlyError(err, 'code'), 'error'); });
       });
     });
+    var resetEmail = '';
+    $('#forgotForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var box = $('#forgotForm .form-msg'), btn = $('#forgotForm button[type="submit"]');
+      var email = $('#fgEmail').value.trim().toLowerCase();
+      if (!validEmail(email)) { showMsg(box, 'Bitte gib eine gültige E-Mail-Adresse ein.', 'error'); return; }
+      if (!sb) { showMsg(box, 'Die Seite ist gerade nicht erreichbar. Bitte lade sie neu.', 'error'); return; }
+      showMsg(box, ''); setBusy(btn, true, 'E-Mail wird gesendet …');
+      sb.auth.resetPasswordForEmail(email, { redirectTo: authRedirectUrl() }).then(function (res) {
+        setBusy(btn, false);
+        if (res.error) { showMsg(box, friendlyError(res.error, 'recovery'), 'error'); return; }
+        resetEmail = email; $('#fgCode').value = ''; $('#fgPassword').value = '';
+        afterSent('passwort-vergessen', email);
+      }, function (err) { setBusy(btn, false); showMsg(box, friendlyError(err, 'recovery'), 'error'); });
+    });
+    $('#resetCodeForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var box = $('#resetCodeForm .form-msg'), btn = $('#resetCodeForm button[type="submit"]');
+      var token = $('#fgCode').value.replace(/\D/g, ''), pw = $('#fgPassword').value;
+      if (token.length < 6) { showMsg(box, 'Bitte gib den ganzen Code aus der E-Mail ein.', 'error'); return; }
+      if (!checkPassword(box, pw)) return;
+      showMsg(box, ''); setBusy(btn, true, 'Wird gespeichert …');
+      sb.auth.verifyOtp({ email: resetEmail, token: token, type: 'recovery' }).then(function (res) {
+        if (res.error) throw res.error;
+        return sb.auth.updateUser({ password: pw });
+      }).then(function (res) {
+        setBusy(btn, false);
+        if (res.error) { showMsg(box, friendlyError(res.error, 'recovery'), 'error'); return; }
+        $('#fgPassword').value = '';
+        signedIn(res.data.user, 'Dein neues Passwort ist gespeichert.');
+      }, function (err) { setBusy(btn, false); showMsg(box, friendlyError(err, 'recovery'), 'error'); });
+    });
+    function savePassword(form, input) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var box = form.querySelector('.form-msg'), btn = form.querySelector('button[type="submit"]'), pw = input.value;
+        if (!checkPassword(box, pw)) return;
+        showMsg(box, ''); setBusy(btn, true, 'Wird gespeichert …');
+        sb.auth.updateUser({ password: pw }).then(function (res) {
+          setBusy(btn, false);
+          if (res.error) { showMsg(box, friendlyError(res.error), 'error'); return; }
+          input.value = ''; user = res.data.user; renderUser();
+          if (form.id === 'newPasswordForm') location.hash = '#/konto';
+          else showMsg(box, 'Gespeichert.', 'ok');
+          toast('Dein Passwort ist gespeichert.');
+        }, function (err) { setBusy(btn, false); showMsg(box, friendlyError(err), 'error'); });
+      });
+    }
+    savePassword($('#newPasswordForm'), $('#npPassword'));
+    savePassword($('#passwordForm'), $('#pwNew'));
+
     $$('[data-restart]').forEach(function (a) {
       a.addEventListener('click', function (e) {
         e.preventDefault(); var view = a.closest('.view').id.replace('view-', ''); showStep(view, 'form');
@@ -2085,6 +2259,12 @@
         });
         show(view); window.scrollTo(0, 0); return;
       }
+      if (view === 'passwort-vergessen') { show(view); window.scrollTo(0, 0); return; }
+      if (view === 'passwort-neu') {
+        if (!authReady) return;
+        if (!user) { location.replace('#/passwort-vergessen'); return; }
+        show(view); window.scrollTo(0, 0); return;
+      }
       if (view === 'anmelden' || view === 'registrieren') {
         if (authReady && user) { location.replace('#/konto'); return; }
         show(view); window.scrollTo(0, 0); return;
@@ -2121,6 +2301,7 @@
         user = session ? session.user : null;
         renderUser();
         if (event === 'SIGNED_OUT' && /^#\/konto/.test(location.hash)) location.hash = '#/anmelden';
+        if (event === 'PASSWORD_RECOVERY') setTimeout(function () { location.hash = '#/passwort-neu'; }, 0);
       });
       sb.auth.getSession().then(function (res) {     // wartet, bis ein ?code= aus dem Link eingelöst ist
         user = res.data && res.data.session ? res.data.session.user : null;

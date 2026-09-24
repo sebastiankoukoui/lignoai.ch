@@ -48,14 +48,20 @@
   if(!/^[A-Za-z0-9_-]{43}$/.test(challenge||'')){
     message('Die Anmeldeanfrage ist unvollständig. Bitte in LignoCAD erneut starten.');return;
   }
-  el('login').hidden=false;message('');
-  el('mode').addEventListener('click',event=>{
-    event.preventDefault();create=!create;
+  el('login').hidden=false;el('tabs').hidden=false;message('');
+  // The app can open this page directly in registration mode with &mode=register
+  const setMode=value=>{
+    create=value;
     el('heading').textContent=create?'LignoAI-Konto erstellen':'In LignoCAD anmelden';
     el('submit').textContent=create?'Konto erstellen und E-Mail bestätigen':'Anmeldelink senden';
     el('mode').textContent=create?'Bereits ein Konto? Anmelden':'Noch kein Konto? Konto erstellen';
     el('termsRow').hidden=!create;
-  });
+    el('tabLogin').className=create?'':'on';el('tabRegister').className=create?'on':'';
+  };
+  el('mode').addEventListener('click',event=>{event.preventDefault();setMode(!create);});
+  el('tabLogin').addEventListener('click',()=>setMode(false));
+  el('tabRegister').addEventListener('click',()=>setMode(true));
+  if(q.get('mode')==='register')setMode(true);
   let sentTo='';
   el('login').addEventListener('submit',async event=>{
     event.preventDefault();if(!el('login').reportValidity())return;

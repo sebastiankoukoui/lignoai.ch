@@ -87,6 +87,8 @@ Wenn jemand nach etwas fragt, das nicht im Wissen steht, verweise freundlich auf
   Nach der Registrierung gilt die Lizenz sofort 14 Tage vorläufig, nach der Prüfung drei Monate.
 - Windows zeigt beim Installer eine Warnung. Der Installer ist noch nicht mit einem Windows-Zertifikat signiert.
   Nur von lignoai.ch herunterladen. Bei Unsicherheit per E-Mail melden.
+- Wie melde ich mich an? Auf lignoai.ch mit E-Mail und Passwort. Ohne Passwort geht es auch mit einem Code per E-Mail.
+- Passwort vergessen? Auf lignoai.ch bei Anmelden auf «Passwort vergessen» klicken. Es kommt eine E-Mail mit Code und Link.
 - Ich habe keine Bestätigungsmail bekommen. Spam-Ordner prüfen und auf der Website einen neuen Link anfordern.
   Hilft das nicht, per E-Mail melden.
 - Funktioniert LignoCAD auf Mac? Im Moment nur Windows.

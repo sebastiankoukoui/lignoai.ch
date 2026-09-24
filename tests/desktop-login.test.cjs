@@ -60,10 +60,16 @@ const sha224=s=>crypto.createHash('sha224').update(s).digest('hex');
  const signup=JSON.parse(login.calls.filter(c=>c[0]==='request').at(-1)[2].body);
  assert.equal(signup.create_user,true);assert.equal(signup.data.terms_version,'2026-09-24');assert.equal(signup.data.signup_source,'desktop');assert.ok(signup.data.consent_at);
  assert.equal('data' in body,false,'login request carries no metadata');
+ // The app can open the page straight in registration mode
+ const reg=page('?state='+state+'&code_challenge='+challenge+'&mode=register');
+ assert.equal(reg.nodes.get('termsRow').hidden,false);assert.equal(reg.nodes.get('tabRegister').className,'on');
+ reg.nodes.get('terms').checked=true;await reg.nodes.get('login').handlers.submit({preventDefault(){}});
+ assert.equal(JSON.parse(reg.calls.find(c=>c[0]==='request')[2].body).create_user,true);
+ reg.nodes.get('tabLogin').handlers.click();assert.equal(reg.nodes.get('termsRow').hidden,true);
  const code='11111111-1111-4111-8111-111111111111',returned=page('?state='+state+'&code='+code+'&redirect_to=https://evil.example');
  assert.equal(returned.nodes.get('openApp').href,'lignocad://auth/callback?state='+state+'&code='+code);
  assert.equal(returned.calls.find(c=>c[0]==='history').at(-1),'/desktop-login.html','callback code removed from address bar');
  const invalid=page('?code='+code);assert.match(invalid.nodes.get('status').textContent,/Öffne LignoCAD/);
  const expired=page('?state='+state+'&error=access_denied');assert.match(expired.nodes.get('status').textContent,/abgelaufen/);
- console.log('PASS: website login/registration, terms consent on registration, e-mail code as link token, type retry, app PKCE challenge, fixed return target, expired and malformed callbacks');
+ console.log('PASS: website login/registration, terms consent on registration, register mode and tabs, e-mail code as link token, type retry, app PKCE challenge, fixed return target, expired and malformed callbacks');
 })().catch(e=>{console.error(e);process.exitCode=1;});
