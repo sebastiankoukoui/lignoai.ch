@@ -83,7 +83,7 @@ Wenn jemand nach etwas fragt, das nicht im Wissen steht, verweise freundlich auf
 - Kostet Open MCP CAD etwas? Nein, es ist Open Source und kostenlos.
 - Brauche ich für Open MCP CAD ein Konto? Nein.
 - Wo lade ich LignoCAD Tragwerk herunter? Auf lignoai.ch beim Produkt LignoCAD Tragwerk, Button «LignoCAD für Windows herunterladen».
-  Aktuell ist die Studien-Beta Version 4.0.1-beta.7 für Windows x64. Zum Verwenden braucht es ein LignoPlan-Konto
+  Aktuell ist die Studien-Beta Version 4.0.1-beta.8 für Windows x64. Zum Verwenden braucht es ein LignoPlan-Konto
   Nach der Registrierung gilt die Lizenz sofort 14 Tage vorläufig, nach der Prüfung drei Monate.
 - Windows zeigt beim Installer eine Warnung. Der Installer ist noch nicht mit einem Windows-Zertifikat signiert.
   Nur von lignoai.ch herunterladen. Bei Unsicherheit per E-Mail melden.
