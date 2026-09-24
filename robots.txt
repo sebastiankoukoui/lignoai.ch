@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /src/
+Disallow: /tools/
+Disallow: /tests/
 
 Sitemap: https://lignoai.ch/sitemap.xml

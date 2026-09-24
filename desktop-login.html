@@ -5,18 +5,18 @@
 <title>LignoCAD anmelden · LignoAI</title>
 <style>body{margin:0;background:#f5f7f3;color:#203728;font:17px/1.6 system-ui}main{max-width:480px;margin:8vh auto;padding:32px;background:white;border:1px solid #d8e2d8;border-radius:18px}a{color:#16783a}h1{line-height:1.2;font-size:30px}label{display:block;margin:20px 0 8px}input{box-sizing:border-box;width:100%;padding:12px;border:1px solid #9aa99e;border-radius:8px;font:inherit}button,.primary{display:inline-block;background:#176d38;color:white;border:0;padding:12px 18px;border-radius:8px;font:inherit;text-decoration:none;cursor:pointer}button:disabled{opacity:.5;cursor:wait}.muted{color:#52675a}#status{white-space:pre-line}small{display:block;margin-top:24px}.check{display:flex;gap:10px;align-items:flex-start;margin:16px 0 0;font-size:15px}.check input{width:18px;height:18px;margin-top:4px;flex-shrink:0;accent-color:#176d38}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#eef3ee;padding:5px;border-radius:12px;margin:18px 0 6px}.tabs button{background:transparent;color:#203728;padding:10px 12px;font-weight:600}.tabs button.on{background:white;color:#176d38;box-shadow:0 1px 3px rgba(0,0,0,.12)}[hidden]{display:none!important}@media(max-width:560px){main{margin:24px 12px;padding:24px}}</style>
 </head><body><main>
-<a href="/">LignoAI</a><h1 id="heading">In LignoCAD anmelden</h1>
+<a id="home" href="/">LignoAI</a><h1 id="heading">In LignoCAD anmelden</h1>
 <p id="intro">Melde dich mit deinem LignoAI-Konto an. Danach kannst du zur App zurückkehren.</p>
-<div id="continue" hidden><p>Du bist auf lignoai.ch angemeldet als <strong id="continueEmail"></strong>.</p><p><button id="continueBtn" type="button">Mit diesem Konto in LignoCAD anmelden</button></p><p><a id="otherAccount" href="#anderes-konto">Anderes Konto verwenden</a></p></div>
+<div id="continue" hidden><p><span id="continueText">Du bist auf lignoai.ch angemeldet als</span> <strong id="continueEmail"></strong>.</p><p><button id="continueBtn" type="button">Mit diesem Konto in LignoCAD anmelden</button></p><p><a id="otherAccount" href="#anderes-konto">Anderes Konto verwenden</a></p></div>
 <div class="tabs" id="tabs" hidden><button type="button" id="tabLogin" class="on">Anmelden</button><button type="button" id="tabRegister">Konto erstellen</button></div>
-<form id="login" hidden><label for="email">E-Mail-Adresse</label><input id="email" type="email" autocomplete="email" maxlength="254" required>
-<label id="termsRow" class="check" hidden><input id="terms" type="checkbox"> <span>Ich akzeptiere die <a href="/#/nutzungsbedingungen" target="_blank" rel="noopener">Nutzungsbedingungen</a> inklusive Lizenzbedingungen und habe die <a href="/#/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a> gelesen.</span></label>
+<form id="login" hidden><label for="email" id="emailLabel">E-Mail-Adresse</label><input id="email" type="email" autocomplete="email" maxlength="254" required>
+<label id="termsRow" class="check" hidden><input id="terms" type="checkbox"> <span><span id="termsA">Ich akzeptiere die</span> <a id="termsLink" href="/#/nutzungsbedingungen" target="_blank" rel="noopener">Nutzungsbedingungen</a> <span id="termsB">inklusive Lizenzbedingungen und habe die</span> <a id="privacyLink" href="/#/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a><span id="termsC"> gelesen.</span></span></label>
 <p><button id="submit" type="submit">Anmeldelink senden</button></p>
 <p><a id="mode" href="#registrieren">Noch kein Konto? Konto erstellen</a></p></form>
-<form id="codeForm" hidden><label for="code">Code aus der E-Mail</label><input id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="12" placeholder="12345678" required>
+<form id="codeForm" hidden><label for="code" id="codeLabel">Code aus der E-Mail</label><input id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="12" placeholder="12345678" required>
 <p><button id="codeSubmit" type="submit">Mit Code fortfahren</button></p></form>
 <p id="status" role="status" aria-live="polite">Anmeldeanfrage wird geprüft …</p>
 <a id="openApp" class="primary" hidden>LignoCAD öffnen</a>
 <p id="help" class="muted" hidden>Bestätige im Browser das Öffnen von LignoCAD. Falls nichts passiert, starte die installierte App und beginne die Anmeldung dort erneut.</p>
-<small>Nach der Registrierung gilt deine Lizenz sofort für 14 Tage. Nach unserer Prüfung verlängern wir sie auf drei Monate. Deine Pläne bleiben auf deinem Computer.</small>
+<small id="footer">Nach der Registrierung gilt deine Lizenz sofort für 14 Tage. Nach unserer Prüfung verlängern wir sie auf drei Monate. Deine Pläne bleiben auf deinem Computer.</small>
 </main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.1/dist/umd/supabase.js" integrity="sha384-K1nraABOP/zFehpLIUksXebbs7jMpB8gYMlb+uhVKZcWT/9Vkq1+qhv6ndC+1Yuz" crossorigin="anonymous"></script><script src="desktop-login.js"></script></body></html>

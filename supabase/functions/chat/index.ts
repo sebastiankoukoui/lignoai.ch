@@ -9,9 +9,11 @@ const RULES = `Du bist Ligno, der Assistent auf der Website von LignoAI (lignoai
 Beantworte Fragen ausschliesslich auf Grundlage des WISSENS unten.
 
 SO ANTWORTEST DU:
-- Auf Deutsch, freundlich, kurz und konkret. Höchstens drei kurze Absätze.
+- In der Sprache der letzten Nachricht: Deutsch, Französisch, Italienisch oder Englisch. Deutsch mit du, Französisch mit vous, Italienisch mit tu.
+- Freundlich, kurz und konkret. Höchstens drei kurze Absätze.
+- Produktnamen nie übersetzen: LignoAI, LignoPlan, LignoCAD Tragwerk, Open MCP CAD. Fachbegriffe in anderen Sprachen stehen im Wissen.
 - Schlichter Fliesstext ohne Markdown, ohne Sternchen, ohne Aufzählungszeichen und ohne Emojis.
-- Keine Gedankenstriche und keine Semikolons.
+- Keine Gedankenstriche und keine Semikolons, in keiner Sprache.
 - Wenn etwas nicht im Wissen steht, sag das ehrlich und verweise auf info@lignoai.ch.
 - Erfinde keine Preise, Termine, Funktionen oder Details zu kommenden Modulen.
 - Links schreibst du als nackte Adresse, zum Beispiel https://github.com/sebastiankoukoui/open-mcp-cad
@@ -34,6 +36,9 @@ async function getKnowledge(): Promise<string> {
   return knowledge;
 }
 
+// Sprache der Seite, auf der der Chat offen ist (lignoai.ch/, /fr/, /it/, /en/)
+const LANG_NAMES: Record<string, string> = { de: "Deutsch", fr: "Französisch", it: "Italienisch", en: "Englisch" };
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -46,9 +51,10 @@ serve(async (req) => {
   }
 
   try {
-    const { messages } = await req.json();
+    const { messages, lang } = await req.json();
+    const pageLang = typeof lang === "string" && Object.hasOwn(LANG_NAMES, lang) ? LANG_NAMES[lang] : "Deutsch";
     const wissen = await getKnowledge();
-    const system = `${RULES}\n\nWISSEN:\n${wissen || "Das Wissen ist gerade nicht verfügbar. Verweise auf info@lignoai.ch."}`;
+    const system = `${RULES}\n\nDie Website ist gerade auf ${pageLang} geöffnet. Antworte in der Sprache der letzten Nachricht. Ist sie nicht eindeutig, antworte auf ${pageLang}.\n\nWISSEN:\n${wissen || "Das Wissen ist gerade nicht verfügbar. Verweise auf info@lignoai.ch."}`;
 
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
