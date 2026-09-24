@@ -1,0 +1,2256 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://djijagmwottlscxguimc.supabase.co https://nwrvvqufmlmdbfubfoqs.supabase.co; form-action 'self'; base-uri 'self'; object-src 'none'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>LignoAI | KI im Planungsprozess des Holzbaus</title>
+  <meta name="description" content="LignoAI entwickelt Software für den Holzbau: Open MCP CAD, der erste öffentliche MCP-Server für Cadwork, und LignoPlan mit LignoCAD Tragwerk für Positions- und Lastenübergabepläne." />
+  <meta name="author" content="Sebastian Koukoui" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="LignoAI" />
+  <meta property="og:title" content="LignoAI | KI im Planungsprozess des Holzbaus" />
+  <meta property="og:description" content="Open MCP CAD · LignoPlan · LignoCAD Tragwerk" />
+  <meta property="og:url" content="https://lignoai.ch/" />
+  <meta property="og:locale" content="de_CH" />
+  <meta property="og:image" content="https://lignoai.ch/og/lignoai.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="LignoAI: KI im Planungsprozess des Holzbaus" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f6f8f6;
+      --bg-tint: #eef6f0;
+      --ink: #0f1411;
+      --ink-2: #334038;
+      --muted: #66736b;
+      --line: #e2e8e3;
+      --line-strong: #cfd8d1;
+
+      --green: #178a3e;
+      --green-700: #106b30;
+      --green-50: #eef7f1;
+      --green-100: #d9eedf;
+
+      --violet: #6547c9;
+      --violet-50: #f2effc;
+      --blue: #2f64b8;
+      --blue-50: #edf2fb;
+      --orange: #cf4a26;
+
+      --radius: 14px;
+      --radius-sm: 9px;
+      --shadow-sm: 0 1px 2px rgba(15,20,17,.05);
+      --shadow: 0 1px 2px rgba(15,20,17,.04), 0 8px 24px -8px rgba(15,20,17,.10);
+      --shadow-lg: 0 2px 4px rgba(15,20,17,.04), 0 24px 48px -16px rgba(15,20,17,.18);
+
+      --font: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+      --max: 1180px;
+      --gutter: 24px;
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; }
+    button { font: inherit; cursor: pointer; }
+    input, select, textarea { font: inherit; }
+    :focus-visible { outline: 2px solid var(--green); outline-offset: 2px; border-radius: 4px; }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      height: 44px; padding: 0 20px;
+      border-radius: 10px; border: 1px solid transparent;
+      font-weight: 700; font-size: .92rem; letter-spacing: -.005em;
+      text-decoration: none; white-space: nowrap;
+      transition: background .15s, border-color .15s, color .15s, box-shadow .15s, transform .15s;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn-primary { background: var(--green); color: #fff; box-shadow: 0 1px 0 rgba(255,255,255,.2) inset, 0 1px 2px rgba(16,107,48,.3); }
+    .btn-primary:hover { background: var(--green-700); }
+    .btn-dark { background: var(--ink); color: #fff; }
+    .btn-dark:hover { background: #26302a; }
+    .btn-outline { background: #fff; color: var(--ink); border-color: var(--line-strong); }
+    .btn-outline:hover { border-color: var(--ink); }
+    .btn-ghost { background: transparent; color: var(--ink-2); padding: 0 12px; }
+    .btn-ghost:hover { color: var(--ink); background: var(--bg-soft); }
+    .btn-sm { height: 36px; padding: 0 14px; font-size: .85rem; border-radius: 8px; }
+    .btn-lg { height: 52px; padding: 0 26px; font-size: 1rem; }
+    .btn-block { width: 100%; }
+    .btn svg { width: 17px; height: 17px; flex-shrink: 0; }
+    .btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+    /* ---------- Header ---------- */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,.86);
+      backdrop-filter: saturate(1.6) blur(14px);
+      -webkit-backdrop-filter: saturate(1.6) blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .2s;
+    }
+    .site-header.scrolled { border-bottom-color: var(--line); }
+    .header-inner { height: 68px; display: flex; align-items: center; gap: 28px; }
+    .logo { display: inline-flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+    .logo img { height: 26px; width: auto; max-width: none; }
+    .site-footer .logo img { height: 24px; }
+    .mission-head { display: grid; grid-template-columns: 1fr 200px; gap: 56px; align-items: center; margin-bottom: 56px; }
+    .mission-head .section-head { margin-bottom: 0; }
+    .mission-logo { width: 200px; height: auto; }
+    .main-nav { display: flex; gap: 4px; margin-left: 8px; }
+    .main-nav a {
+      text-decoration: none; color: var(--ink-2); font-weight: 600; font-size: .9rem;
+      padding: 8px 12px; border-radius: 8px; transition: color .15s, background .15s;
+    }
+    .main-nav a:hover { color: var(--ink); background: var(--bg-soft); }
+    .header-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+    .user-chip {
+      display: none; align-items: center; gap: 8px; text-decoration: none;
+      padding: 4px 12px 4px 4px; border: 1px solid var(--line); border-radius: 999px;
+      font-weight: 700; font-size: .85rem;
+    }
+    .user-chip:hover { border-color: var(--line-strong); }
+    .avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--green-100); color: var(--green-700);
+      display: grid; place-items: center; font-size: .75rem; font-weight: 800;
+    }
+    body.signed-in .user-chip { display: inline-flex; }
+    body.signed-in .guest-only { display: none !important; }
+    body:not(.signed-in) .member-only { display: none !important; }
+    .menu-toggle { display: none; background: none; border: 0; width: 40px; height: 40px; border-radius: 8px; }
+    .menu-toggle:hover { background: var(--bg-soft); }
+    .menu-toggle svg { width: 22px; height: 22px; }
+
+    .mobile-nav { display: none; }
+
+    /* ---------- Announcement ---------- */
+    .announce {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 5px 14px 5px 6px; border-radius: 999px;
+      background: #fff; border: 1px solid var(--line);
+      font-size: .84rem; font-weight: 600; color: var(--ink-2); text-decoration: none;
+      box-shadow: var(--shadow-sm); transition: border-color .15s;
+    }
+    .announce:hover { border-color: var(--line-strong); }
+    .announce .pill {
+      background: var(--violet-50); color: var(--violet);
+      font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 999px;
+    }
+    .announce .arrow { color: var(--muted); }
+
+    /* ---------- Hero ---------- */
+    .hero { position: relative; padding: 72px 0 88px; overflow: hidden; }
+    .hero-rings {
+      position: absolute; right: -180px; top: -140px; width: 820px; height: 820px;
+      pointer-events: none; opacity: .9;
+      -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
+              mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
+    }
+    .hero-grid { position: relative; display: grid; grid-template-columns: 1.12fr .88fr; gap: 56px; align-items: center; }
+    .hero h1 {
+      font-size: clamp(2.4rem, 4.9vw, 3.9rem);
+      line-height: 1.02; letter-spacing: -.045em; font-weight: 800;
+      margin: 26px 0 22px;
+    }
+    .hero h1 .hl { color: var(--green); }
+    .hero h1 { -webkit-hyphens: auto; hyphens: auto; overflow-wrap: break-word; }
+    .hero-grid > *, .product > *, .plan-intro > *, .services > *, .about > *, .contact-card > *, .mission-head > *, .account-grid > * { min-width: 0; }
+    .hero .lead { font-size: 1.14rem; color: var(--ink-2); max-width: 540px; line-height: 1.65; }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 26px; font-size: .86rem; color: var(--muted); font-weight: 600; }
+    .hero-meta span { display: inline-flex; align-items: center; gap: 7px; }
+    .hero-meta svg { width: 16px; height: 16px; color: var(--green); }
+
+    .hero-visual { position: relative; height: 480px; }
+    .float-card {
+      position: absolute; display: block; background: #fff; border: 1px solid var(--line);
+      border-radius: 18px; box-shadow: var(--shadow-lg); overflow: hidden;
+      color: inherit; text-decoration: none; cursor: pointer;
+      transform: rotate(var(--rot)); transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease;
+    }
+    .float-card:hover, .float-card:focus-visible {
+      transform: rotate(var(--rot)) scale(1.05); z-index: 3;
+      box-shadow: 0 2px 4px rgba(15,20,17,.05), 0 32px 60px -18px rgba(15,20,17,.28);
+    }
+    .float-card:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+    .float-card img { width: 100%; height: auto; }
+    .fc-tragwerk { --rot: 2deg; width: 290px; right: 0; top: 0; }
+    .fc-mcp { --rot: -3deg; width: 235px; left: 0; top: 120px; z-index: 1; }
+    @media (prefers-reduced-motion: reduce) { .float-card { transition: none; } .float-card:hover { transform: rotate(var(--rot)); } }
+    .fc-label {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: 12px 16px; border-top: 1px solid var(--line); font-size: .8rem; font-weight: 700;
+    }
+    .fc-label .status { font-family: var(--mono); font-size: .7rem; font-weight: 500; color: var(--green-700); background: var(--green-50); padding: 3px 8px; border-radius: 6px; }
+    .fc-label .status.violet { color: var(--violet); background: var(--violet-50); }
+    .fc-terminal {
+      position: absolute; right: -8px; bottom: 0; width: 265px; z-index: 2;
+      background: #111713; color: #d7e4da; border-radius: 12px; box-shadow: var(--shadow-lg);
+      font-family: var(--mono); font-size: .72rem; line-height: 1.7; padding: 14px 16px;
+    }
+    .fc-terminal .dots { display: flex; gap: 5px; margin-bottom: 10px; }
+    .fc-terminal .dots i { width: 8px; height: 8px; border-radius: 50%; background: #3a453d; }
+    .fc-terminal .p { color: #6fcf8e; }
+    .fc-terminal .c { color: #8a9a8e; }
+
+    /* ---------- Sections ---------- */
+    section.block { padding: 104px 0; }
+    section.block.soft { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: .74rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--green-700);
+    }
+    .eyebrow::before { content: ''; width: 18px; height: 2px; background: var(--green); border-radius: 2px; }
+    .section-head { max-width: 720px; margin-bottom: 56px; }
+    .section-head h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); line-height: 1.1; letter-spacing: -.035em; font-weight: 800; margin: 14px 0 16px; }
+    .section-head p { color: var(--ink-2); font-size: 1.06rem; }
+    .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+    .section-head.center .eyebrow::before { display: none; }
+
+    /* ---------- Products ---------- */
+    .product {
+      display: grid; grid-template-columns: 380px 1fr; gap: 0;
+      background: #fff; border: 1px solid var(--line); border-radius: 22px;
+      box-shadow: var(--shadow); overflow: hidden;
+    }
+    .product + .product { margin-top: 28px; }
+    .product-art {
+      position: relative; display: grid; place-items: center; padding: 36px;
+      border-right: 1px solid var(--line);
+    }
+    .product-art img { width: 100%; max-width: 280px; }
+    .product.mcp .product-art { background: linear-gradient(160deg, #f6f4fd, #fff 60%); }
+    .product.tragwerk .product-art { background: linear-gradient(160deg, #f3f6fc, #fff 60%); }
+    .product-body { padding: 44px 48px; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .74rem; font-weight: 700; padding: 5px 10px; border-radius: 999px;
+      background: var(--bg-soft); color: var(--ink-2); border: 1px solid var(--line);
+    }
+    .badge.green { background: var(--green-50); color: var(--green-700); border-color: var(--green-100); }
+    .badge.violet { background: var(--violet-50); color: var(--violet); border-color: #ddd5f6; }
+    .badge.blue { background: var(--blue-50); color: var(--blue); border-color: #d6e1f4; }
+    .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .product h3 { font-size: 2rem; letter-spacing: -.035em; line-height: 1.1; font-weight: 800; }
+    .product .tagline { font-size: 1.12rem; font-weight: 600; color: var(--ink-2); margin: 8px 0 16px; }
+    .product .desc { color: var(--ink-2); max-width: 620px; }
+    .checks { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; margin: 26px 0 30px; }
+    .checks li { display: flex; gap: 10px; font-size: .93rem; color: var(--ink-2); line-height: 1.5; }
+    .checks li svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; color: var(--green); }
+    .product.mcp .checks li svg { color: var(--violet); }
+    .product.tragwerk .checks li svg { color: var(--blue); }
+    .product-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .product-foot { margin-top: 18px; font-size: .82rem; color: var(--muted); }
+    .product-foot code { font-family: var(--mono); font-size: .78rem; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px; color: var(--ink-2); }
+
+    .code {
+      display: flex; align-items: center; gap: 12px; margin: 0 0 22px;
+      background: #111713; color: #d7e4da; border-radius: 10px; padding: 12px 14px;
+      font-family: var(--mono); font-size: .82rem; overflow-x: auto;
+    }
+    .code .p { color: #6fcf8e; user-select: none; }
+    .code code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+    .copy-btn { flex-shrink: 0; }
+    .copy-btn { background: #26302a; color: #d7e4da; border: 0; border-radius: 6px; padding: 5px 10px; font-family: var(--mono); font-size: .72rem; }
+    .copy-btn:hover { background: #334038; }
+
+    .license-box {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+      border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin: 0 0 26px;
+    }
+    .license-box > div { padding: 14px 16px; }
+    .license-box > div + div { border-left: 1px solid var(--line); }
+    .license-box .k { font-size: .74rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+    .license-box .v { font-weight: 800; font-size: 1.02rem; margin-top: 2px; }
+    .license-box .s { font-size: .8rem; color: var(--muted); }
+    .license-box .v.free { color: var(--green-700); }
+
+    .download-box { background: var(--blue-50); border: 1px solid #d5e1f5; border-radius: 12px; padding: 20px 22px; margin: 0 0 22px; }
+    .download-box .btn svg { width: 18px; height: 18px; }
+    .dl-meta { font-family: var(--mono); font-size: .76rem; color: var(--ink-2); margin: 10px 0 12px; }
+    .download-box p { font-size: .88rem; color: var(--ink-2); }
+    .download-box p + p { margin-top: 8px; }
+    .download-box .dl-hint { font-size: .8rem; color: var(--muted); }
+    .download-box a:not(.btn) { color: var(--blue); }
+
+    .share { position: relative; }
+    .share-btn svg { width: 17px; height: 17px; }
+    .share-menu { position: absolute; left: 0; bottom: calc(100% + 8px); z-index: 30; min-width: 210px; background: #fff; border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow-lg); padding: 6px; }
+    .share-menu a, .share-menu button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 9px 12px; border: 0; border-radius: 8px; background: none; font: inherit; font-size: .9rem; font-weight: 600; color: var(--ink-2); text-decoration: none; cursor: pointer; text-align: left; }
+    .share-menu a:hover, .share-menu button:hover { background: var(--bg-soft); color: var(--ink); }
+    .share-menu svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    /* ---------- LignoPlan modules ---------- */
+    .plan-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: end; margin-bottom: 48px; }
+    .plan-intro .section-head { margin-bottom: 0; }
+    .plan-intro .aside { color: var(--ink-2); font-size: 1rem; border-left: 2px solid var(--green); padding-left: 20px; }
+    .modules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .module {
+      position: relative; background: #fff; border: 1px solid var(--line); border-radius: 18px;
+      padding: 22px; display: flex; flex-direction: column; min-height: 320px;
+      transition: box-shadow .2s, transform .2s, border-color .2s;
+    }
+    .module.live { box-shadow: var(--shadow); border-color: #d6e1f4; }
+    .module.live:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .module .m-img { flex: 1; display: grid; place-items: center; padding: 8px 20px; }
+    .module .m-img img { max-height: 190px; width: auto; }
+    .module.soon .m-img img { filter: grayscale(1); opacity: .32; }
+    .module .m-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 16px; border-top: 1px solid var(--line); }
+    .module .m-name { font-weight: 800; letter-spacing: -.01em; }
+    .module.soon .m-name { color: var(--muted); }
+    .module .m-status { font-size: .72rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+    .module.live .m-status { background: var(--blue-50); color: var(--blue); }
+    .module.soon .m-status { background: var(--bg-soft); color: var(--muted); border: 1px dashed var(--line-strong); }
+    .module.mystery { background: repeating-linear-gradient(-45deg, #fafbfa, #fafbfa 10px, #f4f6f4 10px, #f4f6f4 20px); border-style: dashed; border-color: var(--line-strong); }
+    .module.mystery .m-img { color: var(--line-strong); }
+    .module.mystery .q { font-size: 5rem; font-weight: 800; letter-spacing: -.05em; color: #d5ddd7; line-height: 1; }
+    .module.mystery p { text-align: center; color: var(--muted); font-size: .9rem; margin-top: 10px; }
+    .modules-cta { display: flex; justify-content: center; margin-top: 36px; gap: 10px; flex-wrap: wrap; }
+
+    /* ---------- Steps (how it works) ---------- */
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 8px; }
+    .step { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 26px; }
+    .step .n { width: 32px; height: 32px; border-radius: 9px; background: var(--green-50); color: var(--green-700); display: grid; place-items: center; font-weight: 800; font-size: .9rem; margin-bottom: 16px; }
+    .step h4 { font-size: 1.05rem; letter-spacing: -.01em; margin-bottom: 6px; }
+    .step p { font-size: .92rem; color: var(--ink-2); }
+
+    /* ---------- Mission ---------- */
+    .mv { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .mv-card { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 18px; padding: 32px; }
+    .mv-k { font-family: var(--mono); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--green-700); margin-bottom: 12px; }
+    .mv-card h3 { font-size: 1.35rem; letter-spacing: -.02em; line-height: 1.25; margin-bottom: 10px; }
+    .mv-card p { color: var(--ink-2); }
+    .timeline { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 56px; position: relative; }
+    .timeline::before { content: ''; position: absolute; left: 6px; right: 0; top: 6px; height: 2px; background: linear-gradient(90deg, var(--green) 0%, var(--green) 62%, var(--line-strong) 62%); }
+    .timeline li { position: relative; padding-top: 30px; }
+    .timeline li::before { content: ''; position: absolute; left: 0; top: 0; width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 2px solid var(--green); }
+    .timeline li.now::before { background: var(--green); box-shadow: 0 0 0 5px var(--green-100); }
+    .timeline li.next::before { border-style: dashed; border-color: var(--line-strong); }
+    .timeline .tl-date { display: block; font-family: var(--mono); font-size: .74rem; color: var(--muted); margin-bottom: 4px; }
+    .timeline strong { display: block; font-size: 1rem; letter-spacing: -.01em; }
+    .timeline p { font-size: .9rem; color: var(--ink-2); margin-top: 4px; }
+    .timeline li.next strong, .timeline li.next p { color: var(--muted); }
+
+    /* ---------- Services ---------- */
+    .services { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: start; }
+    .svc-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+    .svc { background: #fff; padding: 24px; }
+    .svc h4 { font-size: 1rem; margin-bottom: 6px; letter-spacing: -.01em; }
+    .svc p { font-size: .9rem; color: var(--ink-2); }
+    .privacy { margin-top: 28px; padding: 20px 22px; background: var(--green-50); border: 1px solid var(--green-100); border-radius: 14px; display: flex; gap: 14px; }
+    .privacy svg { width: 22px; height: 22px; color: var(--green-700); flex-shrink: 0; margin-top: 2px; }
+    .privacy strong { display: block; margin-bottom: 2px; }
+    .privacy p { font-size: .9rem; color: var(--ink-2); }
+
+    /* ---------- About ---------- */
+    .about { display: grid; grid-template-columns: 340px 1fr; gap: 64px; align-items: center; }
+    .portrait {
+      position: relative; aspect-ratio: 1; border-radius: 24px; overflow: hidden;
+      background: radial-gradient(circle at 50% 30%, #fff 0%, var(--bg-tint) 70%);
+      border: 1px solid var(--line);
+    }
+    .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
+    .about h2 { font-size: clamp(1.9rem, 3.4vw, 2.6rem); letter-spacing: -.035em; line-height: 1.1; margin: 14px 0 18px; }
+    .about p { color: var(--ink-2); margin-bottom: 12px; max-width: 620px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .tag { font-size: .8rem; font-weight: 600; padding: 6px 12px; border-radius: 8px; background: var(--bg-soft); border: 1px solid var(--line); color: var(--ink-2); }
+
+    /* ---------- Contact ---------- */
+    .contact-card {
+      background: var(--ink); color: #fff; border-radius: 24px; padding: 56px;
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center;
+      position: relative; overflow: hidden;
+    }
+    .contact-card h2 { font-size: clamp(1.8rem, 3.2vw, 2.5rem); letter-spacing: -.035em; line-height: 1.1; margin-bottom: 14px; }
+    .contact-card p { color: #b9c6bd; }
+    .contact-links { display: grid; gap: 12px; position: relative; }
+    .contact-link {
+      display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 12px;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); text-decoration: none;
+      transition: background .15s;
+    }
+    .contact-link:hover { background: rgba(255,255,255,.1); }
+    .contact-link svg { width: 20px; height: 20px; color: #6fcf8e; }
+    .contact-link .k { font-size: .74rem; color: #8fa095; font-weight: 600; }
+    .contact-link .v { font-weight: 700; }
+
+    /* ---------- Footer ---------- */
+    .site-footer { border-top: 1px solid var(--line); padding: 56px 0 40px; margin-top: 104px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; }
+    .footer-grid h5 { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 14px; }
+    .footer-grid ul { list-style: none; display: grid; gap: 8px; }
+    .footer-grid a { text-decoration: none; color: var(--ink-2); font-size: .92rem; }
+    .footer-grid a:hover { color: var(--green-700); }
+    .footer-grid .blurb { color: var(--muted); font-size: .9rem; margin-top: 14px; max-width: 300px; }
+    .footer-bottom a { text-decoration: none; }
+    .footer-bottom a:hover { color: var(--ink); text-decoration: underline; }
+    .footer-bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--line); font-size: .82rem; color: var(--muted); }
+
+    /* ---------- App views (Konto) ---------- */
+    .view { display: none; }
+    .view.active { display: block; }
+    .concept-bar {
+      background: #fff8e6; border-bottom: 1px solid #f1e2b8; color: #6b5310;
+      font-size: .84rem; font-weight: 600; text-align: center; padding: 9px 16px;
+    }
+    .auth-wrap { min-height: calc(100vh - 68px - 38px); display: grid; place-items: center; padding: 56px var(--gutter); background: var(--bg-soft); }
+    .auth-card { width: 100%; max-width: 440px; background: #fff; border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 36px; }
+    .auth-card.wide { max-width: 620px; }
+    .auth-card h1 { font-size: 1.6rem; letter-spacing: -.03em; line-height: 1.2; }
+    .auth-card .sub { color: var(--muted); font-size: .94rem; margin: 6px 0 26px; }
+    .field { display: grid; gap: 6px; margin-bottom: 16px; }
+    .field label { font-size: .84rem; font-weight: 700; color: var(--ink-2); }
+    .field input, .field select {
+      height: 44px; padding: 0 14px; border: 1px solid var(--line-strong); border-radius: 10px; background: #fff; color: var(--ink);
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .field input:focus, .field select:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(23,138,62,.15); }
+    .field .hint { font-size: .78rem; color: var(--muted); }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .check { display: flex; gap: 10px; align-items: flex-start; font-size: .87rem; color: var(--ink-2); margin-bottom: 12px; }
+    .check input { width: 17px; height: 17px; margin-top: 3px; accent-color: var(--green); flex-shrink: 0; }
+    .check a { color: var(--green-700); }
+    .divider { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: .8rem; margin: 20px 0; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+    .auth-alt { text-align: center; font-size: .9rem; color: var(--muted); margin-top: 22px; }
+    .auth-alt a { color: var(--green-700); font-weight: 700; text-decoration: none; }
+    .link-row { display: flex; justify-content: space-between; align-items: center; margin: -4px 0 18px; font-size: .85rem; }
+    .link-row a { color: var(--green-700); text-decoration: none; font-weight: 600; }
+    .form-note { font-size: .82rem; color: var(--muted); margin-top: 14px; text-align: center; }
+
+    .roles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 22px; }
+    .role { position: relative; }
+    .role input { position: absolute; opacity: 0; pointer-events: none; }
+    .role label {
+      display: block; height: 100%; padding: 14px; border: 1px solid var(--line-strong); border-radius: 12px; cursor: pointer;
+      transition: border-color .15s, background .15s, box-shadow .15s;
+    }
+    .role label:hover { border-color: var(--ink-2); }
+    .role input:checked + label { border-color: var(--green); background: var(--green-50); box-shadow: 0 0 0 3px rgba(23,138,62,.12); }
+    .role input:focus-visible + label { outline: 2px solid var(--green); outline-offset: 2px; }
+    .role .rt { font-weight: 800; font-size: .92rem; }
+    .role .rp { font-size: .78rem; font-weight: 700; color: var(--green-700); margin-top: 4px; }
+    .role .rd { font-size: .76rem; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+    .account { background: var(--bg-soft); min-height: calc(100vh - 68px - 38px); padding: 40px 0 72px; }
+    .account-grid { display: grid; grid-template-columns: 240px 1fr; gap: 32px; align-items: start; }
+    .acc-nav { position: sticky; top: 92px; display: grid; gap: 2px; }
+    .acc-nav .who { display: flex; align-items: center; gap: 12px; padding: 0 12px 18px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
+    .acc-nav .who .avatar { width: 40px; height: 40px; font-size: .9rem; }
+    .acc-nav .who .n { font-weight: 800; font-size: .95rem; line-height: 1.3; }
+    .acc-nav .who .e { font-size: .78rem; color: var(--muted); overflow-wrap: anywhere; }
+    .acc-nav button {
+      display: flex; align-items: center; gap: 10px; text-align: left; background: none; border: 0;
+      padding: 10px 12px; border-radius: 9px; font-weight: 600; font-size: .92rem; color: var(--ink-2);
+    }
+    .acc-nav button svg { width: 18px; height: 18px; color: var(--muted); }
+    .acc-nav button:hover { background: #fff; color: var(--ink); }
+    .acc-nav button.active { background: #fff; color: var(--ink); box-shadow: var(--shadow-sm); border: 1px solid var(--line); }
+    .acc-nav button.active svg { color: var(--green); }
+    .acc-nav .sep { height: 1px; background: var(--line); margin: 8px 0; }
+    .acc-panel { display: none; }
+    .acc-panel.active { display: block; }
+    .acc-panel > h1 { font-size: 1.6rem; letter-spacing: -.03em; margin-bottom: 4px; }
+    .acc-panel > .sub { color: var(--muted); margin-bottom: 26px; }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px; box-shadow: var(--shadow-sm); }
+    .card + .card { margin-top: 18px; }
+    .card h3 { font-size: 1.05rem; letter-spacing: -.01em; margin-bottom: 4px; }
+    .card .sub { font-size: .88rem; color: var(--muted); margin-bottom: 18px; }
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 18px; }
+    .stat { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+    .stat .k { font-size: .78rem; color: var(--muted); font-weight: 700; }
+    .stat .v { font-size: 1.35rem; font-weight: 800; letter-spacing: -.02em; margin-top: 2px; }
+    .stat .v.ok { color: var(--green-700); }
+    .lic { display: grid; grid-template-columns: 72px 1fr auto; gap: 18px; align-items: center; }
+    .lic img { width: 72px; height: 72px; border-radius: 12px; border: 1px solid var(--line); object-fit: contain; background: #fff; }
+    .lic .t { font-weight: 800; }
+    .lic .d { font-size: .86rem; color: var(--muted); }
+    .kv { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); }
+    .kv .k { font-size: .75rem; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+    .kv .v { font-weight: 700; font-size: .92rem; margin-top: 2px; }
+    .progress { height: 6px; border-radius: 99px; background: var(--bg-soft); overflow: hidden; margin-top: 8px; }
+    .progress i { display: block; height: 100%; background: var(--green); border-radius: 99px; }
+    table.list { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    table.list th { text-align: left; font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 700; padding: 0 12px 10px; border-bottom: 1px solid var(--line); }
+    table.list td { padding: 14px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+    table.list tr:last-child td { border-bottom: 0; }
+    table.list .mono { font-family: var(--mono); font-size: .8rem; color: var(--muted); }
+    .dl-row { display: flex; align-items: center; gap: 16px; padding: 16px 0; }
+    .dl-row + .dl-row { border-top: 1px solid var(--line); }
+    .dl-row .ic { width: 44px; height: 44px; border-radius: 10px; background: var(--bg-soft); display: grid; place-items: center; flex-shrink: 0; }
+    .dl-row .ic img { width: 36px; height: 36px; object-fit: contain; }
+    .dl-row .t { font-weight: 700; }
+    .dl-row .d { font-size: .84rem; color: var(--muted); }
+    .dl-row .grow { flex: 1; min-width: 0; }
+    .danger { border-color: #f1d0c7; }
+    .danger h3 { color: #b0361a; }
+    .btn-danger { background: #fff; color: #b0361a; border-color: #eab8aa; }
+    .btn-danger:hover { background: #fdf2ef; }
+    /* Rechtliches */
+    .legal { max-width: 800px; padding-top: 48px; padding-bottom: 24px; }
+    .legal-nav { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 36px; }
+    .legal-nav a { text-decoration: none; font-size: .86rem; font-weight: 600; color: var(--ink-2); padding: 7px 14px; border: 1px solid var(--line); border-radius: 999px; }
+    .legal-nav a:hover { border-color: var(--line-strong); }
+    .legal-nav a.active { background: var(--green-50); border-color: var(--green-100); color: var(--green-700); }
+    .legal-head h1 { font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1.1; letter-spacing: -.035em; font-weight: 800; margin: 12px 0 12px; }
+    .legal-head .lead { color: var(--ink-2); font-size: 1.05rem; }
+    .legal-meta { font-family: var(--mono); font-size: .78rem; color: var(--muted); margin-top: 10px; }
+    .legal-summary { background: var(--green-50); border: 1px solid var(--green-100); border-radius: var(--radius); padding: 22px 26px; margin: 32px 0; }
+    .legal-summary h2 { font-size: 1.05rem; margin-bottom: 10px; }
+    .legal-summary ul { padding-left: 20px; color: var(--ink-2); }
+    .legal-summary li + li { margin-top: 4px; }
+    .legal-summary .note { font-size: .84rem; color: var(--muted); margin-top: 12px; }
+    .legal-toc { columns: 2; column-gap: 32px; padding-left: 22px; margin: 0 0 16px; font-size: .92rem; color: var(--muted); }
+    .legal-toc a { color: var(--ink-2); text-decoration: none; }
+    .legal-toc a:hover { color: var(--green-700); text-decoration: underline; }
+    .legal section { padding-top: 28px; }
+    .legal section h2 { font-size: 1.25rem; letter-spacing: -.015em; margin-bottom: 12px; }
+    .legal section h3 { font-size: 1rem; margin: 18px 0 6px; }
+    .legal section p, .legal section li { color: var(--ink-2); }
+    .legal section p + p { margin-top: 10px; }
+    .legal section ul, .legal section ol { padding-left: 22px; margin: 8px 0 10px; }
+    .legal section li + li { margin-top: 6px; }
+    .legal ol.alpha { list-style: lower-alpha; }
+    .legal .n { font-family: var(--mono); font-size: .8rem; color: var(--muted); margin-right: 6px; }
+    .legal a { color: var(--green-700); }
+    .legal .legal-small { font-size: .78rem; color: var(--muted); margin-top: 18px; }
+    .legal .todo { background: #fff3c4; color: #7a5a00; border-radius: 4px; padding: 0 4px; }
+    .terms-card { border-color: var(--green-100); background: var(--green-50); }
+    @media (max-width: 680px) { .legal-toc { columns: 1; } .legal-summary { padding: 18px; } }
+    .toggle-row { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 14px 0; }
+    .toggle-row + .toggle-row { border-top: 1px solid var(--line); }
+    .toggle-row .t { font-weight: 700; font-size: .93rem; }
+    .toggle-row .d { font-size: .84rem; color: var(--muted); }
+    .switch { position: relative; width: 42px; height: 24px; flex-shrink: 0; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .switch span { position: absolute; inset: 0; background: var(--line-strong); border-radius: 99px; transition: background .15s; cursor: pointer; }
+    .switch span::after { content: ''; position: absolute; left: 3px; top: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: var(--shadow-sm); transition: transform .15s; }
+    .switch input:checked + span { background: var(--green); }
+    .switch input:checked + span::after { transform: translateX(18px); }
+    .switch input:focus-visible + span { outline: 2px solid var(--green); outline-offset: 2px; }
+
+    .form-msg { margin: 4px 0 16px; padding: 11px 14px; border-radius: 10px; font-size: .88rem; line-height: 1.5; background: var(--bg-soft); border: 1px solid var(--line); color: var(--ink-2); }
+    .form-msg.error { background: #fdf2ef; border-color: #f1d0c7; color: #8f2c14; }
+    .form-msg.ok { background: var(--green-50); border-color: var(--green-100); color: var(--green-700); }
+    .form-msg a { color: inherit; font-weight: 700; }
+    .code-form { margin: 4px 0 18px; }
+    .code-input { font-family: var(--mono); font-size: 1.25rem; letter-spacing: .3em; text-align: center; }
+    .mail-icon { width: 52px; height: 52px; border-radius: 14px; background: var(--green-50); color: var(--green-700); display: grid; place-items: center; margin-bottom: 18px; }
+    .mail-icon svg { width: 26px; height: 26px; }
+    .lic-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); }
+    .lic-note { font-size: .86rem; color: var(--muted); }
+    .lic-text { margin-top: 16px; color: var(--ink-2); font-size: .93rem; }
+    [hidden] { display: none !important; }
+    .toast {
+      position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); opacity: 0;
+      background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 10px; font-size: .9rem; font-weight: 600;
+      box-shadow: var(--shadow-lg); z-index: 100; transition: opacity .2s, transform .2s; pointer-events: none;
+      max-width: calc(100vw - 32px);
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    /* ---------- Chat ---------- */
+    .chat-btn {
+      position: fixed; right: 22px; bottom: 22px; z-index: 60;
+      height: 52px; padding: 0 20px 0 16px; border-radius: 999px; border: 1px solid var(--line);
+      background: #fff; color: var(--ink); box-shadow: var(--shadow-lg);
+      display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: .9rem;
+    }
+    .chat-btn:hover { border-color: var(--line-strong); }
+    .chat-btn .bub { width: 30px; height: 30px; border-radius: 50%; background: var(--green); color: #fff; display: grid; place-items: center; }
+    .chat-btn .bub svg { width: 16px; height: 16px; }
+    .chat {
+      position: fixed; right: 22px; bottom: 88px; z-index: 61; width: 370px; height: 520px; max-height: calc(100vh - 120px);
+      background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow-lg);
+      display: flex; flex-direction: column; overflow: hidden;
+      opacity: 0; transform: translateY(12px) scale(.98); pointer-events: none; transition: opacity .18s, transform .18s;
+    }
+    .chat.open { opacity: 1; transform: none; pointer-events: auto; }
+    .chat-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+    .chat-head .bub { width: 36px; height: 36px; border-radius: 50%; background: var(--green-50); color: var(--green-700); display: grid; place-items: center; font-weight: 800; }
+    .chat-head .n { font-weight: 800; line-height: 1.2; }
+    .chat-head .s { font-size: .78rem; color: var(--muted); }
+    .chat-head .x { margin-left: auto; background: none; border: 0; width: 32px; height: 32px; border-radius: 8px; color: var(--muted); font-size: 1.3rem; }
+    .chat-head .x:hover { background: var(--bg-soft); color: var(--ink); }
+    .chat-msgs { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: var(--bg-soft); }
+    .msg { max-width: 84%; padding: 10px 13px; border-radius: 14px; font-size: .9rem; line-height: 1.5; }
+    .msg.bot { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+    .msg.user { align-self: flex-end; background: var(--green); color: #fff; border-bottom-right-radius: 4px; }
+    .msg a { color: var(--green-700); font-weight: 700; }
+    .chat-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); }
+    .chat-form input { flex: 1; height: 42px; border: 1px solid var(--line-strong); border-radius: 10px; padding: 0 12px; }
+    .chat-form input:focus { outline: none; border-color: var(--green); }
+    .chat-form button { width: 42px; height: 42px; border-radius: 10px; border: 0; background: var(--green); color: #fff; display: grid; place-items: center; }
+    .chat-form button svg { width: 18px; height: 18px; }
+
+    /* ---------- Reveal ---------- */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 1040px) {
+      .main-nav { display: none; }
+      .menu-toggle { display: grid; place-items: center; }
+      .header-actions .btn-ghost.guest-only { display: none; }
+      .mobile-nav.open { display: grid; gap: 2px; padding: 8px var(--gutter) 18px; border-top: 1px solid var(--line); background: #fff; }
+      .mobile-nav a { text-decoration: none; font-weight: 700; padding: 12px 8px; border-radius: 8px; color: var(--ink-2); }
+      .mobile-nav a:hover { background: var(--bg-soft); }
+      .hero-grid { grid-template-columns: minmax(0, 1fr); }
+      .hero-visual { height: 420px; max-width: 520px; width: 100%; margin: 0 auto; }
+      .product { grid-template-columns: minmax(0, 1fr); }
+      .product-art { border-right: 0; border-bottom: 1px solid var(--line); padding: 28px; }
+      .product-art img { max-width: 220px; }
+      .plan-intro, .services, .about, .contact-card, .mission-head { grid-template-columns: 1fr; gap: 32px; }
+      .mission-logo { width: 150px; }
+      .about .portrait { max-width: 320px; }
+      .modules { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .timeline { grid-template-columns: 1fr 1fr; row-gap: 32px; }
+      .timeline::before { display: none; }
+      .account-grid { grid-template-columns: 1fr; }
+      .acc-nav { position: static; display: flex; overflow-x: auto; gap: 4px; padding-bottom: 4px; }
+      .acc-nav .who, .acc-nav .sep { display: none; }
+      .acc-nav button { white-space: nowrap; }
+    }
+    @media (max-width: 360px) {
+      .site-header .logo img { height: 22px; }
+      .header-actions a.btn-primary.guest-only { font-size: .8rem; padding: 0 10px; }
+    }
+    @media (max-width: 680px) {
+      :root { --gutter: 16px; }
+      section.block { padding: 72px 0; }
+      .hero { padding: 40px 0 64px; }
+      .hero-visual { height: 340px; }
+      .fc-tragwerk { width: 210px; }
+      .fc-mcp { width: 180px; bottom: 60px; }
+      .fc-terminal { width: 230px; font-size: .64rem; }
+      .product-body { padding: 28px 22px; }
+      .product-actions .btn, .download-box .btn { white-space: normal; height: auto; min-height: 44px; padding-top: 10px; padding-bottom: 10px; text-align: center; }
+      .download-box .btn { width: 100%; }
+      .download-box { padding: 16px; }
+      .product h3 { font-size: 1.6rem; }
+      .checks { grid-template-columns: 1fr; }
+      .license-box { grid-template-columns: 1fr; }
+      .license-box > div + div { border-left: 0; border-top: 1px solid var(--line); }
+      .modules, .steps, .svc-list, .mv { grid-template-columns: 1fr; }
+      .timeline { grid-template-columns: 1fr; gap: 22px; }
+      .timeline li { padding: 0 0 0 30px; }
+      .module { min-height: 260px; }
+      .contact-card { padding: 32px 22px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .auth-card { padding: 26px 20px; }
+      .row2, .roles { grid-template-columns: 1fr; }
+      .stat-row { grid-template-columns: 1fr; }
+      .kv { grid-template-columns: 1fr 1fr; }
+      .lic { grid-template-columns: 56px 1fr; }
+      .lic img { width: 56px; height: 56px; }
+      .lic > .btn { grid-column: 1 / -1; }
+      .dl-row { flex-wrap: wrap; }
+      .table-scroll { overflow-x: auto; }
+      .header-actions .btn-primary.guest-only { padding: 0 12px; }
+      .header-inner { gap: 12px; }
+      .chat { right: 12px; left: 12px; width: auto; bottom: 80px; }
+      .chat-btn { right: 14px; bottom: 14px; padding: 0 14px 0 12px; }
+      .chat-btn .lbl { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="siteHeader">
+    <div class="wrap header-inner">
+      <a class="logo" href="#top" aria-label="LignoAI Startseite">
+        <img src="assets/lignoai-wordmark.webp" alt="LignoAI" width="720" height="150">
+      </a>
+      <nav class="main-nav" aria-label="Hauptnavigation">
+        <a href="#produkte">Produkte</a>
+        <a href="#lignoplan">LignoPlan</a>
+        <a href="#beratung">Beratung</a>
+        <a href="#mission">Über uns</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <a class="btn btn-ghost btn-sm guest-only" href="#/anmelden">Anmelden</a>
+        <a class="btn btn-primary btn-sm guest-only" href="#/registrieren">Konto erstellen</a>
+        <a class="user-chip" href="#/konto" title="Mein Konto"><span class="avatar" data-initials></span><span data-firstname>Konto</span></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menü öffnen" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile Navigation">
+      <a href="#produkte">Produkte</a>
+      <a href="#lignoplan">LignoPlan</a>
+      <a href="#beratung">Beratung</a>
+      <a href="#mission">Über uns</a>
+      <a href="#kontakt">Kontakt</a>
+      <a href="#/anmelden" class="guest-only">Anmelden</a>
+      <a href="#/konto" class="member-only">Mein Konto</a>
+    </nav>
+  </header>
+
+  <!-- ================================================================= -->
+  <!-- VIEW: HOME                                                         -->
+  <!-- ================================================================= -->
+  <main class="view active" id="view-home">
+
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <svg class="hero-rings" id="heroRings" viewBox="0 0 820 820" aria-hidden="true"></svg>
+      <div class="wrap hero-grid">
+        <div>
+          <a class="announce" href="#produkte">
+            <span class="pill">Neu</span>
+            Open MCP CAD ist jetzt öffentlich
+            <span class="arrow">→</span>
+          </a>
+          <h1>KI im Planungs&shy;prozess des <span class="hl">Holzbaus.</span></h1>
+          <p class="lead">
+            LignoAI entwickelt Software, die Planerinnen und Ingenieure im Holzbau entlastet. Dazu gehören der erste öffentliche MCP-Server für Cadwork und <strong>LignoPlan</strong>, unsere Planungsplattform für den Schweizer Holzbau.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-primary btn-lg" href="#tragwerk">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>
+              LignoCAD Tragwerk laden
+            </a>
+            <a class="btn btn-outline btn-lg" href="#mcp">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.56-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+              Open MCP CAD
+            </a>
+          </div>
+          <div class="hero-meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Gratis für Studierende</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Einführungsphase gratis für Büros</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Entwickelt in der Schweiz</span>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <a class="float-card fc-tragwerk" href="#tragwerk" aria-label="Zu LignoCAD Tragwerk">
+            <img src="assets/lignocad-tragwerk.webp" alt="" width="300" height="300">
+            <div class="fc-label">LignoCAD Tragwerk <span class="status">verfügbar</span></div>
+          </a>
+          <a class="float-card fc-mcp" href="#mcp" aria-label="Zu Open MCP CAD">
+            <img src="assets/open-mcp-cad.webp" alt="" width="250" height="250">
+            <div class="fc-label">Open MCP CAD <span class="status violet">open source</span></div>
+          </a>
+          <div class="fc-terminal" aria-hidden="true">
+            <div class="dots"><i></i><i></i><i></i></div>
+            <div><span class="p">du&gt;</span> Erstelle eine Aussenwand, 6.40 m, Ständer 60/200 e=625</div>
+            <div class="c">↳ cadwork: 13 Elemente erzeugt</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUKTE -->
+    <section class="block soft" id="produkte">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">Produkte</span>
+          <h2>Jetzt verfügbar.</h2>
+          <p>Zwei Werkzeuge, die heute schon im Planungsalltag helfen. Das eine ist frei für alle, das andere ist der erste Baustein von LignoPlan.</p>
+        </div>
+
+        <!-- Open MCP CAD -->
+        <article class="product mcp reveal" id="mcp">
+          <div class="product-art">
+            <img src="assets/open-mcp-cad.webp" alt="Open MCP CAD Logo" width="280" height="280">
+          </div>
+          <div class="product-body">
+            <div class="badges">
+              <span class="badge violet"><span class="dot"></span>Open Source</span>
+              <span class="badge green">Kostenlos</span>
+              <span class="badge">Lizenz AGPL-3.0</span>
+            </div>
+            <h3>Open MCP CAD</h3>
+            <p class="tagline">Der erste öffentliche MCP-Server für Cadwork.</p>
+            <p class="desc">
+              Open MCP CAD verbindet deinen KI-Assistenten mit dem laufenden Cadwork. Ein MCP-Server und ein Cadwork-Plugin sorgen dafür, dass ein Sprachmodell Geometrie direkt in deinem geöffneten 3D-Dokument lesen und erzeugen kann. Du beschreibst, was du brauchst, und musst dich nicht durch Menüs klicken. Entstanden ist das Ganze über Monate im echten Holzbau-Alltag.
+            </p>
+            <ul class="checks">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Jeder schreibende Zugriff braucht deine Freigabe und lässt sich rückgängig machen</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Für MCP-fähige Assistenten wie Claude Desktop, Claude Code oder Codex</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Mehrere Cadwork-Fenster parallel, sauber getrennt</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Läuft lokal, ohne Konto und ohne Cloud dazwischen</li>
+            </ul>
+            <div class="code">
+              <span class="p">$</span>
+              <code id="cloneCmd">git clone https://github.com/sebastiankoukoui/open-mcp-cad</code>
+              <button class="copy-btn" data-copy="#cloneCmd">kopieren</button>
+            </div>
+            <div class="product-actions">
+              <a class="btn btn-dark" href="https://github.com/sebastiankoukoui/open-mcp-cad" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.56-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+                Auf GitHub ansehen
+              </a>
+              <a class="btn btn-outline" href="https://github.com/sebastiankoukoui/open-mcp-cad/releases/latest" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>
+                Neueste Version (.zip)
+              </a>
+              <div class="share" data-share="mcp">
+                <button class="btn btn-ghost share-btn" type="button" aria-haspopup="menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>Teilen</button>
+                <div class="share-menu" role="menu" hidden>
+                  <a role="menuitem" data-share-to="whatsapp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>WhatsApp</a>
+                  <a role="menuitem" data-share-to="linkedin" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="#0A66C2" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
+                  <a role="menuitem" data-share-to="mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>E-Mail</a>
+                  <button role="menuitem" type="button" data-share-to="copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Link kopieren</button>
+                </div>
+              </div>
+            </div>
+            <p class="product-foot">Installation: ZIP entpacken, <code>install.cmd</code> doppelklicken. Voraussetzung: Windows, Cadwork 3D 2026, Python 3.10 bis 3.13.</p>
+          </div>
+        </article>
+
+        <!-- LignoCAD Tragwerk -->
+        <article class="product tragwerk reveal" id="tragwerk">
+          <div class="product-art">
+            <img src="assets/lignocad-tragwerk.webp" alt="LignoCAD Tragwerk Logo" width="280" height="280">
+          </div>
+          <div class="product-body">
+            <div class="badges">
+              <span class="badge blue"><span class="dot"></span>Teil von LignoPlan</span>
+              <span class="badge">Windows-App</span>
+              <span class="badge">Für den Schweizer Holzbau</span>
+            </div>
+            <h3>LignoCAD Tragwerk</h3>
+            <p class="tagline">Positions- und Lastenübergabepläne, schnell und sauber erstellt.</p>
+            <p class="desc">
+              Plangrundlage als PDF, DWG oder DXF importieren, kalibrieren, Bauteile positionieren und Lasten
+              geschossweise übergeben. Das Ergebnis ist ein massstäbliches Planblatt, wie es Schweizer
+              Holzbauingenieure gewohnt sind.
+            </p>
+            <ul class="checks">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>PDF-, DWG- und DXF-Import mit Einrasten auf Planpunkte</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Positionsplan und Lastenübergabe in einer Datei</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>PDF-Ausgabe massstäblich, ohne Druckdialog</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Arbeitet lokal, deine Projekte bleiben auf deinem Rechner</li>
+            </ul>
+            <div class="license-box">
+              <div><div class="k">Studierende</div><div class="v free">Gratis</div><div class="s">mit Hochschul-E-Mail</div></div>
+              <div><div class="k">Ingenieurbüros</div><div class="v free">Gratis</div><div class="s">mind. 3 Monate Einführungsphase</div></div>
+              <div><div class="k">Voraussetzung</div><div class="v">LignoPlan-Konto</div><div class="s">Lizenz gilt sofort 14 Tage vorläufig</div></div>
+            </div>
+            <div class="download-box">
+              <a class="btn btn-primary btn-lg" id="tragwerkDownload" href="https://github.com/sebastiankoukoui/lignocad-download/releases/download/v4.0.1-beta.4/LignoCAD-Tragwerk-4.0.1-beta.4-x64-Setup.exe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>LignoCAD für Windows herunterladen</a>
+              <div class="dl-meta">Studien-Beta · Windows x64 · Version 4.0.1-beta.4</div>
+              <p>Zum Verwenden brauchst du ein LignoPlan-Konto. Nach der Registrierung gilt deine Lizenz sofort für 14 Tage. Nach unserer Prüfung verlängern wir sie auf drei Monate.</p>
+              <p class="dl-hint">Der Installer ist noch nicht mit einem Windows-Zertifikat signiert. Windows kann deshalb beim Öffnen eine Warnung anzeigen. Lade ihn nur von dieser Seite herunter.</p>
+              <p class="dl-hint"><a href="#/nutzungsbedingungen">Nutzungsbedingungen</a> · <a href="#/datenschutz">Datenschutz</a> · Support: <a href="mailto:info@lignoai.ch">info@lignoai.ch</a></p>
+            </div>
+            <div class="product-actions">
+              <a class="btn btn-primary guest-only" href="#/registrieren">Konto erstellen</a>
+              <a class="btn btn-outline guest-only" href="#/anmelden">Anmelden</a>
+              <a class="btn btn-primary member-only" href="#/konto">Zu meiner Lizenz</a>
+              <div class="share" data-share="tragwerk">
+                <button class="btn btn-ghost share-btn" type="button" aria-haspopup="menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>Teilen</button>
+                <div class="share-menu" role="menu" hidden>
+                  <a role="menuitem" data-share-to="whatsapp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>WhatsApp</a>
+                  <a role="menuitem" data-share-to="linkedin" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="#0A66C2" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
+                  <a role="menuitem" data-share-to="mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>E-Mail</a>
+                  <button role="menuitem" type="button" data-share-to="copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Link kopieren</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- LIGNOPLAN -->
+    <section class="block" id="lignoplan">
+      <div class="wrap">
+        <div class="plan-intro">
+          <div class="section-head reveal">
+            <span class="eyebrow">LignoPlan</span>
+            <h2>Eine Plattform für alle Module.</h2>
+            <p>LignoPlan bündelt die Planungswerkzeuge von LignoAI. Herzstück wird <strong>LignoCAD</strong>, ein eigenständiges Holzbau-CAD, das versteht, wie Ingenieure denken.</p>
+          </div>
+          <p class="aside reveal">
+            Tragwerk ist das erste Modul. Weitere folgen nach und nach und laufen alle über dasselbe LignoPlan-Konto. Deine Projekte bleiben dabei lokal auf deinem Rechner.
+          </p>
+        </div>
+
+        <div class="modules">
+          <div class="module live reveal">
+            <div class="m-img"><img src="assets/lignocad-tragwerk.webp" alt="LignoCAD Tragwerk" width="190" height="190"></div>
+            <div class="m-foot"><span class="m-name">LignoCAD Tragwerk</span><span class="m-status">Verfügbar</span></div>
+          </div>
+          <div class="module soon reveal">
+            <div class="m-img"><img src="assets/lignocad-3d.webp" alt="LignoCAD 3D" width="190" height="190"></div>
+            <div class="m-foot"><span class="m-name">LignoCAD 3D</span><span class="m-status">Demnächst</span></div>
+          </div>
+          <div class="module soon reveal">
+            <div class="m-img"><img src="assets/lignocad-2d.webp" alt="LignoCAD 2D" width="190" height="190"></div>
+            <div class="m-foot"><span class="m-name">LignoCAD 2D</span><span class="m-status">Demnächst</span></div>
+          </div>
+          <div class="module soon reveal">
+            <div class="m-img"><img src="assets/lignocad-brandschutz.webp" alt="LignoCAD Brandschutz" width="190" height="190"></div>
+            <div class="m-foot"><span class="m-name">LignoCAD Brandschutz</span><span class="m-status">Demnächst</span></div>
+          </div>
+          <div class="module soon mystery reveal">
+            <div class="m-img"><div><div class="q">?</div><p>Wird bald vorgestellt</p></div></div>
+            <div class="m-foot"><span class="m-name">Weiteres Modul</span><span class="m-status">In Arbeit</span></div>
+          </div>
+          <div class="module soon mystery reveal">
+            <div class="m-img"><div><div class="q">?</div><p>Wird bald vorgestellt</p></div></div>
+            <div class="m-foot"><span class="m-name">Weiteres Modul</span><span class="m-status">In Arbeit</span></div>
+          </div>
+        </div>
+        <div class="modules-cta reveal">
+          <a class="btn btn-outline guest-only" href="#/registrieren">Konto erstellen und informiert bleiben</a>
+          <a class="btn btn-outline member-only" href="#/konto/profil">Benachrichtigungen verwalten</a>
+        </div>
+
+        <div class="section-head reveal" style="margin: 96px 0 28px;">
+          <span class="eyebrow">So funktioniert's</span>
+          <h2>In drei Schritten zur Lizenz.</h2>
+        </div>
+        <div class="steps">
+          <div class="step reveal"><div class="n">1</div><h4>Konto erstellen</h4><p>Name, E-Mail, Studium oder Büro angeben. Studierende nutzen ihre Hochschul-Adresse.</p></div>
+          <div class="step reveal"><div class="n">2</div><h4>Sofort loslegen</h4><p>Sobald du deine E-Mail bestätigst, gilt deine Lizenz für 14 Tage. Nach unserer Prüfung verlängern wir sie auf drei Monate. In der Einführungsphase ist sie kostenlos.</p></div>
+          <div class="step reveal"><div class="n">3</div><h4>Herunterladen &amp; anmelden</h4><p>Installer laden, App starten und mit dem LignoPlan-Konto anmelden. Fertig.</p></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- BERATUNG -->
+    <section class="block soft" id="beratung">
+      <div class="wrap services">
+        <div class="section-head reveal" style="margin-bottom: 0;">
+          <span class="eyebrow">Beratung &amp; Projekte</span>
+          <h2>KI, die zu eurem Betrieb passt.</h2>
+          <p>Neben den eigenen Produkten unterstütze ich Holzbaubetriebe, Planungsbüros und Schreinereien dabei, KI sinnvoll in bestehende Abläufe zu bringen. Pragmatisch und ohne Tech-Hype.</p>
+          <div class="privacy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div><strong>Eure Daten bleiben eure Daten.</strong><p>Professionelle KI-APIs ohne Training auf euren Daten. Auf Wunsch ausschliesslich auf Servern in der Schweiz.</p></div>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="svc-list">
+            <div class="svc"><h4>Prozessanalyse</h4><p>Wo spart KI konkret Zeit oder verbessert die Qualität? Wir schauen eure Abläufe gemeinsam an.</p></div>
+            <div class="svc"><h4>Prototypen</h4><p>Schnell ein lauffähiges Werkzeug, das zeigt, ob eine Idee funktioniert, bevor grösser investiert wird.</p></div>
+            <div class="svc"><h4>Implementierung</h4><p>Von der Idee zum produktiven Tool mit LLMs, Automatisierung und CAD-Anbindung.</p></div>
+            <div class="svc"><h4>Integration</h4><p>Einbettung in bestehende Software wie Cadwork, damit Teams entlastet und nicht überfordert werden.</p></div>
+          </div>
+          <div style="margin-top: 22px;"><a class="btn btn-dark" href="#kontakt">Erstgespräch vereinbaren →</a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MISSION -->
+    <section class="block" id="mission">
+      <div class="wrap">
+        <div class="mission-head">
+          <div class="section-head reveal">
+            <span class="eyebrow">Über uns</span>
+            <h2>Das Programm soll verstehen, wie Ingenieure denken.</h2>
+            <p>Nach der Industrialisierung und der Digitalisierung verändert jetzt künstliche Intelligenz die Arbeit. Auch dieser Umbruch braucht Leute, die ihn in der Praxis begleiten. LignoAI baut dafür Werkzeuge, die im Holzbau wirklich funktionieren.</p>
+          </div>
+          <img class="mission-logo reveal" src="assets/lignoai-logo.webp" alt="LignoAI Logo" width="504" height="560">
+        </div>
+        <div class="mv">
+          <div class="mv-card reveal">
+            <div class="mv-k">Mission</div>
+            <h3>KI dorthin bringen, wo im Holzbau geplant wird.</h3>
+            <p>In CAD, Tragwerksplanung und Brandschutz. Praxisnah und für Büros jeder Grösse, damit mehr Zeit für die eigentliche Ingenieursarbeit bleibt.</p>
+          </div>
+          <div class="mv-card reveal">
+            <div class="mv-k">Vision</div>
+            <h3>Beschreiben statt klicken.</h3>
+            <p>Die Ingenieurin beschreibt, was gebaut werden soll. Das Programm zeigt, was es verstanden hat, lässt es bestätigen und zeichnet das Modell. Der Mensch prüft und ergänzt nur noch, was fehlt.</p>
+          </div>
+        </div>
+        <ol class="timeline reveal" aria-label="Firmengeschichte">
+          <li><span class="tl-date">Dez. 2025</span><strong>Gründung LignoAI</strong><p>KI-Projekte und Prototypen für Betriebe der Holzbranche.</p></li>
+          <li><span class="tl-date">2026</span><strong>Cadwork trifft KI</strong><p>Monatelange Entwicklung des MCP-Servers im echten Planungsalltag.</p></li>
+          <li class="now"><span class="tl-date">Herbst 2026</span><strong>Erste Produkte</strong><p>Open MCP CAD wird öffentlich, LignoCAD Tragwerk startet als erstes LignoPlan-Modul.</p></li>
+          <li class="next"><span class="tl-date">Als Nächstes</span><strong>LignoPlan wächst</strong><p>Weitere Module folgen nach und nach, alle mit demselben Konto.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ÜBER -->
+    <section class="block" id="ueber" style="padding-top: 0;">
+      <div class="wrap about">
+        <div class="portrait reveal"><img src="assets/sebastian.webp" alt="Sebastian Koukoui" width="360" height="382"></div>
+        <div class="reveal">
+          <span class="eyebrow">Gründer</span>
+          <h2>Zimmermann trifft Code.</h2>
+          <p>Ich bin Sebastian Koukoui, gelernter Zimmermann, Holztechnik-Student an der BFH in Biel und Gründer von LignoAI.</p>
+          <p>Ich kenne die Holzbranche aus der Praxis und weiss, wo der Schuh drückt. LignoAI entsteht aus der Überzeugung, dass KI im Holzbau nicht Spielerei ist, sondern Planerinnen und Planern echte Arbeit abnehmen kann. Vorausgesetzt, sie wird von jemandem gebaut, der den Beruf kennt.</p>
+          <div class="tags">
+            <span class="tag">Zimmermann EFZ</span>
+            <span class="tag">BSc Holztechnik · BFH</span>
+            <span class="tag">Cadwork-API</span>
+            <span class="tag">LLMs &amp; MCP</span>
+            <span class="tag">Gegründet 2025</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KONTAKT -->
+    <section class="block" id="kontakt" style="padding-bottom: 0;">
+      <div class="wrap">
+        <div class="contact-card reveal">
+          <div>
+            <h2>Fragen, Feedback oder ein Projekt?</h2>
+            <p>Egal ob es um Open MCP CAD, LignoCAD Tragwerk oder ein eigenes KI-Vorhaben geht, ich freue mich über jede Nachricht.</p>
+          </div>
+          <div class="contact-links">
+            <a class="contact-link" href="mailto:info@lignoai.ch">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+              <div><div class="k">E-Mail</div><div class="v">info@lignoai.ch</div></div>
+            </a>
+            <a class="contact-link" href="tel:+41786196345">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+              <div><div class="k">Telefon</div><div class="v">+41 78 619 63 45</div></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- VIEW: ANMELDEN (Magic Link, ohne Passwort)                         -->
+  <!-- ================================================================= -->
+  <main class="view" id="view-anmelden">
+    <div class="auth-wrap">
+      <div class="auth-card">
+        <div data-step="form">
+          <h1>Anmelden</h1>
+          <p class="sub">Wir schicken dir einen Anmeldelink per E-Mail. Ein Passwort brauchst du dafür nicht.</p>
+          <form id="loginForm" novalidate>
+            <div class="field"><label for="liEmail">E-Mail</label><input id="liEmail" type="email" autocomplete="email" placeholder="name@buero.ch" required></div>
+            <div class="form-msg" role="alert" hidden></div>
+            <button class="btn btn-primary btn-block btn-lg" type="submit">Anmeldelink senden</button>
+          </form>
+          <p class="auth-alt">Noch kein Konto? <a href="#/registrieren">Jetzt registrieren</a></p>
+        </div>
+        <div data-step="sent" hidden>
+          <div class="mail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></div>
+          <h1>Schau in dein Postfach</h1>
+          <p class="sub">Wir haben dir einen Anmeldelink an <strong data-sent-email></strong> geschickt. Klick einfach auf den Link in der E-Mail.</p>
+          <form class="code-form" data-code-form novalidate>
+            <div class="divider">oder mit Code</div>
+            <div class="field">
+              <label for="liCode">Code aus der E-Mail</label>
+              <input id="liCode" class="code-input" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="12345678">
+              <span class="hint">Praktisch, wenn du die E-Mail auf einem anderen Gerät liest.</span>
+            </div>
+            <div class="form-msg" role="alert" hidden></div>
+            <button class="btn btn-primary btn-block" type="submit">Mit Code anmelden</button>
+          </form>
+          <div class="form-msg" role="alert" hidden></div>
+          <button class="btn btn-outline btn-block" type="button" data-resend>Link nochmals senden</button>
+          <p class="auth-alt"><a href="#/anmelden" data-restart>Andere E-Mail-Adresse verwenden</a></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- VIEW: REGISTRIEREN                                                 -->
+  <!-- ================================================================= -->
+  <main class="view" id="view-registrieren">
+    <div class="auth-wrap">
+      <div class="auth-card wide">
+        <div data-step="form">
+          <h1>LignoPlan-Konto erstellen</h1>
+          <p class="sub">Mit dem Konto meldest du dich auf der Website und in LignoCAD an. Sobald du deine E-Mail bestätigst, kannst du die App 14 Tage lang nutzen. Nach unserer Prüfung verlängern wir auf drei Monate.</p>
+          <form id="registerForm" novalidate>
+            <div class="field"><label>Ich bin</label></div>
+            <div class="roles" role="radiogroup" aria-label="Kontotyp">
+              <div class="role">
+                <input type="radio" name="role" id="roleStudent" value="student" checked>
+                <label for="roleStudent"><div class="rt">Studierende/r</div><div class="rp">Kostenlos</div><div class="rd">Am besten mit deiner Hochschul-E-Mail</div></label>
+              </div>
+              <div class="role">
+                <input type="radio" name="role" id="roleOffice" value="office">
+                <label for="roleOffice"><div class="rt">Ingenieur/in, Büro</div><div class="rp">Kostenlos in der Einführung</div><div class="rd">Mindestens 3 Monate</div></label>
+              </div>
+              <div class="role">
+                <input type="radio" name="role" id="roleOther" value="other">
+                <label for="roleOther"><div class="rt">Andere</div><div class="rp">Auf Anfrage</div><div class="rd">Unternehmen, Lehre, Interessierte</div></label>
+              </div>
+            </div>
+            <div class="row2">
+              <div class="field"><label for="rgFirst">Vorname</label><input id="rgFirst" autocomplete="given-name" maxlength="80" required></div>
+              <div class="field"><label for="rgLast">Nachname</label><input id="rgLast" autocomplete="family-name" maxlength="80" required></div>
+            </div>
+            <div class="field">
+              <label for="rgEmail">E-Mail</label>
+              <input id="rgEmail" type="email" autocomplete="email" placeholder="vorname.name@students.bfh.ch" required>
+              <span class="hint" id="rgEmailHint">Mit der Hochschul-Adresse können wir deine Registrierung schneller prüfen.</span>
+            </div>
+            <div class="field"><label for="rgOrg" id="rgOrgLabel">Hochschule</label><input id="rgOrg" autocomplete="organization" maxlength="120" placeholder="BFH Biel"></div>
+            <label class="check"><input type="checkbox" id="rgConsent" required> <span>Ich akzeptiere die <a href="#/nutzungsbedingungen" target="_blank" rel="noopener">Nutzungsbedingungen</a> inklusive Lizenzbedingungen und habe die <a href="#/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a> gelesen.</span></label>
+            <label class="check"><input type="checkbox" id="rgNews" checked> <span>Informiert mich, wenn neue LignoPlan-Module erscheinen.</span></label>
+            <div class="form-msg" role="alert" hidden></div>
+            <button class="btn btn-primary btn-block btn-lg" type="submit" style="margin-top: 8px;">Konto erstellen</button>
+          </form>
+          <p class="auth-alt">Schon registriert? <a href="#/anmelden">Anmelden</a></p>
+        </div>
+        <div data-step="sent" hidden>
+          <div class="mail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></div>
+          <h1>Bitte bestätige deine E-Mail</h1>
+          <p class="sub">Wir haben dir eine E-Mail an <strong data-sent-email></strong> geschickt. Mit dem Link darin bestätigst du deine Adresse und bist gleich angemeldet. Falls nichts ankommt, schau auch im Spam-Ordner nach.</p>
+          <form class="code-form" data-code-form novalidate>
+            <div class="divider">oder mit Code</div>
+            <div class="field">
+              <label for="rgCode">Code aus der E-Mail</label>
+              <input id="rgCode" class="code-input" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="12345678">
+              <span class="hint">Praktisch, wenn du die E-Mail auf einem anderen Gerät liest.</span>
+            </div>
+            <div class="form-msg" role="alert" hidden></div>
+            <button class="btn btn-primary btn-block" type="submit">Mit Code anmelden</button>
+          </form>
+          <div class="form-msg" role="alert" hidden></div>
+          <button class="btn btn-outline btn-block" type="button" data-resend>E-Mail nochmals senden</button>
+          <p class="auth-alt"><a href="#/registrieren" data-restart>Angaben korrigieren</a></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- VIEW: KONTO                                                        -->
+  <!-- ================================================================= -->
+  <main class="view" id="view-konto">
+    <div class="account">
+      <div class="wrap account-grid">
+        <aside class="acc-nav" aria-label="Kontonavigation">
+          <div class="who"><span class="avatar" data-initials></span><div><div class="n" data-fullname></div><div class="e" data-email></div></div></div>
+          <button data-tab="uebersicht"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Lizenz</button>
+          <button data-tab="profil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profil</button>
+          <button data-tab="sicherheit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Sicherheit</button>
+          <div class="sep"></div>
+          <button data-logout><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>Abmelden</button>
+        </aside>
+
+        <div>
+          <!-- Lizenz -->
+          <section class="acc-panel" data-panel="uebersicht">
+            <h1>Grüezi <span data-firstname></span></h1>
+            <p class="sub">Hier siehst du den Stand deiner Lizenz für LignoCAD Tragwerk.</p>
+            <form class="card terms-card" id="termsForm" hidden novalidate>
+              <h3>Bitte bestätige unsere Nutzungsbedingungen</h3>
+              <p class="sub">Für LignoCAD Tragwerk gelten Nutzungs- und Lizenzbedingungen. Bitte lies sie kurz durch und bestätige sie.</p>
+              <label class="check"><input type="checkbox" id="tmConsent"> <span>Ich akzeptiere die <a href="#/nutzungsbedingungen" target="_blank" rel="noopener">Nutzungsbedingungen</a> inklusive Lizenzbedingungen und habe die <a href="#/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a> gelesen.</span></label>
+              <div class="form-msg" role="alert" hidden></div>
+              <button class="btn btn-primary" type="submit">Bestätigen</button>
+            </form>
+            <div class="card" id="licenseBox" aria-live="polite"></div>
+            <div class="card">
+              <h3>So meldest du dich in der App an</h3>
+              <p class="sub" style="margin-bottom: 0;">In LignoCAD meldest du dich mit derselben E-Mail-Adresse an wie hier. Deine Projekte und CAD-Dateien bleiben dabei immer auf deinem Rechner.</p>
+            </div>
+            <div class="card">
+              <h3>Open MCP CAD</h3>
+              <p class="sub">Open Source unter AGPL-3.0. Frei auf GitHub, dafür brauchst du kein Konto.</p>
+              <a class="btn btn-outline" href="https://github.com/sebastiankoukoui/open-mcp-cad" target="_blank" rel="noopener">Zu GitHub</a>
+            </div>
+          </section>
+
+          <!-- Profil -->
+          <section class="acc-panel" data-panel="profil">
+            <h1>Profil</h1>
+            <p class="sub">Deine Angaben für Konto und Lizenz.</p>
+            <form class="card" id="profileForm" novalidate>
+              <div class="row2">
+                <div class="field"><label for="pfFirst">Vorname</label><input id="pfFirst" autocomplete="given-name" maxlength="80" required></div>
+                <div class="field"><label for="pfLast">Nachname</label><input id="pfLast" autocomplete="family-name" maxlength="80" required></div>
+              </div>
+              <div class="row2">
+                <div class="field"><label for="pfOrg">Hochschule oder Firma</label><input id="pfOrg" autocomplete="organization" maxlength="120"></div>
+                <div class="field"><label for="pfRole">Kontotyp</label>
+                  <select id="pfRole"><option value="student">Studierende/r</option><option value="office">Ingenieur/in, Büro</option><option value="other">Andere</option></select>
+                </div>
+              </div>
+              <label class="check"><input type="checkbox" id="pfNews"> <span>Informiert mich, wenn neue LignoPlan-Module erscheinen.</span></label>
+              <div class="form-msg" role="alert" hidden></div>
+              <button class="btn btn-primary" type="submit">Speichern</button>
+            </form>
+            <div class="card">
+              <h3>E-Mail-Adresse</h3>
+              <p class="sub"><strong data-email></strong><br>Mit dieser Adresse meldest du dich auf der Website und in der App an. Wenn du sie ändern möchtest, schreib uns kurz.</p>
+              <div class="kv" style="grid-template-columns: repeat(2, 1fr);">
+                <div><div class="k">Konto erstellt</div><div class="v" data-created></div></div>
+                <div><div class="k">E-Mail bestätigt</div><div class="v" data-confirmed></div></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sicherheit -->
+          <section class="acc-panel" data-panel="sicherheit">
+            <h1>Sicherheit</h1>
+            <p class="sub">Anmeldung und Abmeldung.</p>
+            <div class="card">
+              <h3>In diesem Browser abmelden</h3>
+              <p class="sub">Die LignoCAD-App auf deinem Rechner bleibt angemeldet.</p>
+              <button class="btn btn-outline" data-logout>Abmelden</button>
+            </div>
+            <div class="card">
+              <h3>Überall abmelden</h3>
+              <p class="sub">Beendet alle Sitzungen, auch in der LignoCAD-App und in anderen Browsern. Sinnvoll, wenn du ein Gerät verloren hast. Eine bereits erteilte Offline-Freigabe der App kann danach noch bis zu 72 Stunden gelten.</p>
+              <button class="btn btn-outline" data-logout-global>Überall abmelden</button>
+            </div>
+            <div class="card danger">
+              <h3>Konto löschen</h3>
+              <p class="sub">Wir löschen dein Konto und alle zugehörigen Lizenzdaten. Lokal gespeicherte Projekte bleiben auf deinem Rechner.</p>
+              <a class="btn btn-danger" data-delete-request href="mailto:info@lignoai.ch">Löschung per E-Mail anfragen</a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- VIEW: NUTZUNGSBEDINGUNGEN (Fassung TERMS_VERSION)                   -->
+  <!-- ================================================================= -->
+  <main class="view legal-view" id="view-nutzungsbedingungen">
+    <div class="wrap legal">
+      <nav class="legal-nav" aria-label="Rechtliches">
+        <a href="#/nutzungsbedingungen" class="active">Nutzungsbedingungen</a>
+        <a href="#/datenschutz">Datenschutz</a>
+        <a href="#/impressum">Impressum</a>
+      </nav>
+      <header class="legal-head">
+        <p class="eyebrow">Rechtliches</p>
+        <h1>Nutzungsbedingungen</h1>
+        <p class="lead">Für das LignoPlan-Konto, die Website lignoai.ch und die Software LignoCAD Tragwerk, inklusive Lizenzbedingungen.</p>
+        <p class="legal-meta">Fassung vom 24. September 2026 · Version 2026-09-24</p>
+      </header>
+
+      <div class="legal-summary">
+        <h2>Das Wichtigste in Kürze</h2>
+        <ul>
+          <li>Mit deinem Konto meldest du dich auf lignoai.ch und in LignoCAD Tragwerk an. Nach der Registrierung erhältst du eine vorläufige Lizenz für 14 Tage. Über die Verlängerung entscheiden wir.</li>
+          <li>Die Lizenz ist persönlich. Du darfst sie nicht weitergeben, teilen oder umgehen.</li>
+          <li>Die Software darf nicht kopiert, dekompiliert, verändert oder ohne gültige Lizenz genutzt werden.</li>
+          <li>LignoCAD Tragwerk ist ein Hilfsmittel. Jedes Ergebnis prüft und verantwortet eine fachkundige Person.</li>
+          <li>Deine Projekte bleiben auf deinem Rechner. Wie wir mit deinen Daten umgehen, steht in der <a href="#/datenschutz">Datenschutzerklärung</a>.</li>
+          <li>Kosten entstehen nur, wenn du ein kostenpflichtiges Angebot ausdrücklich bestellst.</li>
+        </ul>
+        <p class="note">Diese Zusammenfassung erleichtert das Lesen. Rechtlich massgebend ist der vollständige Text.</p>
+      </div>
+
+      <ol class="legal-toc">
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-1">Geltungsbereich und Anbieter</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-2">Begriffe</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-3">Konto</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-4">Vertragsschluss und Freischaltung</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-5">Lizenzarten und Kosten</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-6">Nutzungsrecht</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-7">Was nicht erlaubt ist</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-8">Folgen von Verstössen</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-9">Fachliche Verantwortung</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-10">Deine Projekte und Ergebnisse</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-11">Updates und Verfügbarkeit</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-12">Geistiges Eigentum</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-13">Website und Lignobot</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-14">Open MCP CAD</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-15">Gewährleistung</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-16">Haftung</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-17">Laufzeit und Kündigung</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-18">Änderungen dieser Bedingungen</a></li>
+        <li><a href="#/nutzungsbedingungen" data-goto="nb-19">Schlussbestimmungen</a></li>
+      </ol>
+
+      <section id="nb-1">
+        <h2>1. Geltungsbereich und Anbieter</h2>
+        <p><span class="n">1.1</span> Diese Bedingungen regeln die Nutzung des LignoPlan-Kontos, der Website lignoai.ch und der Software LignoCAD Tragwerk. Anbieter ist LignoAI, Inhaber Sebastian Koukoui, Biel/Bienne, Schweiz (nachfolgend «LignoAI» oder «wir»). Die Postanschrift steht im <a href="#/impressum">Impressum</a>.</p>
+        <p><span class="n">1.2</span> Die Bedingungen gelten auch für weitere Module von LignoPlan, soweit wir für diese keine eigenen Bedingungen festlegen.</p>
+        <p><span class="n">1.3</span> Allgemeine Geschäftsbedingungen von Nutzerinnen und Nutzern oder ihren Unternehmen gelten nicht, auch wenn wir ihnen nicht ausdrücklich widersprechen.</p>
+        <p><span class="n">1.4</span> Für die Open-Source-Software Open MCP CAD gilt ausschliesslich deren eigene Lizenz (Ziffer 14).</p>
+      </section>
+
+      <section id="nb-2">
+        <h2>2. Begriffe</h2>
+        <p><span class="n">2.1</span> <strong>Konto</strong> ist dein persönlicher Zugang zu LignoPlan. Du meldest dich damit auf der Website und in der Software an.</p>
+        <p><span class="n">2.2</span> <strong>Software</strong> ist LignoCAD Tragwerk in allen Versionen, samt Updates, Installationsprogrammen, Vorlagen, Symbolen, Bibliotheken, Dokumentation und den zugehörigen Online-Diensten wie Anmeldung und Lizenzprüfung.</p>
+        <p><span class="n">2.3</span> <strong>Lizenz</strong> ist das Recht, die Software nach den Ziffern 5 und 6 zu nutzen.</p>
+        <p><span class="n">2.4</span> <strong>Ergebnisse</strong> sind alle Inhalte, die du mit der Software erstellst, zum Beispiel Positionspläne, Lastabtragungspläne, Listen und Exporte.</p>
+        <p><span class="n">2.5</span> <strong>Du</strong> bist die Person, die das Konto erstellt. Handelst du für ein Büro oder Unternehmen, ist damit auch dieses gemeint.</p>
+      </section>
+
+      <section id="nb-3">
+        <h2>3. Konto</h2>
+        <p><span class="n">3.1</span> Für ein Konto musst du volljährig und handlungsfähig sein. Bist du jünger, brauchst du die Zustimmung deiner gesetzlichen Vertretung.</p>
+        <p><span class="n">3.2</span> Deine Angaben müssen wahr und vollständig sein. Ändern sie sich, passt du sie in deinem Konto an oder teilst sie uns mit.</p>
+        <p><span class="n">3.3</span> Jedes Konto gehört genau einer Person. Du darfst dein Konto nicht mit anderen teilen, nicht als Sammelkonto für mehrere Personen verwenden und nicht auf andere übertragen.</p>
+        <p><span class="n">3.4</span> Du meldest dich mit einem Link oder einem Code an, den wir dir per E-Mail schicken. Schütze den Zugang zu deinem E-Mail-Postfach und gib Links und Codes nicht weiter. Bemerkst du, dass jemand dein Konto missbraucht, melde es uns sofort an info@lignoai.ch. Für Handlungen über dein Konto bist du verantwortlich, soweit du einen Missbrauch zu vertreten hast.</p>
+        <p><span class="n">3.5</span> Eröffnest oder nutzt du ein Konto für ein Büro oder Unternehmen, bestätigst du, dass du es vertreten darfst. Diese Bedingungen gelten dann auch für das Büro oder Unternehmen.</p>
+        <p><span class="n">3.6</span> Wir dürfen eine Registrierung ohne Angabe von Gründen ablehnen. Einen Anspruch auf ein Konto gibt es nicht.</p>
+      </section>
+
+      <section id="nb-4">
+        <h2>4. Vertragsschluss und Freischaltung</h2>
+        <p><span class="n">4.1</span> Du akzeptierst diese Bedingungen, indem du bei der Registrierung das entsprechende Feld anklickst und danach deine E-Mail-Adresse bestätigst. Damit kommt der Vertrag über dein Konto zustande. Als Nachweis speichern wir den Zeitpunkt deiner Zustimmung und die Version der Bedingungen, der du zugestimmt hast.</p>
+        <p><span class="n">4.2</span> Sobald du deine E-Mail-Adresse bestätigt hast, erhältst du automatisch eine vorläufige Lizenz für 14 Tage. In dieser Zeit prüfen wir die Registrierung. Danach verlängern wir die Lizenz nach deiner Lizenzart oder lassen sie auslaufen. Einen Anspruch auf eine Lizenz oder ihre Verlängerung gibt es nicht.</p>
+        <p><span class="n">4.3</span> Art, Laufzeit und Anzahl Geräte deiner Lizenz siehst du in deinem Konto. Diese Angaben sind massgebend.</p>
+        <p><span class="n">4.4</span> Für kostenpflichtige Angebote schliessen wir einen separaten Vertrag ab. Dafür können ergänzende Bedingungen gelten, die wir dir vorher mitteilen.</p>
+      </section>
+
+      <section id="nb-5">
+        <h2>5. Lizenzarten und Kosten</h2>
+        <p><span class="n">5.1</span> <strong>Lizenz für Studierende.</strong> Sie ist kostenlos und gilt nur für die Ausbildung, zum Beispiel für Übungen, Semesterarbeiten und Abschlussarbeiten an einer Hochschule, Fachhochschule oder Berufsschule. Eine kommerzielle Nutzung ist nicht erlaubt, insbesondere nicht für bezahlte Aufträge, für einen Nebenerwerb oder für die Arbeit bei einem Arbeitgeber. Wir dürfen einen Nachweis der Ausbildung verlangen, zum Beispiel eine Hochschul-E-Mail-Adresse oder eine Legitimation. Die Lizenz endet mit ihrer Laufzeit oder wenn die Ausbildung endet.</p>
+        <p><span class="n">5.2</span> <strong>Lizenz für Büros und Fachleute.</strong> Während der Einführungsphase ist sie kostenlos, mindestens während drei Monaten ab der Freischaltung. Sie gilt für die Nutzung in deinen eigenen beruflichen Projekten.</p>
+        <p><span class="n">5.3</span> <strong>Weitere Lizenzen</strong>, zum Beispiel für die Lehre oder für grössere Unternehmen, vereinbaren wir im Einzelfall.</p>
+        <p><span class="n">5.4</span> <strong>Kostenpflichtige Angebote</strong> kündigen wir mindestens 30 Tage im Voraus an. Kosten entstehen nur, wenn du ein kostenpflichtiges Angebot ausdrücklich bestellst. Eine kostenlose Lizenz wird nie automatisch in eine kostenpflichtige umgewandelt. Bestellst du nichts, endet die kostenlose Lizenz mit ihrer Laufzeit.</p>
+        <p><span class="n">5.5</span> <strong>Beta-Phase.</strong> Die Software befindet sich in einer frühen Entwicklungsphase. Funktionen können sich ändern, wegfallen oder Fehler enthalten.</p>
+      </section>
+
+      <section id="nb-6">
+        <h2>6. Nutzungsrecht</h2>
+        <p><span class="n">6.1</span> Solange deine Lizenz gültig ist und du diese Bedingungen einhältst, erhältst du ein einfaches, nicht ausschliessliches, nicht übertragbares, nicht unterlizenzierbares und widerrufliches Recht, die Software in ausführbarer Form zu installieren und für den Zweck deiner Lizenzart zu nutzen. Das Recht ist auf die Laufzeit deiner Lizenz beschränkt.</p>
+        <p><span class="n">6.2</span> Du darfst die Software nur auf so vielen Geräten nutzen, wie deine Lizenz erlaubt. Bei der ersten Anmeldung meldet die Software das Gerät an (Aktivierung). Möchtest du das Gerät wechseln, melde dich bei uns.</p>
+        <p><span class="n">6.3</span> Die Software prüft die Lizenz regelmässig online. Ohne Internetverbindung läuft sie mit einer signierten Offline-Freigabe für eine begrenzte Zeit, derzeit höchstens 72 Stunden. Danach braucht sie wieder eine Verbindung.</p>
+        <p><span class="n">6.4</span> Du darfst eine Sicherungskopie des Installationsprogramms anlegen, solange du sie nur für deine eigene lizenzierte Nutzung verwendest.</p>
+        <p><span class="n">6.5</span> Die Software wird lizenziert, nicht verkauft. Alle Rechte, die wir dir nicht ausdrücklich einräumen, bleiben bei LignoAI.</p>
+      </section>
+
+      <section id="nb-7">
+        <h2>7. Was nicht erlaubt ist</h2>
+        <p><span class="n">7.1</span> Ohne unsere vorherige schriftliche Zustimmung ist insbesondere nicht erlaubt:</p>
+        <ol class="alpha">
+          <li>die Software ganz oder teilweise zu kopieren, zu vervielfältigen oder zu verbreiten, ausser für die Installation und die Sicherungskopie nach Ziffer 6</li>
+          <li>die Software zu dekompilieren, zu disassemblieren, zurückzuentwickeln (Reverse Engineering) oder auf andere Weise zu versuchen, ihren Quellcode, ihren Aufbau, ihre Algorithmen oder ihre Datenformate offenzulegen. Das gilt auch für den ausgelieferten Bytecode und für einzelne Programmteile.</li>
+          <li>die Software zu verändern, zu übersetzen, zu bearbeiten oder daraus abgeleitete Werke zu erstellen, ausser über Schnittstellen, die wir dafür ausdrücklich anbieten</li>
+          <li>die Lizenzprüfung, die Aktivierung, die Gerätebindung, die Offline-Freigabe, die Begrenzung der Laufzeit, die Verschlüsselung oder andere technische Schutzmassnahmen zu umgehen, zu entfernen, zu deaktivieren oder zu manipulieren oder dies zu versuchen. Dazu gehört auch, Lizenzdaten, Geräte-Kennungen, die Systemzeit, Programmdateien oder den Datenverkehr zum Lizenzserver zu verändern.</li>
+          <li>Werkzeuge, Anleitungen, Schlüssel, Patches oder andere Mittel herzustellen, zu verbreiten oder zu nutzen, mit denen sich solche Schutzmassnahmen umgehen lassen</li>
+          <li>die Software ohne gültige Lizenz zu nutzen oder nach dem Ende der Lizenz weiter zu nutzen</li>
+          <li>die Software, dein Konto, deine Lizenz, Anmeldelinks oder Codes an andere weiterzugeben, zu verkaufen, zu vermieten, zu verleihen, zu teilen oder ihnen sonst zugänglich zu machen</li>
+          <li>die Software für andere als Dienst zu betreiben, zum Beispiel über Terminalserver, gemeinsam genutzte virtuelle Maschinen, Fernzugriff oder Hosting, ausser deine Lizenz erlaubt dies ausdrücklich</li>
+          <li>Urheberrechtsvermerke, Marken, Lizenzhinweise oder andere Kennzeichnungen zu entfernen oder zu verändern</li>
+          <li>die Software oder ihre Funktionsweise zu nutzen, um ein vergleichbares oder konkurrierendes Produkt zu entwickeln oder Modelle der künstlichen Intelligenz zu trainieren, welche die Software nachbilden sollen</li>
+          <li>eine Lizenz für Studierende kommerziell zu nutzen</li>
+          <li>die Online-Dienste wie Anmeldung, Lizenzserver, Website oder Lignobot anders als über die vorgesehenen Wege zu nutzen, sie zu überlasten, automatisiert abzufragen, auf Schwachstellen zu testen oder schädlichen Code einzuschleusen</li>
+          <li>die Software für rechtswidrige Zwecke zu nutzen</li>
+        </ol>
+        <p><span class="n">7.2</span> Vorbehalten bleiben Handlungen, die das Gesetz zwingend erlaubt, insbesondere die Entschlüsselung zur Herstellung der Interoperabilität nach Art. 21 des Urheberrechtsgesetzes (URG). Bevor du dich darauf berufst, frag uns bitte schriftlich an. Wir stellen dir die nötigen Informationen über Schnittstellen nach Möglichkeit selbst zur Verfügung.</p>
+        <p><span class="n">7.3</span> Findest du eine Sicherheitslücke, melde sie uns bitte vertraulich an info@lignoai.ch, statt sie auszunutzen oder zu veröffentlichen.</p>
+      </section>
+
+      <section id="nb-8">
+        <h2>8. Folgen von Verstössen</h2>
+        <p><span class="n">8.1</span> Verstösst du gegen diese Bedingungen oder besteht ein begründeter Verdacht, dürfen wir deine Lizenz und dein Konto sofort sperren, angemeldete Geräte deaktivieren und den Vertrag fristlos kündigen. Bereits bezahlte Beträge erstatten wir in diesem Fall nicht zurück.</p>
+        <p><span class="n">8.2</span> Für Schäden aus einem Verstoss haftest du. Bei einer Nutzung ohne gültige Lizenz schuldest du mindestens die Vergütung, die für eine entsprechende reguläre Lizenz angefallen wäre.</p>
+        <p><span class="n">8.3</span> Weitere zivil- und strafrechtliche Schritte bleiben vorbehalten. Urheberrechtsverletzungen und die Umgehung technischer Schutzmassnahmen sind in der Schweiz strafbar (Art. 67 und Art. 69a URG).</p>
+        <p><span class="n">8.4</span> Wir dürfen die Einhaltung der Lizenz im Rahmen der technischen Lizenzprüfung kontrollieren, zum Beispiel die Anzahl aktivierter Geräte. Einblick in deine Projekte nehmen wir dabei nicht.</p>
+      </section>
+
+      <section id="nb-9">
+        <h2>9. Fachliche Verantwortung</h2>
+        <p><span class="n">9.1</span> LignoCAD Tragwerk ist ein Werkzeug, das die Planung unterstützt. Es ersetzt weder eine fachkundige Person noch eine Ingenieurleistung.</p>
+        <p><span class="n">9.2</span> Ergebnisse können Fehler enthalten, zum Beispiel wegen falscher oder unvollständiger Eingaben, wegen Fehlern der Software, getroffener Annahmen, Vereinfachungen oder Rundungen.</p>
+        <p><span class="n">9.3</span> Du musst jedes Ergebnis vor seiner Verwendung von einer dafür qualifizierten Fachperson auf Richtigkeit, Vollständigkeit und Plausibilität prüfen lassen. Die Verantwortung für Tragsicherheit, Gebrauchstauglichkeit und die Einhaltung der geltenden Normen, Vorschriften, anerkannten Regeln der Baukunde und behördlichen Auflagen tragen allein du und die im Projekt verantwortlichen Fachpersonen.</p>
+        <p><span class="n">9.4</span> LignoAI erbringt mit der Software keine Ingenieur- oder Planungsleistungen, erstellt keine statischen Nachweise und prüft keine Projekte. Ergebnisse der Software sind keine geprüften Berechnungen und keine Bestätigung, dass eine Konstruktion den Anforderungen genügt.</p>
+      </section>
+
+      <section id="nb-10">
+        <h2>10. Deine Projekte und Ergebnisse</h2>
+        <p><span class="n">10.1</span> Projekte, Pläne und CAD-Dateien verarbeitet und speichert die Software auf deinem Rechner. Wir erhalten davon nichts.</p>
+        <p><span class="n">10.2</span> Für die Sicherung deiner Daten bist du selbst verantwortlich. Lege regelmässig Sicherungskopien an.</p>
+        <p><span class="n">10.3</span> Die Rechte an deinen Ergebnissen stehen dir zu. Enthalten sie Bestandteile der Software, zum Beispiel Vorlagen, Symbole oder Bibliotheken, darfst du diese als Teil deiner Ergebnisse zeitlich unbeschränkt verwenden, auch nach dem Ende der Lizenz.</p>
+        <p><span class="n">10.4</span> Rückmeldungen, Fehlerberichte und Vorschläge sind willkommen. Wir dürfen sie frei, unentgeltlich und ohne Namensnennung für die Weiterentwicklung verwenden. Schick uns dabei bitte keine vertraulichen Projektdaten.</p>
+      </section>
+
+      <section id="nb-11">
+        <h2>11. Updates und Verfügbarkeit</h2>
+        <p><span class="n">11.1</span> Wir entwickeln die Software laufend weiter und stellen Updates bereit. Manche Updates sind für die weitere Nutzung nötig, etwa aus Sicherheitsgründen oder für die Lizenzprüfung.</p>
+        <p><span class="n">11.2</span> Wir bemühen uns um eine hohe Verfügbarkeit der Online-Dienste, können sie aber nicht garantieren. Wartungen und Störungen sind möglich. Die Offline-Freigabe überbrückt kurze Unterbrüche.</p>
+        <p><span class="n">11.3</span> Wir dürfen Funktionen ändern, erweitern oder einstellen. Stellen wir die Software ganz ein, informieren wir dich nach Möglichkeit mindestens 30 Tage im Voraus.</p>
+        <p><span class="n">11.4</span> Für ein geeignetes System, eine funktionierende Internetverbindung und gültige Lizenzen allfälliger Programme Dritter sorgst du selbst.</p>
+      </section>
+
+      <section id="nb-12">
+        <h2>12. Geistiges Eigentum</h2>
+        <p><span class="n">12.1</span> Die Software, die Website, Texte, Grafiken, Logos sowie die Bezeichnungen LignoAI, LignoPlan und LignoCAD sind durch Urheber- und Kennzeichenrecht geschützt. Alle Rechte daran liegen bei LignoAI oder ihren Lizenzgebern.</p>
+        <p><span class="n">12.2</span> Die Software enthält Bestandteile Dritter, darunter Open-Source-Software. Für diese Bestandteile gelten ihre eigenen Lizenzen. Die Hinweise dazu findest du in der Software oder erhältst sie auf Anfrage. Soweit diese Lizenzen dir weitergehende Rechte geben, haben sie für den jeweiligen Bestandteil Vorrang.</p>
+        <p><span class="n">12.3</span> Genannte Marken Dritter, zum Beispiel Cadwork, gehören ihren jeweiligen Inhabern.</p>
+      </section>
+
+      <section id="nb-13">
+        <h2>13. Website und Lignobot</h2>
+        <p><span class="n">13.1</span> Die Inhalte der Website dienen der Information. Wir erstellen sie sorgfältig, übernehmen aber keine Gewähr für Richtigkeit, Vollständigkeit und Aktualität.</p>
+        <p><span class="n">13.2</span> Der Lignobot beantwortet Fragen automatisch mit Hilfe künstlicher Intelligenz. Seine Antworten können falsch oder unvollständig sein. Sie sind unverbindlich und keine Fach-, Rechts- oder Vertragsauskunft. Verbindlich sind nur diese Bedingungen und schriftliche Zusagen von LignoAI. Gib im Chat bitte keine vertraulichen oder besonders schützenswerten Daten ein.</p>
+        <p><span class="n">13.3</span> Für Websites Dritter, auf die wir verlinken, sind deren Betreiber verantwortlich.</p>
+      </section>
+
+      <section id="nb-14">
+        <h2>14. Open MCP CAD</h2>
+        <p><span class="n">14.1</span> Open MCP CAD ist Open Source unter der GNU Affero General Public License Version 3 (AGPL-3.0). Du kannst es ohne Konto auf GitHub beziehen.</p>
+        <p><span class="n">14.2</span> Für Nutzung, Änderung und Weitergabe von Open MCP CAD gelten ausschliesslich die Bedingungen der AGPL-3.0. Nichts in diesen Nutzungsbedingungen schränkt die Rechte ein, die dir die AGPL-3.0 gibt. Wie dort beschrieben, wird Open MCP CAD ohne Gewähr bereitgestellt.</p>
+        <p><span class="n">14.3</span> Für Programme und Dienste Dritter, mit denen du Open MCP CAD verbindest, zum Beispiel CAD-Programme oder KI-Assistenten, gelten deren eigene Bedingungen. Für gültige Lizenzen dieser Programme sorgst du selbst.</p>
+      </section>
+
+      <section id="nb-15">
+        <h2>15. Gewährleistung</h2>
+        <p><span class="n">15.1</span> Wir stellen die kostenlose Software und die Beta-Versionen so zur Verfügung, wie sie sind. Wir sichern keine bestimmten Eigenschaften zu, insbesondere keine Fehlerfreiheit, keine ununterbrochene Verfügbarkeit und keine Eignung für einen bestimmten Zweck. Soweit gesetzlich zulässig, schliessen wir jede Gewährleistung aus.</p>
+        <p><span class="n">15.2</span> Für kostenpflichtige Angebote gelten die dort vereinbarten Regeln.</p>
+        <p><span class="n">15.3</span> Fehler meldest du uns am besten an info@lignoai.ch. Wir bemühen uns, sie zu beheben, sind dazu aber nicht verpflichtet.</p>
+      </section>
+
+      <section id="nb-16">
+        <h2>16. Haftung</h2>
+        <p><span class="n">16.1</span> Soweit gesetzlich zulässig, schliessen wir jede Haftung aus. Das gilt insbesondere für indirekte Schäden und Folgeschäden, entgangenen Gewinn, Verzögerungen im Planungs- oder Bauablauf, Mängel und Schäden an Bauwerken, Kosten für Nachbesserungen, Datenverlust und Ansprüche Dritter.</p>
+        <p><span class="n">16.2</span> Soweit gesetzlich zulässig, schliessen wir auch die Haftung für Hilfspersonen aus.</p>
+        <p><span class="n">16.3</span> Unberührt bleibt die Haftung für Vorsatz und grobe Fahrlässigkeit sowie die Haftung nach zwingenden gesetzlichen Vorschriften, etwa nach dem Produktehaftpflichtgesetz.</p>
+        <p><span class="n">16.4</span> Bei kostenpflichtigen Angeboten ist unsere Haftung, soweit gesetzlich zulässig, auf den Betrag beschränkt, den du in den zwölf Monaten vor dem schädigenden Ereignis bezahlt hast.</p>
+        <p><span class="n">16.5</span> Soweit gesetzlich zulässig, stellst du LignoAI von Ansprüchen Dritter frei, die entstehen, weil du diese Bedingungen verletzt oder Ergebnisse ohne die nötige fachliche Prüfung verwendest. Das umfasst auch angemessene Kosten der Rechtsverteidigung.</p>
+      </section>
+
+      <section id="nb-17">
+        <h2>17. Laufzeit und Kündigung</h2>
+        <p><span class="n">17.1</span> Der Vertrag über dein Konto gilt auf unbestimmte Zeit.</p>
+        <p><span class="n">17.2</span> Du kannst ihn jederzeit beenden, indem du die Löschung deines Kontos verlangst. Das geht in deinem Konto unter «Sicherheit» oder per E-Mail an info@lignoai.ch.</p>
+        <p><span class="n">17.3</span> Wir können den Vertrag mit einer Frist von 30 Tagen per E-Mail kündigen. Aus wichtigem Grund, insbesondere bei einem Verstoss gegen Ziffer 7, bei falschen Angaben oder bei Missbrauch, können wir fristlos kündigen.</p>
+        <p><span class="n">17.4</span> Eine Lizenz endet mit ihrer Laufzeit, mit dem Ende des Kontos oder durch Widerruf nach Ziffer 8. Kostenlose Lizenzen können wir aus sachlichen Gründen mit einer Frist von 30 Tagen beenden. Zugesagte Mindestlaufzeiten wie die drei Monate für Büros halten wir ein, ausser bei einem Verstoss gegen diese Bedingungen.</p>
+        <p><span class="n">17.5</span> Nach dem Ende der Lizenz musst du die Nutzung der Software einstellen, sie deinstallieren und alle Kopien löschen. Die Offline-Freigabe läuft spätestens nach 72 Stunden ab. Ergebnisse, die du vorher erstellt hast, darfst du weiter verwenden. Die Ziffern 7 bis 10, 12, 15, 16 und 19 gelten über das Vertragsende hinaus.</p>
+      </section>
+
+      <section id="nb-18">
+        <h2>18. Änderungen dieser Bedingungen</h2>
+        <p><span class="n">18.1</span> Wir können diese Bedingungen anpassen, zum Beispiel wegen neuer Funktionen, neuer Angebote oder geänderter Gesetze.</p>
+        <p><span class="n">18.2</span> Wesentliche Änderungen teilen wir dir mindestens 30 Tage vor ihrem Inkrafttreten per E-Mail oder in deinem Konto mit und bitten dich um deine Zustimmung. Stimmst du nicht zu, kannst du den Vertrag beenden. Ohne Zustimmung dürfen wir die Nutzung der Software nach dem Inkrafttreten einschränken.</p>
+        <p><span class="n">18.3</span> Rein redaktionelle Änderungen und Änderungen, die dich nicht schlechter stellen, gelten ohne erneute Zustimmung.</p>
+        <p><span class="n">18.4</span> Jede Fassung trägt ein Datum und eine Version. Frühere Fassungen senden wir dir auf Anfrage.</p>
+      </section>
+
+      <section id="nb-19">
+        <h2>19. Schlussbestimmungen</h2>
+        <p><span class="n">19.1</span> Wie wir Personendaten bearbeiten, beschreibt unsere <a href="#/datenschutz">Datenschutzerklärung</a>.</p>
+        <p><span class="n">19.2</span> Mitteilungen erfolgen per E-Mail an die Adresse deines Kontos oder an info@lignoai.ch. Die elektronische Form genügt.</p>
+        <p><span class="n">19.3</span> Du darfst Rechte und Pflichten aus diesem Vertrag nur mit unserer schriftlichen Zustimmung übertragen. Wir dürfen den Vertrag auf eine Gesellschaft übertragen, welche die Software weiterführt, zum Beispiel bei der Gründung einer Gesellschaft durch den Inhaber.</p>
+        <p><span class="n">19.4</span> Ist eine Bestimmung ungültig, bleiben die übrigen gültig. An die Stelle der ungültigen Bestimmung tritt eine Regelung, die ihrem Zweck am nächsten kommt.</p>
+        <p><span class="n">19.5</span> Massgebend ist die deutsche Fassung dieser Bedingungen.</p>
+        <p><span class="n">19.6</span> Es gilt schweizerisches Recht unter Ausschluss des Übereinkommens der Vereinten Nationen über Verträge über den internationalen Warenkauf (Wiener Kaufrecht) und der Kollisionsnormen.</p>
+        <p><span class="n">19.7</span> Gerichtsstand ist Biel/Bienne, Schweiz. Zwingende Gerichtsstände, insbesondere für Konsumentinnen und Konsumenten, bleiben vorbehalten. Wir dürfen dich auch an deinem Wohnsitz oder Sitz belangen.</p>
+      </section>
+    </div>
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- VIEW: DATENSCHUTZ                                                  -->
+  <!-- ================================================================= -->
+  <main class="view legal-view" id="view-datenschutz">
+    <div class="wrap legal">
+      <nav class="legal-nav" aria-label="Rechtliches">
+        <a href="#/nutzungsbedingungen">Nutzungsbedingungen</a>
+        <a href="#/datenschutz" class="active">Datenschutz</a>
+        <a href="#/impressum">Impressum</a>
+      </nav>
+      <header class="legal-head">
+        <p class="eyebrow">Rechtliches</p>
+        <h1>Datenschutzerklärung</h1>
+        <p class="lead">Welche Personendaten wir bearbeiten, wofür wir sie brauchen und welche Rechte du hast.</p>
+        <p class="legal-meta">Fassung vom 24. September 2026</p>
+      </header>
+
+      <div class="legal-summary">
+        <h2>Das Wichtigste in Kürze</h2>
+        <ul>
+          <li>Wir bearbeiten nur, was wir für Konto, Lizenz und Kontakt brauchen.</li>
+          <li>Keine Werbung, kein Tracking, keine Analyse-Cookies.</li>
+          <li>Projekte, Pläne und CAD-Dateien bleiben auf deinem Rechner.</li>
+          <li>Konto- und Lizenzdaten liegen bei Supabase in einem Rechenzentrum in Schweden.</li>
+          <li>Wir verkaufen keine Daten.</li>
+          <li>Du kannst jederzeit Auskunft, Berichtigung oder Löschung verlangen.</li>
+        </ul>
+      </div>
+
+      <section id="ds-1">
+        <h2>1. Verantwortlicher</h2>
+        <p>Verantwortlich für die Bearbeitung deiner Personendaten ist LignoAI, Sebastian Koukoui, Biel/Bienne, Schweiz. Die Postanschrift steht im <a href="#/impressum">Impressum</a>. Du erreichst uns unter <a href="mailto:info@lignoai.ch">info@lignoai.ch</a>.</p>
+        <p>Diese Erklärung gilt für die Website lignoai.ch, das LignoPlan-Konto, die Software LignoCAD Tragwerk und den Lignobot. Sie richtet sich nach dem schweizerischen Datenschutzgesetz (DSG) und, soweit anwendbar, nach der Datenschutz-Grundverordnung der EU (DSGVO).</p>
+      </section>
+
+      <section id="ds-2">
+        <h2>2. Welche Daten wir bearbeiten</h2>
+        <h3>2.1 Besuch der Website</h3>
+        <p>Beim Aufruf von lignoai.ch speichert unser Hosting-Anbieter Netlify technische Angaben in Protokolldateien: IP-Adresse, Datum und Uhrzeit, aufgerufene Seite, Browser, Betriebssystem und die zuvor besuchte Seite. Das ist nötig, um die Website auszuliefern, sie zu schützen und Fehler zu finden. Wir werten diese Angaben nicht für Marketing aus.</p>
+        <p>Die Schriften der Website lädt dein Browser von Google Fonts, die Programmbibliothek für die Anmeldung vom Dienst jsDelivr. Dabei erhalten diese Anbieter deine IP-Adresse und Angaben zum Browser.</p>
+        <h3>2.2 Dein Konto</h3>
+        <p>Wenn du ein Konto erstellst, speichern wir deine E-Mail-Adresse, deinen Vor- und Nachnamen, den Kontotyp, deine Hochschule oder Firma, ob du Neuigkeiten erhalten möchtest, den Zeitpunkt und die Version deiner Zustimmung zu den Nutzungsbedingungen und ob du dich über die Website oder die App registriert hast. Dazu kommen die Zeitpunkte der Erstellung, der Bestätigung und der letzten Anmeldung.</p>
+        <p>Für die Anmeldung fallen technische Daten an, etwa Sitzungsschlüssel sowie Anmeldeprotokolle mit IP-Adresse und Browserkennung. Ein Passwort speichern wir nicht, weil die Anmeldung über Link oder Code per E-Mail läuft.</p>
+        <h3>2.3 Anmelde-E-Mails</h3>
+        <p>Die E-Mails mit Anmeldelink und Code verschickt der Dienst Resend in unserem Auftrag. Dabei werden deine E-Mail-Adresse, der Inhalt der Nachricht und der Zustellstatus bearbeitet. Bei einer neuen Registrierung schicken wir ausserdem deine Kontoangaben per E-Mail an info@lignoai.ch, damit wir die Lizenz prüfen können.</p>
+        <h3>2.4 Lizenz</h3>
+        <p>Zu deiner Lizenz speichern wir Status, Lizenzart und Gültigkeit. Für jedes angemeldete Gerät speichern wir eine Geräte-ID sowie die Zeitpunkte von Aktivierung, letzter Prüfung und Deaktivierung. Die Geräte-ID ist eine Zufallszahl, welche die App erzeugt. Sie enthält keine Seriennummern und keine Angaben zur Hardware. Die App speichert auf deinem Gerät eine signierte Offline-Freigabe und deine Anmeldesitzung.</p>
+        <h3>2.5 LignoCAD Tragwerk</h3>
+        <p>Projekte, Pläne und CAD-Dateien verarbeitet die App ausschliesslich auf deinem Rechner. Sie überträgt keine Projektinhalte, keine Nutzungsstatistiken und keine Absturzberichte an uns. Mit unseren Servern verbindet sie sich nur für die Anmeldung und die Lizenzprüfung.</p>
+        <h3>2.6 Kontakt per E-Mail</h3>
+        <p>Schreibst du uns an info@lignoai.ch, bearbeiten wir deine Adresse und den Inhalt deiner Nachricht, um dir zu antworten. Die Nachrichten empfangen wir über den E-Mail-Dienst iCloud von Apple.</p>
+        <h3>2.7 Lignobot</h3>
+        <p>Schreibst du dem Lignobot, gehen deine Nachricht und der bisherige Verlauf dieser Unterhaltung an eine Funktion bei Supabase in Zürich und von dort an den KI-Anbieter Anthropic in den USA, der die Antwort erzeugt. Wir speichern die Unterhaltungen nicht. Der Verlauf verschwindet, sobald du die Seite neu lädst. Gib im Chat bitte keine vertraulichen oder besonders schützenswerten Daten ein.</p>
+        <h3>2.8 Speicherung in deinem Browser</h3>
+        <p>Meldest du dich auf der Website an, speichert dein Browser die Anmeldesitzung im lokalen Speicher, damit du angemeldet bleibst. Auf der Anmeldeseite für die App wird während der Anmeldung kurz ein Zwischenstand im Sitzungsspeicher abgelegt. Cookies für Werbung oder Analyse setzen wir nicht.</p>
+        <h3>2.9 Neuigkeiten</h3>
+        <p>Wenn du dich dafür entscheidest, informieren wir dich per E-Mail über neue LignoPlan-Module. Du kannst das jederzeit in deinem Profil abbestellen oder uns schreiben.</p>
+      </section>
+
+      <section id="ds-3">
+        <h2>3. Zwecke</h2>
+        <ul>
+          <li>Konto bereitstellen und Anmeldung ermöglichen</li>
+          <li>Lizenzen freischalten, prüfen und vor Missbrauch schützen, zum Beispiel durch die Begrenzung der Geräte</li>
+          <li>mit dir kommunizieren, zum Beispiel bei Fragen oder wichtigen Hinweisen zu Konto, Lizenz und Bedingungen</li>
+          <li>Neuigkeiten versenden, wenn du das möchtest</li>
+          <li>Website und Dienste sicher betreiben und Fehler beheben</li>
+          <li>Zustimmungen nachweisen, unsere Rechte durchsetzen und gesetzliche Pflichten erfüllen</li>
+        </ul>
+      </section>
+
+      <section id="ds-4">
+        <h2>4. Rechtsgrundlagen</h2>
+        <p>Soweit die DSGVO anwendbar ist, stützen wir uns auf folgende Grundlagen: Die Bearbeitung für Konto, Anmeldung und Lizenz ist für den Vertrag nötig (Art. 6 Abs. 1 lit. b DSGVO). Betrieb, Sicherheit der Dienste und der Schutz vor Missbrauch beruhen auf unserem berechtigten Interesse (Art. 6 Abs. 1 lit. f DSGVO). Neuigkeiten versenden wir mit deiner Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die du jederzeit widerrufen kannst. Aufbewahrungspflichten erfüllen wir nach Art. 6 Abs. 1 lit. c DSGVO.</p>
+      </section>
+
+      <section id="ds-5">
+        <h2>5. Dienstleister und Bekanntgabe ins Ausland</h2>
+        <p>Wir setzen folgende Dienstleister ein, die Daten in unserem Auftrag bearbeiten:</p>
+        <ul>
+          <li><strong>Supabase Inc.</strong>, USA: Konto, Anmeldung und Lizenzdaten. Die Daten liegen in einem Rechenzentrum in Stockholm, Schweden. Die Funktion des Lignobots läuft in Zürich.</li>
+          <li><strong>Resend Inc.</strong>, USA: Versand der Anmelde-E-Mails</li>
+          <li><strong>Netlify Inc.</strong>, USA: Hosting der Website über ein weltweites Servernetz</li>
+          <li><strong>Anthropic PBC</strong>, USA: KI-Modell für die Antworten des Lignobots</li>
+          <li><strong>Apple</strong> (iCloud): Empfang von E-Mails an info@lignoai.ch</li>
+          <li><strong>Google</strong> (Google Fonts): Auslieferung der Schriften</li>
+          <li><strong>jsDelivr</strong>: Auslieferung der Programmbibliothek für die Anmeldung</li>
+        </ul>
+        <p>Open MCP CAD laden Nutzerinnen und Nutzer direkt bei GitHub herunter. Dafür gilt die Datenschutzerklärung von GitHub.</p>
+        <p>Einige dieser Anbieter sitzen in den USA oder bearbeiten Daten dort. Die USA gelten nur für Unternehmen als Land mit angemessenem Datenschutz, die nach dem Swiss-U.S. Data Privacy Framework zertifiziert sind. Wo das nicht der Fall ist, stützen wir uns auf die Standardvertragsklauseln der Europäischen Kommission, die der Eidgenössische Datenschutz- und Öffentlichkeitsbeauftragte (EDÖB) anerkannt hat, oder auf eine andere gesetzlich vorgesehene Garantie.</p>
+        <p>Darüber hinaus geben wir Personendaten nur weiter, wenn das Gesetz oder eine Behörde es verlangt, wenn es zur Durchsetzung unserer Rechte nötig ist oder wenn eine Gesellschaft die Software übernimmt und weiterführt. Wir verkaufen keine Daten.</p>
+      </section>
+
+      <section id="ds-6">
+        <h2>6. Aufbewahrung</h2>
+        <ul>
+          <li>Konto- und Lizenzdaten bewahren wir auf, solange dein Konto besteht. Nach der Löschung entfernen wir sie innert 30 Tagen.</li>
+          <li>Ausgenommen sind Angaben, die wir aufbewahren müssen oder als Nachweis brauchen, etwa Geschäftsunterlagen bei kostenpflichtigen Angeboten während zehn Jahren oder den Nachweis deiner Zustimmung und allfälliger Verstösse gegen die Lizenzbedingungen, solange daraus Ansprüche entstehen können.</li>
+          <li>Technische Protokolle unserer Dienstleister werden nach deren Fristen gelöscht, in der Regel nach wenigen Tagen oder Wochen.</li>
+          <li>E-Mails an info@lignoai.ch bewahren wir auf, solange es für deine Anfrage und allfällige Rückfragen nötig ist.</li>
+          <li>Unterhaltungen mit dem Lignobot speichern wir nicht. Anthropic bewahrt die Daten nach eigenen Richtlinien für begrenzte Zeit auf und verwendet sie nach eigenen Angaben nicht zum Training seiner Modelle.</li>
+        </ul>
+      </section>
+
+      <section id="ds-7">
+        <h2>7. Datensicherheit</h2>
+        <p>Alle Verbindungen sind verschlüsselt. Auf Konto- und Lizenzdaten haben nur berechtigte Personen Zugriff. Die Lizenztabellen sind in der Datenbank so gesperrt, dass sie nur über geprüfte Serverfunktionen gelesen und geändert werden können. Die Offline-Freigabe der App ist digital signiert. Einen vollständigen Schutz kann niemand garantieren. Wir passen unsere Massnahmen laufend an.</p>
+      </section>
+
+      <section id="ds-8">
+        <h2>8. Deine Rechte</h2>
+        <p>Du kannst jederzeit verlangen:</p>
+        <ul>
+          <li>Auskunft darüber, welche Personendaten wir über dich bearbeiten</li>
+          <li>die Berichtigung falscher oder unvollständiger Daten</li>
+          <li>die Löschung deiner Daten, soweit keine Aufbewahrungspflicht besteht</li>
+          <li>die Herausgabe deiner Daten in einem gängigen elektronischen Format</li>
+          <li>dass wir eine Bearbeitung einschränken oder unterlassen</li>
+        </ul>
+        <p>Eine erteilte Einwilligung kannst du jederzeit mit Wirkung für die Zukunft widerrufen. Name, Firma und den Wunsch nach Neuigkeiten änderst du direkt in deinem Konto. Für alles andere schreib uns an <a href="mailto:info@lignoai.ch">info@lignoai.ch</a>. Damit niemand fremde Daten erhält, prüfen wir vorher, ob die Anfrage von dir stammt.</p>
+        <p>Du kannst dich ausserdem beim Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB) beschweren. Wohnst du in der EU, ist auch die Aufsichtsbehörde deines Landes zuständig.</p>
+      </section>
+
+      <section id="ds-9">
+        <h2>9. Keine automatisierten Entscheidungen</h2>
+        <p>Wir treffen keine Entscheidungen, die ausschliesslich automatisiert sind und dich erheblich betreffen. Die vorläufige Lizenz nach der Registrierung wird automatisch erteilt. Über ihre Verlängerung entscheidet eine Person. Die technische Begrenzung der Geräte setzt nur den vereinbarten Lizenzumfang um. Wir erstellen keine Profile.</p>
+      </section>
+
+      <section id="ds-10">
+        <h2>10. Änderungen</h2>
+        <p>Wir passen diese Erklärung an, wenn sich unsere Dienste oder die Gesetze ändern. Es gilt die jeweils hier veröffentlichte Fassung. Über wesentliche Änderungen informieren wir dich per E-Mail oder in deinem Konto.</p>
+      </section>
+    </div>
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- VIEW: IMPRESSUM                                                    -->
+  <!-- ================================================================= -->
+  <main class="view legal-view" id="view-impressum">
+    <div class="wrap legal">
+      <nav class="legal-nav" aria-label="Rechtliches">
+        <a href="#/nutzungsbedingungen">Nutzungsbedingungen</a>
+        <a href="#/datenschutz">Datenschutz</a>
+        <a href="#/impressum" class="active">Impressum</a>
+      </nav>
+      <header class="legal-head">
+        <p class="eyebrow">Rechtliches</p>
+        <h1>Impressum</h1>
+      </header>
+
+      <section>
+        <h2>Anbieter</h2>
+        <p>LignoAI<br>Inhaber Sebastian Koukoui<br>Biel/Bienne, Schweiz</p>
+        <p>E-Mail: <a href="mailto:info@lignoai.ch">info@lignoai.ch</a></p>
+        <p>Verantwortlich für den Inhalt: Sebastian Koukoui</p>
+        <p class="legal-small">Postanschrift: <span data-addr></span></p>
+      </section>
+
+      <section>
+        <h2>Haftung für Inhalte</h2>
+        <p>Wir erstellen die Inhalte dieser Website mit grosser Sorgfalt. Für Richtigkeit, Vollständigkeit und Aktualität übernehmen wir keine Gewähr. Haftungsansprüche wegen Schäden, die durch den Zugriff auf die Inhalte, ihre Nutzung oder Nichtnutzung, durch Missbrauch der Verbindung oder durch technische Störungen entstehen, sind ausgeschlossen, soweit das Gesetz es zulässt.</p>
+      </section>
+
+      <section>
+        <h2>Links zu anderen Websites</h2>
+        <p>Für Websites Dritter, auf die wir verlinken, sind ausschliesslich deren Betreiber verantwortlich. Wir übernehmen dafür keine Verantwortung.</p>
+      </section>
+
+      <section>
+        <h2>Urheberrecht und Marken</h2>
+        <p>Texte, Bilder, Grafiken, Logos und Software auf dieser Website gehören LignoAI oder den jeweiligen Rechteinhabern. Jede Verwendung ausserhalb des persönlichen Gebrauchs braucht unsere vorherige schriftliche Zustimmung. Cadwork und andere genannte Produktnamen sind Marken ihrer jeweiligen Inhaber.</p>
+      </section>
+
+      <section>
+        <h2>Hosting</h2>
+        <p>Diese Website wird von Netlify Inc., San Francisco, USA, betrieben. Mehr dazu in der <a href="#/datenschutz">Datenschutzerklärung</a>.</p>
+      </section>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a class="logo" href="#top" aria-label="LignoAI"><img src="assets/lignoai-wordmark.webp" alt="LignoAI" width="720" height="150"></a>
+          <p class="blurb">KI im Planungsprozess des Holzbaus. Entwickelt in Biel, Schweiz.</p>
+        </div>
+        <div>
+          <h5>Produkte</h5>
+          <ul>
+            <li><a href="#mcp">Open MCP CAD</a></li>
+            <li><a href="#tragwerk">LignoCAD Tragwerk</a></li>
+            <li><a href="#lignoplan">LignoPlan</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>LignoAI</h5>
+          <ul>
+            <li><a href="#mission">Über uns</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+            <li class="member-only"><a href="#/konto">Mein Konto</a></li>
+            <li class="guest-only"><a href="#/anmelden">Anmelden</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> LignoAI · Sebastian Koukoui</span>
+        <span class="legal-links"><a href="#/nutzungsbedingungen">Nutzungsbedingungen</a> · <a href="#/datenschutz">Datenschutz</a> · <a href="#/impressum">Impressum</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ CHAT ============ -->
+  <button class="chat-btn" id="chatBtn" aria-label="Chat mit Ligno öffnen" aria-expanded="false">
+    <span class="bub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+    <span class="lbl">Frag Ligno</span>
+  </button>
+  <div class="chat" id="chat" role="dialog" aria-label="Ligno Assistent">
+    <div class="chat-head">
+      <span class="bub">L</span>
+      <div><div class="n">Ligno</div><div class="s">KI-Assistent von LignoAI</div></div>
+      <button class="x" id="chatClose" aria-label="Chat schliessen">×</button>
+    </div>
+    <div class="chat-msgs" id="chatMsgs"></div>
+    <form class="chat-form" id="chatForm">
+      <input id="chatInput" placeholder="Frage zu Produkten oder Lizenzen …" autocomplete="off" aria-label="Nachricht">
+      <button type="submit" aria-label="Senden"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+    </form>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.1/dist/umd/supabase.js" integrity="sha384-K1nraABOP/zFehpLIUksXebbs7jMpB8gYMlb+uhVKZcWT/9Vkq1+qhv6ndC+1Yuz" crossorigin="anonymous"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    /* ------------------------------------------------------------------
+       Konfiguration
+       CHAT_ENDPOINT: neuer Chat-Endpunkt (z. B. Cloudflare Worker).
+       Leer lassen = Ligno antwortet mit einer Offline-Nachricht.
+    ------------------------------------------------------------------ */
+    var CHAT_ENDPOINT = 'https://nwrvvqufmlmdbfubfoqs.supabase.co/functions/v1/chat';
+    var CHAT_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53cnZ2cXVmbWxtZGJmdWJmb3FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDMxNzYsImV4cCI6MjA5MDg3OTE3Nn0.ji817y28YAEYE1WbZ6ChpgmNPJyeri7va9GFS5FS7jg';   // öffentlicher Anon-Key des Chat-Projekts
+
+    var $ = function (s, r) { return (r || document).querySelector(s); };
+    var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+    /* ---------- Toast ---------- */
+    var toastTimer;
+    function toast(msg) {
+      var t = $('#toast');
+      t.textContent = msg; t.classList.add('show');
+      clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.classList.remove('show'); }, 2600);
+    }
+
+    /* ---------- LignoPlan-Konto (Supabase Auth) ----------
+       Anmeldung per Magic Link (PKCE). Website und LignoCAD-App teilen dieselben Konten.
+       Lizenzen schreibt nur der Server (vorläufige Lizenz per Trigger nach der E-Mail-Bestätigung). Der Lizenzstatus kommt ausschliesslich lesend
+       von der Edge Function license-status. Im Browser liegt nur der öffentliche Publishable Key. */
+    var SUPABASE_URL = 'https://djijagmwottlscxguimc.supabase.co';
+    var SUPABASE_KEY = 'sb_publishable_ON8omA_Oi-uwTLBkQE6_5A_35SmXxpf';
+    var LICENSE_STATUS_URL = SUPABASE_URL + '/functions/v1/license-status';
+    var TRAGWERK_DOWNLOAD_URL = 'https://github.com/sebastiankoukoui/lignocad-download/releases/download/v4.0.1-beta.4/LignoCAD-Tragwerk-4.0.1-beta.4-x64-Setup.exe';   // GitHub-Release im Repo lignocad-download, bei neuer Version auch den Knopf oben und download/ anpassen
+    var TRAGWERK_VERSION_NOTE = 'Studien-Beta · Windows x64 · Version 4.0.1-beta.4';
+    var CONTACT_MAIL = 'info@lignoai.ch';
+    var TERMS_VERSION = '2026-09-24';   // bei jeder wesentlichen Änderung der Nutzungsbedingungen erhöhen
+    var RESEND_SECONDS = 60;
+
+    var sb = null, user = null, authReady = false, nextAfterAuth = null, pendingOtp = null;
+    var ROLE_LABEL = { student: 'Studierende/r', office: 'Ingenieur/in, Büro', other: 'Andere' };
+
+    function authRedirectUrl() { return location.origin + location.pathname; }
+
+    /* Fehler aus Supabase in verständliche Sätze übersetzen. */
+    function friendlyError(err, context) {
+      var code = (err && (err.code || err.error_code)) || '';
+      var msg = String((err && (err.message || err.error_description)) || '');
+      var status = err && err.status;
+      if (err && err.name === 'TypeError' || /Failed to fetch|NetworkError|Load failed/i.test(msg))
+        return 'Keine Verbindung zum Server. Bitte prüfe deine Internetverbindung und versuche es nochmals.';
+      if (code === 'over_email_send_rate_limit' || code === 'over_request_rate_limit' || status === 429 || /rate limit|only request this after/i.test(msg))
+        return 'Es wurden gerade zu viele E-Mails angefordert. Bitte warte ein paar Minuten und versuche es dann nochmals.';
+      if (code === 'otp_disabled' || code === 'signup_disabled' || code === 'user_not_found' || /Signups not allowed/i.test(msg))
+        return context === 'login' ? 'NO_ACCOUNT' : 'Neue Registrierungen sind im Moment geschlossen. Schreib uns, dann richten wir dein Konto ein.';
+      if (context === 'code' && (code === 'otp_expired' || code === 'otp_invalid' || status === 403 || /expired|invalid/i.test(msg)))
+        return 'Der Code stimmt nicht oder ist abgelaufen. Prüfe die Ziffern oder fordere eine neue E-Mail an.';
+      if (code === 'otp_expired' || /link is invalid|has expired|token has expired/i.test(msg))
+        return 'Der Link ist abgelaufen oder wurde schon benutzt. Fordere einfach einen neuen an.';
+      if (code === 'email_address_invalid' || /^email address .* is invalid|invalid email/i.test(msg))
+        return 'Diese E-Mail-Adresse scheint nicht gültig zu sein. Bitte prüfe die Schreibweise.';
+      if (code === 'email_address_not_authorized' || /not authorized/i.test(msg))
+        return 'An diese Adresse können wir im Moment keine E-Mail senden. Bitte melde dich direkt bei uns: ' + CONTACT_MAIL;
+      if (code === 'bad_code_verifier' || code === 'flow_state_not_found' || code === 'flow_state_expired' || /code verifier|flow state/i.test(msg))
+        return 'Bitte öffne den Link im selben Browser, in dem du ihn angefordert hast. Du kannst hier auch einfach einen neuen anfordern.';
+      if (code === 'session_expired' || code === 'refresh_token_not_found' || code === 'session_not_found')
+        return 'Deine Sitzung ist abgelaufen. Bitte melde dich neu an.';
+      if (err) console.warn('Auth-Fehler', code || status || '', msg);
+      return 'Das hat leider nicht geklappt. Bitte versuche es nochmals.';
+    }
+
+    function showMsg(box, text, kind) {
+      if (!box) return;
+      box.hidden = !text;
+      box.className = 'form-msg' + (kind ? ' ' + kind : '');
+      box.textContent = '';
+      if (text === 'NO_ACCOUNT') {
+        box.append('Zu dieser E-Mail-Adresse gibt es noch kein Konto. ');
+        var a = document.createElement('a'); a.href = '#/registrieren'; a.textContent = 'Jetzt registrieren';
+        box.append(a);
+      } else if (text) { box.textContent = text; }
+    }
+    function setBusy(btn, busy, label) {
+      if (!btn) return;
+      if (busy) { btn.dataset.label = btn.textContent; btn.textContent = label || 'Einen Moment …'; btn.disabled = true; }
+      else { btn.textContent = btn.dataset.label || btn.textContent; btn.disabled = false; }
+    }
+    function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
+
+    function showStep(view, step) {
+      $$('#view-' + view + ' [data-step]').forEach(function (el) { el.hidden = el.dataset.step !== step; });
+    }
+
+    /* Magic Link oder Bestätigungsmail anfordern. */
+    function requestOtp(opts) {
+      pendingOtp = opts;
+      return sb.auth.signInWithOtp({
+        email: opts.email,
+        options: { shouldCreateUser: opts.create, emailRedirectTo: authRedirectUrl(), data: opts.create ? opts.data : undefined }
+      });
+    }
+
+    function startCooldown(view) {
+      var btn = $('#view-' + view + ' [data-resend]'), left = RESEND_SECONDS;
+      if (!btn) return;
+      var base = btn.dataset.base || btn.textContent; btn.dataset.base = base;
+      btn.disabled = true;
+      (function tick() {
+        if (left <= 0) { btn.disabled = false; btn.textContent = base; return; }
+        btn.textContent = base + ' (' + left + ' s)'; left--; setTimeout(tick, 1000);
+      })();
+    }
+
+    function afterSent(view, email) {
+      $$('#view-' + view + ' [data-sent-email]').forEach(function (el) { el.textContent = email; });
+      $$('#view-' + view + ' [data-step="sent"] .form-msg').forEach(function (b) { showMsg(b, ''); });
+      $$('#view-' + view + ' .code-input').forEach(function (i) { i.value = ''; });
+      showStep(view, 'sent');
+      startCooldown(view);
+    }
+
+    $('#loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var box = $('#loginForm .form-msg'), btn = $('#loginForm button[type="submit"]');
+      var email = $('#liEmail').value.trim().toLowerCase();
+      if (!validEmail(email)) { showMsg(box, 'Bitte gib eine gültige E-Mail-Adresse ein.', 'error'); return; }
+      if (!sb) { showMsg(box, 'Die Anmeldung ist gerade nicht erreichbar. Bitte lade die Seite neu.', 'error'); return; }
+      showMsg(box, ''); setBusy(btn, true, 'Link wird gesendet …');
+      requestOtp({ email: email, create: false, view: 'anmelden' }).then(function (res) {
+        setBusy(btn, false);
+        if (res.error) { showMsg(box, friendlyError(res.error, 'login'), 'error'); return; }
+        afterSent('anmelden', email);
+      }, function (err) { setBusy(btn, false); showMsg(box, friendlyError(err, 'login'), 'error'); });
+    });
+
+    function syncRoleHints() {
+      var role = ($('input[name="role"]:checked') || {}).value;
+      $('#rgOrgLabel').textContent = role === 'student' ? 'Hochschule' : role === 'office' ? 'Firma oder Büro' : 'Organisation (freiwillig)';
+      $('#rgOrg').placeholder = role === 'student' ? 'BFH Biel' : role === 'office' ? 'Holzbau Muster AG' : '';
+      $('#rgEmail').placeholder = role === 'student' ? 'vorname.name@students.bfh.ch' : 'name@buero.ch';
+      $('#rgEmailHint').hidden = role !== 'student';
+    }
+    $$('input[name="role"]').forEach(function (r) { r.addEventListener('change', syncRoleHints); });
+
+    $('#registerForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var box = $('#registerForm .form-msg'), btn = $('#registerForm button[type="submit"]');
+      var first = $('#rgFirst').value.trim(), last = $('#rgLast').value.trim();
+      var email = $('#rgEmail').value.trim().toLowerCase();
+      if (!first || !last) { showMsg(box, 'Bitte gib Vor- und Nachnamen an.', 'error'); return; }
+      if (!validEmail(email)) { showMsg(box, 'Bitte gib eine gültige E-Mail-Adresse ein.', 'error'); return; }
+      if (!$('#rgConsent').checked) { showMsg(box, 'Bitte akzeptiere die Nutzungsbedingungen, damit wir dein Konto erstellen können.', 'error'); return; }
+      if (!sb) { showMsg(box, 'Die Registrierung ist gerade nicht erreichbar. Bitte lade die Seite neu.', 'error'); return; }
+      var data = {
+        first_name: first, last_name: last,
+        account_type: $('input[name="role"]:checked').value,
+        organization: $('#rgOrg').value.trim(),
+        newsletter: $('#rgNews').checked,
+        terms_version: TERMS_VERSION,
+        consent_at: new Date().toISOString(),
+        signup_source: 'website'
+      };
+      showMsg(box, ''); setBusy(btn, true, 'Konto wird erstellt …');
+      requestOtp({ email: email, create: true, data: data, view: 'registrieren' }).then(function (res) {
+        setBusy(btn, false);
+        if (res.error) { showMsg(box, friendlyError(res.error, 'signup'), 'error'); return; }
+        afterSent('registrieren', email);
+      }, function (err) { setBusy(btn, false); showMsg(box, friendlyError(err, 'signup'), 'error'); });
+    });
+
+    $$('[data-resend]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var view = btn.closest('.view').id.replace('view-', ''), box = btn.parentNode.querySelector(':scope > .form-msg');
+        if (!pendingOtp) { showStep(view, 'form'); return; }
+        btn.disabled = true;
+        requestOtp(pendingOtp).then(function (res) {
+          if (res.error) { btn.disabled = false; showMsg(box, friendlyError(res.error, pendingOtp.create ? 'signup' : 'login'), 'error'); return; }
+          showMsg(box, 'Wir haben die E-Mail nochmals geschickt.', 'ok'); startCooldown(view);
+        }, function (err) { btn.disabled = false; showMsg(box, friendlyError(err), 'error'); });
+      });
+    });
+    $$('[data-code-form]').forEach(function (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var box = form.querySelector('.form-msg'), btn = form.querySelector('button[type="submit"]');
+        var token = form.querySelector('.code-input').value.replace(/\D/g, '');
+        if (!pendingOtp) { showMsg(box, 'Bitte fordere zuerst eine E-Mail an.', 'error'); return; }
+        if (token.length < 6) { showMsg(box, 'Bitte gib den ganzen Code aus der E-Mail ein.', 'error'); return; }
+        showMsg(box, ''); setBusy(btn, true, 'Code wird geprüft …');
+        sb.auth.verifyOtp({ email: pendingOtp.email, token: token, type: 'email' }).then(function (res) {
+          setBusy(btn, false);
+          if (res.error) { showMsg(box, friendlyError(res.error, 'code'), 'error'); return; }
+          user = res.data.user; renderUser();
+          location.hash = '#/konto';
+          toast('Willkommen, du bist angemeldet.');
+        }, function (err) { setBusy(btn, false); showMsg(box, friendlyError(err, 'code'), 'error'); });
+      });
+    });
+    $$('[data-restart]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault(); var view = a.closest('.view').id.replace('view-', ''); showStep(view, 'form');
+      });
+    });
+
+    /* ---------- Konto anzeigen ---------- */
+    function meta() { return (user && user.user_metadata) || {}; }
+    function fmtDate(v) { return v ? new Date(v).toLocaleDateString('de-CH', { day: 'numeric', month: 'long', year: 'numeric' }) : ''; }
+
+    function renderUser() {
+      document.body.classList.toggle('signed-in', !!user);
+      if (!user) return;
+      var m = meta(), first = m.first_name || user.email.split('@')[0], last = m.last_name || '';
+      var initials = (first.charAt(0) + last.charAt(0)).toUpperCase();
+      $$('[data-initials]').forEach(function (el) { el.textContent = initials; });
+      $$('[data-firstname]').forEach(function (el) { el.textContent = first; });
+      $$('[data-fullname]').forEach(function (el) { el.textContent = (first + ' ' + last).trim(); });
+      $$('[data-email]').forEach(function (el) { el.textContent = user.email; });
+      $$('[data-created]').forEach(function (el) { el.textContent = fmtDate(user.created_at); });
+      $$('[data-confirmed]').forEach(function (el) { el.textContent = user.email_confirmed_at ? fmtDate(user.email_confirmed_at) : 'noch nicht'; });
+      $('#pfFirst').value = m.first_name || ''; $('#pfLast').value = m.last_name || '';
+      $('#pfOrg').value = m.organization || ''; $('#pfRole').value = m.account_type || 'other';
+      $('#pfNews').checked = !!m.newsletter;
+      $('#termsForm').hidden = m.terms_version === TERMS_VERSION;
+      var del = $('[data-delete-request]');
+      del.href = 'mailto:' + CONTACT_MAIL + '?subject=' + encodeURIComponent('Konto löschen') +
+        '&body=' + encodeURIComponent('Bitte lösche mein LignoPlan-Konto (' + user.email + ').');
+    }
+
+    /* Lizenzkarte: nur lesend, Daten kommen von license-status. Alles per textContent. */
+    function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+    function licenseRequestLink(label) {
+      var m = meta(), a = el('a', 'btn btn-primary', label || 'Freischaltung anfragen');
+      a.href = 'mailto:' + CONTACT_MAIL + '?subject=' + encodeURIComponent('Lizenz LignoCAD Tragwerk') + '&body=' + encodeURIComponent(
+        'Hallo Sebastian\n\nIch möchte LignoCAD Tragwerk nutzen.\n\nKonto: ' + user.email + '\nKontotyp: ' + (ROLE_LABEL[m.account_type] || '') +
+        '\nOrganisation: ' + (m.organization || '') + '\n\nGruss\n' + ((m.first_name || '') + ' ' + (m.last_name || '')).trim());
+      return a;
+    }
+    var LIC_TEXT = {
+      none: ['Noch keine Lizenz', 'Für dein Konto ist noch keine Lizenz eingetragen. Schreib uns kurz, dann schauen wir es an.'],
+      pending: ['Lizenz startet bald', 'Deine Lizenz ist vorbereitet und wird ab dem angegebenen Datum aktiv.'],
+      expired: ['Lizenz abgelaufen', 'Deine Lizenz ist nicht mehr gültig. Schreib uns, wenn du LignoCAD Tragwerk weiter nutzen möchtest.'],
+      revoked: ['Lizenz deaktiviert', 'Diese Lizenz wurde deaktiviert. Bei Fragen melde dich direkt bei uns.'],
+      inactive: ['Lizenz nicht aktiv', 'Deine Lizenz ist im Moment nicht aktiv. Bei Fragen melde dich direkt bei uns.']
+    };
+    function renderLicense(state, lic) {
+      var box = $('#licenseBox'); box.textContent = '';
+      var head = el('div', 'lic');
+      var img = el('img'); img.src = 'assets/lignocad-tragwerk.webp'; img.alt = ''; head.appendChild(img);
+      var mid = el('div'); head.appendChild(mid);
+      mid.appendChild(el('div', 't', 'LignoCAD Tragwerk'));
+      box.appendChild(head);
+
+      if (state === 'loading') { mid.appendChild(el('div', 'd', 'Lizenzstatus wird geladen …')); return; }
+      if (state === 'error') {
+        mid.appendChild(el('div', 'd', 'Der Lizenzstatus konnte gerade nicht geladen werden. Bitte versuche es in einem Moment nochmals.'));
+        var retry = el('button', 'btn btn-outline', 'Nochmals laden'); retry.type = 'button'; retry.addEventListener('click', loadLicense);
+        head.appendChild(retry); return;
+      }
+      var s = lic ? lic.status : 'none';
+      if (s === 'active' || s === 'trial') {
+        mid.appendChild(el('div', 'd', lic.plan));
+        head.appendChild(el('span', 'badge green', s === 'trial' ? 'Testlizenz aktiv' : 'Aktiv'));
+        var kv = el('div', 'kv');
+        [['Gültig bis', lic.validUntil ? fmtDate(lic.validUntil) : 'unbefristet'],
+         ['Geräte', (lic.activeDevices || 0) + ' von ' + lic.maxDevices]].forEach(function (p) {
+          var c = el('div'); c.appendChild(el('div', 'k', p[0])); c.appendChild(el('div', 'v', p[1])); kv.appendChild(c);
+        });
+        kv.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        box.appendChild(kv);
+        if (/vorläufig/.test(lic.plan)) box.appendChild(el('p', 'lic-text', 'Das ist eine vorläufige Lizenz. Wir prüfen deine Registrierung und verlängern sie danach auf drei Monate.'));
+        var act = el('div', 'lic-actions');
+        if (TRAGWERK_DOWNLOAD_URL) {
+          var dl = el('a', 'btn btn-primary', 'LignoCAD für Windows herunterladen'); dl.href = TRAGWERK_DOWNLOAD_URL; act.appendChild(dl);
+          act.appendChild(el('span', 'lic-note', TRAGWERK_VERSION_NOTE));
+        } else {
+          act.appendChild(el('span', 'lic-note', 'Den Installer bekommst du von uns per E-Mail. Der direkte Download folgt hier in Kürze.'));
+        }
+        box.appendChild(act);
+        return;
+      }
+      var t = LIC_TEXT[s] || LIC_TEXT.inactive;
+      mid.appendChild(el('div', 'd', t[0]));
+      head.appendChild(el('span', 'badge', s === 'none' ? 'Nicht freigeschaltet' : t[0]));
+      var p = el('p', 'lic-text', t[1]);
+      if (s === 'pending' && lic.validFrom) p.textContent += ' Start: ' + fmtDate(lic.validFrom) + '.';
+      box.appendChild(p);
+      var row = el('div', 'lic-actions');
+      row.appendChild(licenseRequestLink(s === 'none' ? 'Freischaltung anfragen' : 'Kontakt aufnehmen'));
+      box.appendChild(row);
+    }
+    var licenseLoading = false;
+    function loadLicense() {
+      if (!user || licenseLoading) return;
+      licenseLoading = true; renderLicense('loading');
+      sb.auth.getSession().then(function (r) {
+        var token = r.data && r.data.session && r.data.session.access_token;
+        if (!token) throw { code: 'session_expired' };
+        return fetch(LICENSE_STATUS_URL, { method: 'GET', headers: { Authorization: 'Bearer ' + token, apikey: SUPABASE_KEY } });
+      }).then(function (res) {
+        if (res.status === 401) throw { code: 'session_expired' };
+        if (!res.ok) throw new Error('license-status ' + res.status);
+        return res.json();
+      }).then(function (d) {
+        renderLicense('ok', d.license);
+      }).catch(function (err) {
+        if (err && err.code === 'session_expired') { toast('Deine Sitzung ist abgelaufen. Bitte melde dich neu an.'); sb.auth.signOut({ scope: 'local' }); return; }
+        console.warn('Lizenzstatus nicht verfügbar', err && err.message);
+        renderLicense('error');
+      }).then(function () { licenseLoading = false; });
+    }
+
+    $('#profileForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var box = $('#profileForm .form-msg'), btn = $('#profileForm button[type="submit"]');
+      var first = $('#pfFirst').value.trim(), last = $('#pfLast').value.trim();
+      if (!first || !last) { showMsg(box, 'Bitte gib Vor- und Nachnamen an.', 'error'); return; }
+      setBusy(btn, true, 'Wird gespeichert …');
+      sb.auth.updateUser({ data: { first_name: first, last_name: last, organization: $('#pfOrg').value.trim(), account_type: $('#pfRole').value, newsletter: $('#pfNews').checked } })
+        .then(function (res) {
+          setBusy(btn, false);
+          if (res.error) { showMsg(box, friendlyError(res.error), 'error'); return; }
+          user = res.data.user; renderUser(); showMsg(box, 'Gespeichert.', 'ok');
+        }, function (err) { setBusy(btn, false); showMsg(box, friendlyError(err), 'error'); });
+    });
+
+    $('#termsForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var box = $('#termsForm .form-msg'), btn = $('#termsForm button[type="submit"]');
+      if (!$('#tmConsent').checked) { showMsg(box, 'Bitte setze zuerst das Häkchen.', 'error'); return; }
+      setBusy(btn, true, 'Wird gespeichert …');
+      sb.auth.updateUser({ data: { terms_version: TERMS_VERSION, consent_at: new Date().toISOString() } })
+        .then(function (res) {
+          setBusy(btn, false);
+          if (res.error) { showMsg(box, friendlyError(res.error), 'error'); return; }
+          user = res.data.user; renderUser(); showMsg(box, ''); toast('Danke, deine Zustimmung ist gespeichert.');
+        }, function (err) { setBusy(btn, false); showMsg(box, friendlyError(err), 'error'); });
+    });
+
+    function signOut(scope) {
+      var done = function () { user = null; renderUser(); location.hash = '#top'; toast(scope === 'global' ? 'Du bist jetzt überall abgemeldet.' : 'Du bist abgemeldet.'); };
+      if (!sb) { done(); return; }
+      sb.auth.signOut({ scope: scope }).then(function (res) {
+        if (res && res.error) console.warn('Abmelden', res.error.message);
+        done();   // lokale Sitzung ist in jedem Fall entfernt
+      }, done);
+    }
+    $$('[data-logout]').forEach(function (b) { b.addEventListener('click', function () { signOut('local'); }); });
+    $('[data-logout-global]').addEventListener('click', function () {
+      if (confirm('Wirklich überall abmelden? Auch die LignoCAD-App muss sich danach neu anmelden.')) signOut('global');
+    });
+    $$('.acc-nav [data-tab]').forEach(function (b) { b.addEventListener('click', function () { location.hash = '#/konto/' + b.dataset.tab; }); });
+
+    /* ---------- Router ----------
+       "#/..." = Konto-Ansichten, sonst Abschnitte der Startseite. */
+    function show(name) {
+      $$('.view').forEach(function (v) { v.classList.toggle('active', v.id === 'view-' + name); });
+      $('#mobileNav').classList.remove('open');
+      $('#menuToggle').setAttribute('aria-expanded', 'false');
+    }
+    function tab(name) {
+      if (!$('[data-panel="' + name + '"]')) name = 'uebersicht';
+      $$('.acc-panel').forEach(function (p) { p.classList.toggle('active', p.dataset.panel === name); });
+      $$('.acc-nav [data-tab]').forEach(function (b) { b.classList.toggle('active', b.dataset.tab === name); });
+    }
+    function route() {
+      var h = location.hash || '';
+      if (h.indexOf('#/') !== 0) {
+        show('home');
+        if (h.length > 1) { var t = document.getElementById(h.slice(1)); if (t) t.scrollIntoView(); }
+        return;
+      }
+      var parts = h.slice(2).split('?'), path = parts[0].split('/');
+      nextAfterAuth = new URLSearchParams(parts[1] || '').get('next') || nextAfterAuth;
+      var view = path[0];
+      if (view === 'konto') {
+        if (!authReady) return;                       // wird nach dem Laden der Sitzung erneut aufgerufen
+        if (!user) { location.replace('#/anmelden?next=konto'); return; }
+        show('konto'); tab(path[1] || 'uebersicht'); window.scrollTo(0, 0);
+        if (!path[1] || path[1] === 'uebersicht') loadLicense();
+        return;
+      }
+      if (view === 'nutzungsbedingungen' || view === 'datenschutz' || view === 'impressum') {
+        if (view === 'impressum') $$('[data-addr]').forEach(function (el) {   // nicht als Klartext im Quelltext, damit Suchmaschinen sie nicht aufnehmen
+          el.textContent = String.fromCharCode(71,105,101,115,115,101,114,101,105,103,228,115,115,108,105,32,50,50,44,32,50,53,48,51,32,66,105,101,108,47,66,105,101,110,110,101);
+        });
+        show(view); window.scrollTo(0, 0); return;
+      }
+      if (view === 'anmelden' || view === 'registrieren') {
+        if (authReady && user) { location.replace('#/konto'); return; }
+        show(view); window.scrollTo(0, 0); return;
+      }
+      show('home');
+    }
+    window.addEventListener('hashchange', route);
+    $$('[data-goto]').forEach(function (a) {          // Inhaltsverzeichnis: scrollen, ohne die Route zu wechseln
+      a.addEventListener('click', function (e) { e.preventDefault(); var t = document.getElementById(a.dataset.goto); if (t) t.scrollIntoView({ behavior: 'smooth' }); });
+    });
+
+    /* Parameter, mit denen Supabase nach dem Klick auf den Link zurückkommt. */
+    function readAuthParams() {
+      var q = new URLSearchParams(location.search);
+      var h = new URLSearchParams(location.hash.charAt(1) === '/' ? '' : location.hash.slice(1));
+      var get = function (k) { return q.get(k) || h.get(k); };
+      return { code: q.get('code'), error: get('error'), error_code: get('error_code'), error_description: get('error_description') };
+    }
+    function cleanUrl(hash) {
+      history.replaceState(null, '', location.pathname + (hash || (location.hash.charAt(1) === '/' ? location.hash : '')));
+    }
+
+    function initAuth() {
+      var cb = readAuthParams();
+      if (!window.supabase || !window.supabase.createClient) {
+        authReady = true; route();
+        console.warn('supabase-js nicht geladen');
+        return;
+      }
+      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+        auth: { flowType: 'pkce', persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, storageKey: 'lignoplan-auth' }
+      });
+      sb.auth.onAuthStateChange(function (event, session) {
+        user = session ? session.user : null;
+        renderUser();
+        if (event === 'SIGNED_OUT' && /^#\/konto/.test(location.hash)) location.hash = '#/anmelden';
+      });
+      sb.auth.getSession().then(function (res) {     // wartet, bis ein ?code= aus dem Link eingelöst ist
+        user = res.data && res.data.session ? res.data.session.user : null;
+        authReady = true; renderUser();
+        if (cb.error || res.error) {
+          cleanUrl('#/anmelden'); route();
+          var err = cb.error ? { code: cb.error_code, message: cb.error_description } : res.error;
+          showStep('anmelden', 'form');
+          showMsg($('#loginForm .form-msg'), friendlyError(err, 'callback'), 'error');
+          return;
+        }
+        if (cb.code) {
+          cleanUrl(user ? '#/konto' : '#/anmelden'); route();
+          if (user) toast('Willkommen, du bist angemeldet.');
+          else showMsg($('#loginForm .form-msg'), friendlyError({ code: 'flow_state_not_found' }), 'error');
+          return;
+        }
+        route();
+      });
+    }
+
+    /* ---------- Teilen ----------
+       Eigene Links pro Produkt, damit WhatsApp und LinkedIn das passende Vorschaubild zeigen (Ordner tragwerk/ und open-mcp-cad/). */
+    var SHARES = {
+      tragwerk: { url: 'https://lignoai.ch/tragwerk', title: 'LignoCAD Tragwerk', text: 'LignoCAD Tragwerk: Positions- und Lastenübergabepläne für den Schweizer Holzbau. Gratis für Studierende.' },
+      mcp: { url: 'https://lignoai.ch/open-mcp-cad', title: 'Open MCP CAD', text: 'Open MCP CAD: der erste öffentliche MCP-Server für Cadwork. Open Source und kostenlos.' }
+    };
+    function closeShares(except) {
+      $$('.share').forEach(function (w) { if (w === except) return; $('.share-menu', w).hidden = true; $('.share-btn', w).setAttribute('aria-expanded', 'false'); });
+    }
+    $$('.share').forEach(function (wrap) {
+      var d = SHARES[wrap.dataset.share], menu = $('.share-menu', wrap), btn = $('.share-btn', wrap);
+      $('[data-share-to="whatsapp"]', wrap).href = 'https://wa.me/?text=' + encodeURIComponent(d.text + ' ' + d.url);
+      $('[data-share-to="linkedin"]', wrap).href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(d.url);
+      $('[data-share-to="mail"]', wrap).href = 'mailto:?subject=' + encodeURIComponent(d.title) + '&body=' + encodeURIComponent(d.text + '\n\n' + d.url);
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        // Auf dem Handy das Teilen-Menü des Systems, sonst die eigene Auswahl
+        if (navigator.share && matchMedia('(pointer: coarse)').matches) {
+          navigator.share({ title: d.title, text: d.text, url: d.url }).catch(function () {});
+          return;
+        }
+        var open = menu.hidden; closeShares(); menu.hidden = !open; btn.setAttribute('aria-expanded', String(open));
+      });
+      $('[data-share-to="copy"]', wrap).addEventListener('click', function () {
+        (navigator.clipboard ? navigator.clipboard.writeText(d.url) : Promise.reject()).then(
+          function () { toast('Link kopiert.'); }, function () { toast(d.url); });
+        closeShares();
+      });
+      $$('a', menu).forEach(function (a) { a.addEventListener('click', function () { closeShares(); }); });
+    });
+    document.addEventListener('click', function (e) { if (!e.target.closest('.share')) closeShares(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeShares(); });
+
+    /* ---------- Copy ---------- */
+    $$('[data-copy]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var txt = $(b.dataset.copy).textContent;
+        (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(
+          function () { b.textContent = 'kopiert ✓'; setTimeout(function () { b.textContent = 'kopieren'; }, 1600); },
+          function () { toast('Kopieren nicht möglich'); });
+      });
+    });
+
+    /* ---------- Header / Menu ---------- */
+    var header = $('#siteHeader');
+    window.addEventListener('scroll', function () { header.classList.toggle('scrolled', window.scrollY > 8); }, { passive: true });
+    $('#menuToggle').addEventListener('click', function () {
+      var open = $('#mobileNav').classList.toggle('open');
+      this.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    $$('#mobileNav a').forEach(function (a) { a.addEventListener('click', function () { $('#mobileNav').classList.remove('open'); }); });
+
+    /* ---------- Jahresringe im Hero ---------- */
+    (function rings() {
+      var svg = $('#heroRings'), cx = 430, cy = 400, out = '';
+      for (var i = 1; i <= 17; i++) {
+        var r = i * 23 + (i > 12 ? (i - 12) * 6 : 0), pts = [];
+        for (var a = 0; a <= 64; a++) {
+          var t = a / 64 * Math.PI * 2;
+          var k = 1 + 0.045 * Math.sin(3 * t + i * 0.35) + 0.03 * Math.sin(5 * t + i * 0.9) + (i / 17) * 0.06 * Math.cos(t - 0.6);
+          pts.push([(cx - i * 3.5 + Math.cos(t) * r * k * 1.08).toFixed(1), (cy + i * 1.5 + Math.sin(t) * r * k).toFixed(1)]);
+        }
+        var d = 'M' + pts.map(function (p) { return p.join(','); }).join('L') + 'Z';
+        out += '<path d="' + d + '" fill="none" stroke="#178a3e" stroke-width="' + (i % 4 === 0 ? 1.6 : 1) + '" stroke-opacity="' + (0.10 + (i % 4 === 0 ? 0.08 : 0)) + '"/>';
+      }
+      svg.innerHTML = out;
+    })();
+
+    /* ---------- Reveal ---------- */
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      $$('.reveal').forEach(function (el) { io.observe(el); });
+    } else { $$('.reveal').forEach(function (el) { el.classList.add('in'); }); }
+
+    /* ---------- Chat ---------- */
+    var chat = $('#chat'), msgs = $('#chatMsgs'), chatHistory = [], greeted = false;
+    function addMsg(role, html) {
+      var d = document.createElement('div'); d.className = 'msg ' + role; d.innerHTML = html;
+      msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight;
+    }
+    function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    function toggleChat(open) {
+      chat.classList.toggle('open', open);
+      $('#chatBtn').setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open && !greeted) { greeted = true; addMsg('bot', 'Grüezi! Ich bin Ligno. Frag mich zu Open MCP CAD, LignoCAD Tragwerk oder den Lizenzen.'); }
+      if (open) $('#chatInput').focus();
+    }
+    $('#chatBtn').addEventListener('click', function () { toggleChat(!chat.classList.contains('open')); });
+    $('#chatClose').addEventListener('click', function () { toggleChat(false); });
+    $('#chatForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = $('#chatInput'), text = input.value.trim();
+      if (!text) return;
+      input.value = ''; addMsg('user', esc(text)); chatHistory.push({ role: 'user', content: text });
+      var offline = 'Ich bin gerade offline. Schreib uns direkt: <a href="mailto:info@lignoai.ch">info@lignoai.ch</a>';
+      if (!CHAT_ENDPOINT) { setTimeout(function () { addMsg('bot', offline); }, 350); return; }
+      fetch(CHAT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + CHAT_KEY }, body: JSON.stringify({ messages: chatHistory.slice(-12) }) })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (d) { chatHistory.push({ role: 'assistant', content: d.reply }); addMsg('bot', esc(d.reply).replace(/\n/g, '<br>')); })
+        .catch(function () { addMsg('bot', offline); });
+    });
+
+    /* ---------- Init ---------- */
+    $('#year').textContent = new Date().getFullYear();
+    syncRoleHints();
+    initAuth();
+  })();
+  </script>
+</body>
+</html>

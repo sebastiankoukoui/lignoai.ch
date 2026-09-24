@@ -1,0 +1,31 @@
+# Environment Variables - NIEMALS ins GitHub pushen!
+.env
+.env.local
+.env.production
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.next/
+.nuxt/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Claude local config
+.claude/
+
+# Adminseite Chatbot
+.adminlignoai.html
+
+# Validierungs-Quellseiten (21 MB Scans) - bleiben lokal, nicht ins Repo
+Brand/validierung/pages/
+
+# Nicht mehr online (bleiben nur lokal und im privaten Archiv-Repo)
+HBT-Rechner/
+Brand/
+brand2/
+supabase/.temp/

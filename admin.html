@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer"><meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; connect-src https://djijagmwottlscxguimc.supabase.co; img-src 'self' data:; base-uri 'none'; object-src 'none'; form-action 'none'">
+<title>Admin · LignoAI</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<style>
+  :root { --bg:#f6f8f6; --ink:#0f1411; --ink2:#334038; --muted:#66736b; --line:#e2e8e3; --green:#178a3e; --green7:#106b30; --green0:#eef7f1; --amber:#8a5a00; --amber0:#fff5d9; --red:#a3311a; --red0:#fdf2ef; --blue:#2f64b8; --blue0:#edf2fb; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  [hidden] { display: none !important; }
+  header { background: #fff; border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; }
+  .bar { max-width: 1180px; margin: 0 auto; padding: 12px 16px; display: flex; align-items: center; gap: 14px; }
+  .bar img { height: 22px; width: auto; }
+  .bar .tag { font-size: 12px; font-weight: 700; color: var(--green7); background: var(--green0); padding: 3px 9px; border-radius: 99px; }
+  .bar .me { margin-left: auto; font-size: 13px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  main { max-width: 1180px; margin: 0 auto; padding: 24px 16px 60px; }
+  h1 { font-size: 24px; letter-spacing: -.02em; margin-bottom: 4px; }
+  .sub { color: var(--muted); margin-bottom: 20px; }
+  button, .btn { font: inherit; font-weight: 650; border-radius: 8px; border: 1px solid transparent; padding: 8px 14px; cursor: pointer; background: #fff; color: var(--ink); }
+  .btn-primary { background: var(--green); color: #fff; }
+  .btn-primary:hover { background: var(--green7); }
+  .btn-outline { border-color: #cfd8d1; }
+  .btn-outline:hover { border-color: var(--ink); }
+  .btn-sm { padding: 6px 11px; font-size: 13px; }
+  button:disabled { opacity: .5; cursor: wait; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
+  .login { max-width: 420px; margin: 8vh auto; }
+  label { display: block; font-weight: 600; font-size: 14px; margin: 14px 0 6px; }
+  input, select { width: 100%; font: inherit; padding: 10px 12px; border: 1px solid #b9c4bc; border-radius: 8px; background: #fff; }
+  .msg { margin-top: 12px; font-size: 14px; color: var(--ink2); white-space: pre-line; }
+  .msg.error { color: var(--red); }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+  .stat { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; cursor: pointer; text-align: left; }
+  .stat .k { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  .stat .v { font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
+  .stat.active { outline: 2px solid var(--green); }
+  .tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
+  .tools input { max-width: 320px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-size: 13px; padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); background: #fff; }
+  .chip.on { background: var(--green0); border-color: #cfe7d6; color: var(--green7); }
+  .tools .reload { margin-left: auto; }
+  .list { display: grid; gap: 10px; }
+  .row { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.3fr) minmax(0, .8fr) 210px; gap: 16px; align-items: center; }
+  .row .n { font-weight: 700; overflow-wrap: anywhere; }
+  .row .e { font-size: 13px; color: var(--ink2); overflow-wrap: anywhere; }
+  .row .meta { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .badge { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 99px; background: #eef1ef; color: var(--ink2); }
+  .b-provisional { background: var(--amber0); color: var(--amber); }
+  .b-active { background: var(--green0); color: var(--green7); }
+  .b-expired, .b-revoked, .b-inactive { background: var(--red0); color: var(--red); }
+  .b-pending { background: var(--blue0); color: var(--blue); }
+  .lic .plan { font-size: 13px; color: var(--ink2); margin-top: 4px; }
+  .lic .until { font-size: 13px; font-weight: 600; }
+  .lic .soon { color: var(--amber); }
+  .dev { font-size: 13px; color: var(--ink2); }
+  .actions { display: flex; gap: 6px; align-items: center; justify-content: flex-end; }
+  details.more { position: relative; }
+  details.more summary { list-style: none; cursor: pointer; padding: 6px 10px; border: 1px solid #cfd8d1; border-radius: 8px; font-weight: 700; font-size: 13px; background: #fff; }
+  details.more summary::-webkit-details-marker { display: none; }
+  details.more .menu { position: absolute; right: 0; top: calc(100% + 6px); z-index: 10; background: #fff; border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 16px 40px -16px rgba(15,20,17,.25); padding: 6px; min-width: 220px; }
+  .menu button { display: block; width: 100%; text-align: left; border: 0; padding: 8px 10px; font-weight: 600; font-size: 14px; border-radius: 6px; }
+  .menu button:hover { background: var(--bg); }
+  .menu .danger { color: var(--red); }
+  .menu .sep { height: 1px; background: var(--line); margin: 5px 0; }
+  .menu .lbl { font-size: 12px; color: var(--muted); padding: 4px 10px 2px; }
+  .empty { text-align: center; color: var(--muted); padding: 40px 0; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; max-width: calc(100vw - 32px); }
+  .toast.show { opacity: 1; }
+  @media (max-width: 860px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .row { grid-template-columns: minmax(0, 1fr) auto; }
+    .row .lic { grid-column: 1; }
+    .row .dev { grid-column: 1; }
+    .row .actions { grid-column: 2; grid-row: 1 / span 3; align-self: start; flex-direction: column; align-items: stretch; }
+  }
+</style>
+</head><body>
+<header><div class="bar">
+  <a href="/"><img src="/assets/lignoai-wordmark.webp" alt="LignoAI" width="720" height="150"></a>
+  <span class="tag">Admin</span>
+  <span class="me" id="me"></span>
+  <button class="btn-outline btn-sm" id="logout" type="button" hidden>Abmelden</button>
+</div></header>
+
+<main>
+  <section id="loginView" hidden>
+    <div class="card login">
+      <h1>Admin-Anmeldung</h1>
+      <p class="sub">Nur für freigeschaltete Admin-Konten.</p>
+      <form id="emailForm">
+        <label for="email">E-Mail</label>
+        <input id="email" type="email" autocomplete="email" required>
+        <p style="margin-top:14px"><button class="btn-primary" type="submit">Code senden</button></p>
+      </form>
+      <form id="codeForm" hidden>
+        <label for="code">Code aus der E-Mail</label>
+        <input id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="12345678" required>
+        <p style="margin-top:14px"><button class="btn-primary" type="submit">Anmelden</button></p>
+      </form>
+      <p class="msg" id="loginMsg" role="status"></p>
+    </div>
+  </section>
+
+  <section id="adminView" hidden>
+    <h1>Konten und Lizenzen</h1>
+    <p class="sub">Alle Registrierungen für LignoCAD Tragwerk. Neue Konten erhalten automatisch 14 Tage vorläufig.</p>
+    <div class="stats" id="stats"></div>
+    <div class="tools">
+      <input id="search" type="search" placeholder="Name, E-Mail oder Firma suchen" aria-label="Suchen">
+      <div class="chips" id="chips"></div>
+      <button class="btn-outline btn-sm reload" id="reload" type="button">Aktualisieren</button>
+    </div>
+    <div class="list" id="list"></div>
+    <p class="msg" id="listMsg" role="status"></p>
+  </section>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.1/dist/umd/supabase.js" integrity="sha384-K1nraABOP/zFehpLIUksXebbs7jMpB8gYMlb+uhVKZcWT/9Vkq1+qhv6ndC+1Yuz" crossorigin="anonymous"></script>
+<script src="admin.js"></script>
+</body></html>
