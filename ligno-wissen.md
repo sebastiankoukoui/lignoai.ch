@@ -27,6 +27,9 @@ Kontakt: info@lignoai.ch, Telefon +41 78 619 63 45, Website https://lignoai.ch
 - Open Source unter der Lizenz AGPL-3.0, kostenlos. Kommerzielle Nutzung ist im Rahmen der AGPL erlaubt.
 - Code, Download und Anleitung: https://github.com/sebastiankoukoui/open-mcp-cad
 - Installation: ZIP aus den Releases laden, entpacken, install.cmd doppelklicken.
+- Den Quellcode von GitHub nicht selbst in Cadwork kopieren. Die Ordner «Open MCP CAD A» bis «F» darin sind Prüf-Ordner.
+  Sie erscheinen im Cadwork-Menü, öffnen aber kein Fenster. Falls vorhanden: Cadwork schliessen, diese Ordner im Cadwork-Profil löschen und das ZIP installieren.
+- Startet das Plugin nicht, erscheint ab Version 0.1.1 eine Meldung. Details stehen in C:\Users\Public\OpenMcpCad_Start.log.
 - Voraussetzungen: Windows, Cadwork 3D 2026, Python 3.10 bis 3.13.
 - Enthält bewusst keine Konstruktionslogik und kein Fachwissen einer Branche. Eigenes Wissen lässt sich einhängen.
 
