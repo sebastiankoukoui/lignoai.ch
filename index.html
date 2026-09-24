@@ -439,6 +439,19 @@
     .check a { color: var(--green-700); }
     .divider { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: .8rem; margin: 20px 0; }
     .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+    .pw-wrap { position: relative; }
+    .pw-wrap input { width: 100%; padding-right: 48px; }
+    .pw-toggle { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; display: grid; place-items: center; border: 0; background: none; color: var(--muted); border-radius: 8px; cursor: pointer; }
+    .pw-toggle:hover { color: var(--ink); background: var(--bg-soft); }
+    .pw-toggle svg { width: 20px; height: 20px; }
+    .pw-rules { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 3px 14px; margin: 2px 0 0; font-size: .78rem; color: var(--muted); }
+    .pw-rules li::before { content: "○"; display: inline-block; width: 1.2em; }
+    .pw-rules li.ok { color: var(--green-700); }
+    .pw-rules li.ok::before { content: "✓"; }
+    .pw-match { font-size: .78rem; color: var(--muted); }
+    .pw-match.ok { color: var(--green-700); }
+    .pw-match.bad { color: #8f2c14; }
+    @media (max-width: 480px) { .pw-rules { grid-template-columns: 1fr; } }
     .label-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
     .small-link { font-size: .8rem; font-weight: 700; color: var(--green-700); text-decoration: none; }
     .small-link:hover { text-decoration: underline; }
@@ -1835,7 +1848,7 @@
       if (code === 'email_not_confirmed' || /email not confirmed/i.test(msg))
         return 'Bitte bestätige zuerst deine E-Mail-Adresse mit dem Link aus unserer E-Mail. Du kannst auch einen Code per E-Mail anfordern.';
       if (code === 'weak_password' || /password should be|weak password/i.test(msg))
-        return 'Das Passwort ist zu schwach. Nimm mindestens 8 Zeichen.';
+        return 'Das Passwort ist zu schwach. Es braucht mindestens 8 Zeichen mit Gross- und Kleinbuchstaben, einer Zahl und einem Sonderzeichen.';
       if (code === 'same_password') return 'Das neue Passwort muss sich vom bisherigen unterscheiden.';
       if (code === 'reauthentication_needed') return 'Bitte melde dich kurz neu an und ändere das Passwort dann nochmals.';
       if (context === 'recovery' && (code === 'otp_expired' || status === 403 || /expired|invalid/i.test(msg)))
@@ -1913,9 +1926,66 @@
       location.hash = nextAfterAuth ? '#/' + nextAfterAuth : '#/konto';
       toast(text || 'Willkommen, du bist angemeldet.');
     }
-    function checkPassword(box, pw) {
-      if (pw.length < 8) { showMsg(box, 'Das Passwort braucht mindestens 8 Zeichen.', 'error'); return false; }
+    // Gleiche Regeln wie in Supabase (Password requirements: lower, upper, digits, symbols).
+    var PW_RULES = [
+      ['len', 'mindestens 8 Zeichen', function (v) { return v.length >= 8; }],
+      ['lower', 'ein Kleinbuchstabe', function (v) { return /[a-z]/.test(v); }],
+      ['upper', 'ein Grossbuchstabe', function (v) { return /[A-Z]/.test(v); }],
+      ['digit', 'eine Zahl', function (v) { return /[0-9]/.test(v); }],
+      ['symbol', 'ein Sonderzeichen wie ! ? - _ .', function (v) { return /[!@#$%^&*()_+\-=\[\]{};':"|<>?,.\/`~]/.test(v); }]
+    ];
+    function checkPassword(box, input) {
+      var pw = input.value, repeat = document.getElementById(input.id + '2');
+      var missing = PW_RULES.filter(function (r) { return !r[2](pw); }).map(function (r) { return r[1]; });
+      if (missing.length) { showMsg(box, 'Das Passwort braucht noch: ' + missing.join(', ') + '.', 'error'); input.focus(); return false; }
+      if (repeat && repeat.value !== pw) { showMsg(box, 'Die beiden Passwörter stimmen nicht überein.', 'error'); repeat.focus(); return false; }
       return true;
+    }
+
+    // Passwortfelder: Anzeigen-Knopf, bei neuen Passwörtern Regeln und Wiederholung
+    var EYE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+    var EYE_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19M1 1l22 22"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/></svg>';
+    function addToggle(input) {
+      var wrap = document.createElement('div'); wrap.className = 'pw-wrap';
+      input.parentNode.insertBefore(wrap, input); wrap.appendChild(input);
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'pw-toggle';
+      b.setAttribute('aria-label', 'Passwort anzeigen'); b.innerHTML = EYE;
+      b.addEventListener('click', function () {
+        var show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        b.innerHTML = show ? EYE_OFF : EYE;
+        b.setAttribute('aria-label', show ? 'Passwort verbergen' : 'Passwort anzeigen');
+        input.focus();
+      });
+      wrap.appendChild(b);
+    }
+    $$('input[type="password"]').forEach(function (input) {
+      addToggle(input);
+      if (input.autocomplete !== 'new-password') return;
+      var field = input.closest('.field'), hint = field.querySelector('.hint');
+      var rules = document.createElement('ul'); rules.className = 'pw-rules';
+      PW_RULES.forEach(function (r) { var li = document.createElement('li'); li.dataset.rule = r[0]; li.textContent = r[1]; rules.appendChild(li); });
+      if (hint) hint.replaceWith(rules); else field.appendChild(rules);
+      // Zweites Feld zum Wiederholen
+      var f2 = document.createElement('div'); f2.className = 'field';
+      var l2 = document.createElement('label'); l2.htmlFor = input.id + '2'; l2.textContent = 'Passwort wiederholen';
+      var i2 = document.createElement('input'); i2.type = 'password'; i2.id = input.id + '2'; i2.autocomplete = 'new-password';
+      var m2 = document.createElement('span'); m2.className = 'pw-match';
+      f2.appendChild(l2); f2.appendChild(i2); f2.appendChild(m2);
+      field.parentNode.insertBefore(f2, field.nextSibling);
+      addToggle(i2);
+      function update() {
+        PW_RULES.forEach(function (r) { rules.querySelector('[data-rule="' + r[0] + '"]').classList.toggle('ok', r[2](input.value)); });
+        var same = i2.value && i2.value === input.value;
+        m2.textContent = !i2.value ? '' : same ? '✓ Passwörter stimmen überein' : 'Passwörter stimmen noch nicht überein';
+        m2.className = 'pw-match' + (!i2.value ? '' : same ? ' ok' : ' bad');
+      }
+      input.addEventListener('input', update); i2.addEventListener('input', update);
+      input.form && input.form.addEventListener('reset', function () { setTimeout(update, 0); });
+    });
+    function clearPassword(input) {
+      input.value = ''; var r = document.getElementById(input.id + '2'); if (r) r.value = '';
+      input.dispatchEvent(new Event('input'));
     }
 
     $('#loginForm').addEventListener('submit', function (e) {
@@ -1965,7 +2035,7 @@
       if (!first || !last) { showMsg(box, 'Bitte gib Vor- und Nachnamen an.', 'error'); return; }
       if (!validEmail(email)) { showMsg(box, 'Bitte gib eine gültige E-Mail-Adresse ein.', 'error'); return; }
       var pw = $('#rgPassword').value;
-      if (!checkPassword(box, pw)) return;
+      if (!checkPassword(box, $('#rgPassword'))) return;
       if (!$('#rgConsent').checked) { showMsg(box, 'Bitte akzeptiere die Nutzungsbedingungen, damit wir dein Konto erstellen können.', 'error'); return; }
       if (!sb) { showMsg(box, 'Die Registrierung ist gerade nicht erreichbar. Bitte lade die Seite neu.', 'error'); return; }
       var data = {
@@ -1986,7 +2056,7 @@
         if (res.data && res.data.user && res.data.user.identities && res.data.user.identities.length === 0) {
           showMsg(box, 'Zu dieser E-Mail-Adresse gibt es schon ein Konto. Melde dich an oder nutze «Passwort vergessen».', 'error'); return;
         }
-        $('#rgPassword').value = '';
+        clearPassword($('#rgPassword'));
         afterSent('registrieren', email);
       }, function (err) { setBusy(btn, false); showMsg(box, friendlyError(err, 'signup'), 'error'); });
     });
@@ -2030,7 +2100,7 @@
       sb.auth.resetPasswordForEmail(email, { redirectTo: authRedirectUrl() }).then(function (res) {
         setBusy(btn, false);
         if (res.error) { showMsg(box, friendlyError(res.error, 'recovery'), 'error'); return; }
-        resetEmail = email; $('#fgCode').value = ''; $('#fgPassword').value = '';
+        resetEmail = email; $('#fgCode').value = ''; clearPassword($('#fgPassword'));
         afterSent('passwort-vergessen', email);
       }, function (err) { setBusy(btn, false); showMsg(box, friendlyError(err, 'recovery'), 'error'); });
     });
@@ -2039,7 +2109,7 @@
       var box = $('#resetCodeForm .form-msg'), btn = $('#resetCodeForm button[type="submit"]');
       var token = $('#fgCode').value.replace(/\D/g, ''), pw = $('#fgPassword').value;
       if (token.length < 6) { showMsg(box, 'Bitte gib den ganzen Code aus der E-Mail ein.', 'error'); return; }
-      if (!checkPassword(box, pw)) return;
+      if (!checkPassword(box, $('#fgPassword'))) return;
       showMsg(box, ''); setBusy(btn, true, 'Wird gespeichert …');
       sb.auth.verifyOtp({ email: resetEmail, token: token, type: 'recovery' }).then(function (res) {
         if (res.error) throw res.error;
@@ -2047,7 +2117,7 @@
       }).then(function (res) {
         setBusy(btn, false);
         if (res.error) { showMsg(box, friendlyError(res.error, 'recovery'), 'error'); return; }
-        $('#fgPassword').value = '';
+        clearPassword($('#fgPassword'));
         signedIn(res.data.user, 'Dein neues Passwort ist gespeichert.');
       }, function (err) { setBusy(btn, false); showMsg(box, friendlyError(err, 'recovery'), 'error'); });
     });
@@ -2055,12 +2125,12 @@
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         var box = form.querySelector('.form-msg'), btn = form.querySelector('button[type="submit"]'), pw = input.value;
-        if (!checkPassword(box, pw)) return;
+        if (!checkPassword(box, input)) return;
         showMsg(box, ''); setBusy(btn, true, 'Wird gespeichert …');
         sb.auth.updateUser({ password: pw }).then(function (res) {
           setBusy(btn, false);
           if (res.error) { showMsg(box, friendlyError(res.error), 'error'); return; }
-          input.value = ''; user = res.data.user; renderUser();
+          clearPassword(input); user = res.data.user; renderUser();
           if (form.id === 'newPasswordForm') location.hash = '#/konto';
           else showMsg(box, 'Gespeichert.', 'ok');
           toast('Dein Passwort ist gespeichert.');
