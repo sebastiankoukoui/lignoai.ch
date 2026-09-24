@@ -29,3 +29,8 @@ HBT-Rechner/
 Brand/
 brand2/
 supabase/.temp/
+
+# Interne Anleitung und Hilfsmittel (nur lokal, Repo ist öffentlich)
+CLAUDE.md
+CLAUDE.local.md
+intern/
