@@ -1,7 +1,7 @@
 'use strict';
 // Prüft die Sprachseiten: Build aktuell, Textregeln, Kopfzeilen, JavaScript lauffähig.
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict'), { execFileSync } = require('node:child_process');
-const ROOT = path.join(__dirname, '..'), read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
+const ROOT = path.join(__dirname, '..'), read = f => fs.readFileSync(path.join(ROOT, f), 'utf8').replace(/\r\n/g, '\n');
 const site = require(path.join(ROOT, 'src/site.cjs'));
 
 // 1. Alle erzeugten Dateien entsprechen den Quellen

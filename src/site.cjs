@@ -6,4 +6,6 @@ module.exports = {
   downloadUrl: v => 'https://github.com/sebastiankoukoui/lignocad-download/releases/download/v' + v + '/LignoCAD-Tragwerk-' + v + '-x64-Setup.exe',
   // Reihenfolge der Sprachwahl. Deutsch liegt unter /, die anderen unter /fr/, /it/, /en/.
   languages: ['de', 'fr', 'it', 'en'],
+  // Nach einem neuen Vorschaubild in og/ die Zahl erhöhen
+  ogVersion: { 'open-mcp-cad': 2 },
 };

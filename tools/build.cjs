@@ -59,7 +59,10 @@ function alternates(p) {
     '\n  <link rel="alternate" hreflang="x-default" href="' + url('de', p) + '" />';
 }
 
-function ogImage(l, name) { return site.origin + '/og/' + (l === 'de' ? '' : l + '/') + name + '.png'; }
+function ogImage(l, name) {   // ?v= zwingt WhatsApp und LinkedIn, ein geändertes Bild neu zu laden (site.ogVersion)
+  const v = (site.ogVersion || {})[name];
+  return site.origin + '/og/' + (l === 'de' ? '' : l + '/') + name + '.png' + (v ? '?v=' + v : '');
+}
 
 function headMeta(l) {
   const d = lang[l], m = d.meta;

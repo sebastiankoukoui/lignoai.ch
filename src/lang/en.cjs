@@ -144,7 +144,7 @@ module.exports = {
     'mcp.check4': 'Runs locally, with no account and no cloud in between',
     'mcp.download': 'Download (.zip)',
     'mcp.github': 'View on GitHub',
-    'mcp.foot': 'Installation: unzip the ZIP file and double-click <code>install.cmd</code>. Do not copy the source code from GitHub into Cadwork yourself. Requirements: Windows, Cadwork 3D 2026, Python 3.10 to 3.13.',
+    'mcp.foot': 'Installation: unzip the ZIP file and double-click <code>install.cmd</code>. Do not copy the source code from GitHub into Cadwork yourself. Requirements: Windows, Cadwork 3D 2026, Python 3.10 to 3.13. If Python is missing, the installer offers to install it. The <a href="https://github.com/sebastiankoukoui/open-mcp-cad/blob/main/verteilung/ANLEITUNG.en.md" target="_blank" rel="noopener">installation guide</a> is available in German, English, French and Italian.',
 
     'share.button': 'Share',
     'share.copy': 'Copy link',
