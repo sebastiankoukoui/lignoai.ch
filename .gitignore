@@ -21,13 +21,9 @@ Thumbs.db
 # Adminseite Chatbot
 .adminlignoai.html
 
-# Validierungs-Quellseiten (21 MB Scans) - bleiben lokal, nicht ins Repo
-Brand/validierung/pages/
-
-# Nicht mehr online (bleiben nur lokal und im privaten Archiv-Repo)
-HBT-Rechner/
-Brand/
-brand2/
+# Alte lokale Kopien (Originale in hbt-rechner und integrale-holzbauplanung,
+# alte Website im privaten, archivierten Repo LignoAI-archiv)
+_alt/
 supabase/.temp/
 
 # Interne Anleitung und Hilfsmittel (nur lokal, Repo ist öffentlich)
