@@ -30,7 +30,9 @@ Kontakt: info@lignoai.ch, Telefon +41 78 619 63 45, Website https://lignoai.ch
 - Den Quellcode von GitHub nicht selbst in Cadwork kopieren. Die Ordner «Open MCP CAD A» bis «F» darin sind Prüf-Ordner.
   Sie erscheinen im Cadwork-Menü, öffnen aber kein Fenster. Falls vorhanden: Cadwork schliessen, diese Ordner im Cadwork-Profil löschen und das ZIP installieren.
 - Startet das Plugin nicht, erscheint ab Version 0.1.1 eine Meldung. Details stehen in C:\Users\Public\OpenMcpCad_Start.log.
-- Voraussetzungen: Windows, Cadwork 3D 2026, Python 3.10 bis 3.13.
+- Voraussetzungen: Windows, Cadwork 3D 2026, Python 3.10 bis 3.13. Fehlt Python, installiert install.cmd auf Nachfrage Python 3.13.
+- README und Installationsanleitung gibt es auf Deutsch, Englisch, Französisch und Italienisch. Im ZIP liegen ANLEITUNG.md, ANLEITUNG.en.md, ANLEITUNG.fr.md und ANLEITUNG.it.md.
+- Im Plugin gibt es einen Chat. Er funktioniert mit Claude Code, Codex, einem API-Schlüssel für OpenAI, Anthropic oder OpenRouter oder lokal mit Ollama oder LM Studio.
 - Enthält bewusst keine Konstruktionslogik und kein Fachwissen einer Branche. Eigenes Wissen lässt sich einhängen.
 
 ## LignoCAD Tragwerk
