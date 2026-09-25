@@ -2091,6 +2091,17 @@
       msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight;
     }
     function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    // Antwort des Bots: erst maskieren, dann einfaches Markdown (fett, Aufzählung) und Links darstellen
+    function botHtml(s) {
+      return esc(String(s || '').trim())
+        .replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/^\s*[-*•]\s+/gm, '• ')
+        .replace(/^#+\s*/gm, '')
+        .replace(/\*/g, '')
+        .replace(/\bhttps:\/\/[^\s<]+[^\s<.,:!?)]/g, function (u) { return '<a href="' + u + '" target="_blank" rel="noopener">' + u + '</a>'; })
+        .replace(/\b[\w.+-]+@lignoai\.ch\b/g, function (m) { return '<a href="mailto:' + m + '">' + m + '</a>'; })
+        .replace(/\n/g, '<br>');
+    }
     function toggleChat(open) {
       chat.classList.toggle('open', open);
       $('#chatBtn').setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -2108,7 +2119,7 @@
       if (!CHAT_ENDPOINT) { setTimeout(function () { addMsg('bot', offline); }, 350); return; }
       fetch(CHAT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + CHAT_KEY }, body: JSON.stringify({ messages: chatHistory.slice(-12), lang: LANG }) })
         .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-        .then(function (d) { chatHistory.push({ role: 'assistant', content: d.reply }); addMsg('bot', esc(d.reply).replace(/\n/g, '<br>')); })
+        .then(function (d) { chatHistory.push({ role: 'assistant', content: d.reply }); addMsg('bot', botHtml(d.reply)); })
         .catch(function () { addMsg('bot', offline); });
     });
 

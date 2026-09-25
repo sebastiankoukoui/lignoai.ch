@@ -48,10 +48,10 @@ Kontakt: info@lignoai.ch, Telefon +41 78 619 63 45, Website https://lignoai.ch
 - Man braucht ein LignoPlan-Konto. Registrieren auf https://lignoai.ch unter «Konto erstellen».
   Angemeldet wird mit E-Mail und Passwort. Ohne Passwort geht es auch mit einem Code per E-Mail.
 - Nach der Registrierung und der Bestätigung der E-Mail-Adresse gilt automatisch eine vorläufige Lizenz für 14 Tage.
-  LignoAI prüft die Registrierung und verlängert die Lizenz danach auf drei Monate.
+  LignoAI prüft die Registrierung und verlängert die Lizenz danach, für Studierende während des Studiums, für Fachleute auf drei Monate.
   Den Stand sieht man auf der Website unter «Mein Konto».
-- Studierende: kostenlos, am besten mit Hochschul-E-Mail registrieren.
-- Fachleute (Ingenieurwesen, Planung, Holzbau): in der Einführungsphase kostenlos, mindestens 3 Monate. Die Lizenz ist persönlich, pro Person.
+- Studierende: kostenlos, solange sie studieren. Am besten mit Hochschul-E-Mail registrieren.
+- Fachleute (Ingenieurwesen, Planung, Holzbau): Einführungsangebot. Wer sich bis 31. Dezember 2026 registriert, nutzt LignoCAD Tragwerk mindestens drei Monate kostenlos. Die Lizenz ist persönlich, pro Person.
 - Firmenlizenz für mehrere Personen einer Firma: auf Anfrage per E-Mail an info@lignoai.ch, mit einer Rechnung für alle. Jede Person hat trotzdem ihr eigenes Konto.
 - Später kann es kostenpflichtig werden. Preise gibt es noch keine. Nichts versprechen.
 - In der App meldet man sich mit derselben E-Mail-Adresse an wie auf der Website.
@@ -107,7 +107,7 @@ Wenn jemand nach etwas fragt, das nicht im Wissen steht, verweise freundlich auf
 - Brauche ich für Open MCP CAD ein Konto? Nein.
 - Wo lade ich LignoCAD Tragwerk herunter? Auf lignoai.ch beim Produkt LignoCAD Tragwerk, Button «LignoCAD für Windows herunterladen».
   Aktuell ist die Studien-Beta Version 4.0.1-beta.8 für Windows x64. Zum Verwenden braucht es ein LignoPlan-Konto.
-  Nach der Registrierung gilt die Lizenz sofort 14 Tage vorläufig, nach der Prüfung drei Monate.
+  Nach der Registrierung gilt die Lizenz sofort 14 Tage vorläufig. Nach der Prüfung wird sie verlängert.
 - Windows zeigt beim Installer eine Warnung. Der Installer ist noch nicht mit einem Windows-Zertifikat signiert.
   Nur von lignoai.ch herunterladen. Bei Unsicherheit per E-Mail melden.
 - Wie melde ich mich an? Auf lignoai.ch mit E-Mail und Passwort. Ohne Passwort geht es auch mit einem Code per E-Mail.
