@@ -168,6 +168,7 @@ module.exports = {
     'tw.licReq': 'Prérequis',
     'tw.licAccount': 'Compte LignoPlan',
     'tw.licReqNote': 'licence provisoire de 14 jours, valable immédiatement',
+    'tw.company': 'Licence entreprise pour plusieurs personnes : sur demande, avec une seule facture pour tous. <a href="mailto:info@lignoai.ch?subject=Licence%20entreprise%20LignoCAD%20Tragwerk">Envoyer une demande</a>',
     'tw.download': 'Télécharger LignoCAD pour Windows',
     'tw.dlMeta': 'Bêta études · Windows x64 · Version %VERSION%',
     'tw.dlText': 'Pour l’utiliser, il vous faut un compte LignoPlan. Après l’inscription, votre licence est valable immédiatement pendant 14 jours. Après vérification, nous la prolongeons à trois mois.',

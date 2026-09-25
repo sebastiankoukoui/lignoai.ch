@@ -52,6 +52,7 @@ Kontakt: info@lignoai.ch, Telefon +41 78 619 63 45, Website https://lignoai.ch
   Den Stand sieht man auf der Website unter «Mein Konto».
 - Studierende: kostenlos, am besten mit Hochschul-E-Mail registrieren.
 - Fachleute (Ingenieurwesen, Planung, Holzbau): in der Einführungsphase kostenlos, mindestens 3 Monate. Die Lizenz ist persönlich, pro Person.
+- Firmenlizenz für mehrere Personen einer Firma: auf Anfrage per E-Mail an info@lignoai.ch, mit einer Rechnung für alle. Jede Person hat trotzdem ihr eigenes Konto.
 - Später kann es kostenpflichtig werden. Preise gibt es noch keine. Nichts versprechen.
 - In der App meldet man sich mit derselben E-Mail-Adresse an wie auf der Website.
 
