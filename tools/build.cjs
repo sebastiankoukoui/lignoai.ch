@@ -148,7 +148,7 @@ function renderShare(l, kind) {
 <meta property="og:image:alt" content="${attr(alt)}">
 <meta name="twitter:card" content="summary_large_image">
 <meta http-equiv="refresh" content="0; url=${target}">
-<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.ico?v=2" sizes="any">
 </head><body style="font:17px/1.6 system-ui;padding:40px;color:#203728">
 <p><a href="${target}" style="color:#16783a">${link}</a></p>
 </body></html>
