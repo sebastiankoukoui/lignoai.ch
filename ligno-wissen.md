@@ -48,9 +48,13 @@ Kontakt: info@lignoai.ch, Telefon +41 78 619 63 45, Website https://lignoai.ch
 - Man braucht ein LignoPlan-Konto. Registrieren auf https://lignoai.ch unter «Konto erstellen».
   Angemeldet wird mit E-Mail und Passwort. Ohne Passwort geht es auch mit einem Code per E-Mail.
 - Nach der Registrierung und der Bestätigung der E-Mail-Adresse gilt automatisch eine vorläufige Lizenz für 14 Tage.
-  LignoAI prüft die Registrierung und verlängert die Lizenz danach, für Studierende während des Studiums, für Fachleute auf drei Monate.
+  LignoAI prüft die Registrierung und verlängert die Lizenz danach, für Fachleute auf drei Monate. Für Studierende gilt der Ablauf weiter unten.
   Den Stand sieht man auf der Website unter «Mein Konto».
-- Studierende: kostenlos, solange sie studieren. Am besten mit Hochschul-E-Mail registrieren.
+- Studierende: kostenlos, solange sie studieren. Bei der Registrierung gibt man an, wann das Studium voraussichtlich endet (31. Juli oder 31. Januar).
+  Nachweis: Wer sich mit der Hochschul-E-Mail registriert, ist nach der Bestätigung sofort freigeschaltet. Mit einer privaten Adresse gibt man die Hochschul-Adresse zusätzlich an und bestätigt sie mit einem Code.
+  Ohne Hochschul-Adresse lädt man in «Mein Konto» eine Studienbestätigung hoch (PDF, JPG oder PNG). LignoAI prüft sie und löscht das Dokument danach.
+  Die Lizenz für Studierende gilt jeweils bis 30. September, nie länger als bis zum angegebenen Studienende. Jedes Jahr im September kommt eine E-Mail, dann bestätigt man das Studium in «Mein Konto» neu.
+  Nach dem Studium wechselt man in «Mein Konto» mit «Ich habe abgeschlossen» zur Lizenz für Fachleute. Sie ist kostenlos bis drei Monate nach dem Semesterende, also bis 31. Oktober oder bis 30. April.
 - Fachleute (Ingenieurwesen, Planung, Holzbau): Einführungsangebot. Wer sich bis 31. Dezember 2026 registriert, nutzt LignoCAD Tragwerk mindestens drei Monate kostenlos. Die Lizenz ist persönlich, pro Person.
 - Firmenlizenz für mehrere Personen einer Firma: auf Anfrage per E-Mail an info@lignoai.ch, mit einer Rechnung für alle. Jede Person hat trotzdem ihr eigenes Konto.
 - Später kann es kostenpflichtig werden. Preise gibt es noch keine. Nichts versprechen.

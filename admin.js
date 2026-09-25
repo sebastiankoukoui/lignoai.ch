@@ -17,7 +17,7 @@
     inactive: 'Inaktiv', pending: 'Startet später', none: 'Keine Lizenz'
   };
   var FILTERS = [
-    ['provisional', 'Vorläufig'], ['active', 'Aktiv'], ['soon', 'Läuft bald ab'],
+    ['review', 'Nachweis prüfen'], ['provisional', 'Vorläufig'], ['active', 'Aktiv'], ['soon', 'Läuft bald ab'],
     ['ended', 'Abgelaufen oder gesperrt'], ['none', 'Ohne Lizenz'], ['all', 'Alle']
   ];
 
@@ -30,8 +30,10 @@
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 
   function soon(a) { var d = daysLeft(a.license.validUntil); return a.license.status === 'active' && d !== null && d <= 14; }
+  function needsReview(a) { return !!(a.student && a.student.needsReview); }
   function matches(a) {
     var s = a.license.status;
+    if (filter === 'review' && !needsReview(a)) return false;
     if (filter === 'provisional' && s !== 'provisional') return false;
     if (filter === 'active' && s !== 'active') return false;
     if (filter === 'soon' && !soon(a)) return false;
@@ -50,25 +52,41 @@
     var data = await res.json().catch(function () { return {}; });
     if (res.status === 403) throw Error('Dieses Konto hat keinen Admin-Zugriff.');
     if (!res.ok || !data.accounts) throw Error('Das hat nicht geklappt (' + (data.error || res.status) + '). Bitte nochmals versuchen.');
-    return data.accounts;
+    return data;
   }
 
   async function load() {
     $('listMsg').textContent = 'Wird geladen …';
-    try { accounts = await api({ type: 'admin_list' }); $('listMsg').textContent = ''; render(); }
+    try { accounts = (await api({ type: 'admin_list' })).accounts; $('listMsg').textContent = ''; render(); }
     catch (e) { $('listMsg').textContent = e.message; $('listMsg').className = 'msg error'; }
   }
 
   async function act(a, body, done) {
     body.type = 'admin_action'; body.user_id = a.id;
-    try { accounts = await api(body); render(); toast(done); }
+    try { var data = await api(body); accounts = data.accounts; render(); toast(done); return data; }
     catch (e) { toast(e.message); }
+  }
+
+  // Studiennachweis in neuem Tab öffnen. Das Fenster wird sofort geöffnet, sonst blockiert der Browser es.
+  async function openProof(a) {
+    var w = window.open('about:blank', '_blank');
+    var data = await act(a, { action: 'student_proof_url' }, 'Nachweis geöffnet. Der Link gilt 10 Minuten.');
+    if (data && data.url && w) w.location = data.url; else if (w) w.close();
+  }
+  function studentLine(st) {
+    var parts = [];
+    if (st.studyUntil) parts.push('Studium bis ' + fmt(st.studyUntil));
+    if (st.schoolEmail) parts.push(st.schoolEmail + (st.schoolReview === 'pending' ? ' (Domain prüfen)' : st.schoolVerified ? ' (bestätigt)' : ''));
+    if (st.proof && st.proofDecision === 'pending') parts.push('Dokument wartet auf Prüfung');
+    else if (st.proofDecision) parts.push('Dokument ' + (st.proofDecision === 'approved' ? 'freigegeben' : 'abgelehnt'));
+    if (st.graduatedAt) parts.push('abgeschlossen ' + fmt(st.graduatedAt));
+    return parts.join(' · ');
   }
 
   function renderStats() {
     var count = function (f) { var keep = filter; filter = f; var q = $('search').value; $('search').value = ''; var n = accounts.filter(matches).length; filter = keep; $('search').value = q; return n; };
     var box = $('stats'); box.replaceChildren();
-    [['provisional', 'Warten auf Prüfung'], ['active', 'Aktive Lizenzen'], ['soon', 'Laufen bald ab'], ['all', 'Konten total']].forEach(function (p) {
+    [['review', 'Nachweis prüfen'], ['provisional', 'Warten auf Prüfung'], ['active', 'Aktive Lizenzen'], ['soon', 'Laufen bald ab'], ['all', 'Konten total']].forEach(function (p) {
       var b = el('button', 'stat' + (filter === p[0] ? ' active' : '')); b.type = 'button';
       b.appendChild(el('div', 'k', p[1])); b.appendChild(el('div', 'v', String(count(p[0]))));
       b.addEventListener('click', function () { filter = p[0]; render(); });
@@ -97,6 +115,7 @@
     who.appendChild(el('div', 'n', a.name || a.email));
     if (a.name) who.appendChild(el('div', 'e', a.email));
     who.appendChild(el('div', 'meta', [a.accountTypeLabel, a.organization, 'über ' + a.source, 'registriert ' + fmt(a.createdAt)].filter(Boolean).join(' · ')));
+    if (a.student && studentLine(a.student)) who.appendChild(el('div', 'meta', studentLine(a.student)));
     row.appendChild(who);
 
     var lic = el('div', 'lic');
@@ -113,14 +132,33 @@
     if (a.lastSeenAt) dev.appendChild(el('div', 'meta', 'zuletzt ' + fmt(a.lastSeenAt)));
     row.appendChild(dev);
 
-    var actions = el('div', 'actions');
-    var main = el('button', 'btn-primary btn-sm', s === 'provisional' ? 'Freigeben, 3 Monate' : s === 'active' || s === 'pending' ? '+3 Monate' : 'Freischalten, 3 Monate'); main.type = 'button';
-    main.addEventListener('click', function () { main.disabled = true; act(a, { action: 'extend', months: 3 }, 'Lizenz um 3 Monate verlängert.'); });
+    var actions = el('div', 'actions'), isStudent = a.accountType === 'student';
+    if (a.student && a.student.proof && a.student.proofDecision === 'pending') {
+      var view = el('button', 'btn-outline btn-sm', 'Nachweis ansehen'); view.type = 'button';
+      view.addEventListener('click', function () { openProof(a); });
+      actions.appendChild(view);
+    }
+    var main;
+    if (isStudent && (needsReview(a) || s === 'provisional')) {
+      main = el('button', 'btn-primary btn-sm', 'Studium freigeben'); main.type = 'button';
+      main.title = 'Lizenz für Studierende bis 30. September, nie über das Studienende hinaus. Ein Dokument wird danach gelöscht.';
+      main.addEventListener('click', function () { main.disabled = true; act(a, { action: 'student_approve' }, 'Studium freigegeben, die Person bekommt eine E-Mail.'); });
+    } else {
+      main = el('button', 'btn-primary btn-sm', s === 'provisional' ? 'Freigeben, 3 Monate' : s === 'active' || s === 'pending' ? '+3 Monate' : 'Freischalten, 3 Monate'); main.type = 'button';
+      main.addEventListener('click', function () { main.disabled = true; act(a, { action: 'extend', months: 3 }, 'Lizenz um 3 Monate verlängert.'); });
+    }
     actions.appendChild(main);
 
     var more = el('details', 'more'), sum = el('summary', '', '···'), menu = el('div', 'menu');
     sum.setAttribute('aria-label', 'Weitere Aktionen');
     more.appendChild(sum); more.appendChild(menu);
+    if (needsReview(a)) {
+      menu.appendChild(el('div', 'lbl', 'Studiennachweis'));
+      menuButton(menu, 'Nachweis ablehnen', function () {
+        if (confirm('Nachweis von ' + (a.name || a.email) + ' ablehnen? Das Dokument wird gelöscht und die Person bekommt eine E-Mail.')) act(a, { action: 'student_reject' }, 'Nachweis abgelehnt.');
+      }, 'danger');
+      menu.appendChild(el('div', 'sep'));
+    }
     menu.appendChild(el('div', 'lbl', 'Verlängern'));
     [[1, '+1 Monat'], [6, '+6 Monate'], [12, '+12 Monate']].forEach(function (m) {
       menuButton(menu, m[1], function () { act(a, { action: 'extend', months: m[0] }, 'Lizenz verlängert.'); });

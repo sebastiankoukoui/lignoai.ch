@@ -601,6 +601,15 @@
     .lic-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); }
     .lic-note { font-size: .86rem; color: var(--muted); }
     .lic-text { margin-top: 16px; color: var(--ink-2); font-size: .93rem; }
+    .stud-note { margin: 12px 0 0; padding: 12px 14px; border-radius: 10px; background: var(--bg-soft); border: 1px solid var(--line); color: var(--ink-2); font-size: .9rem; line-height: 1.5; }
+    .stud-note.hi { background: var(--green-50); border-color: var(--green-100); color: var(--green-700); }
+    .stud-part { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+    .stud-part h4 { font-size: .92rem; margin: 0 0 4px; }
+    .stud-part .hint { font-size: .8rem; color: var(--muted); margin: 0 0 10px; }
+    .stud-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
+    .stud-row .field { flex: 1 1 220px; margin: 0; }
+    .stud-row input[type=file] { height: auto; padding: 9px 12px; }
+    .stud-part .form-msg { margin: 12px 0 0; }
     [hidden] { display: none !important; }
     .toast {
       position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); opacity: 0;
@@ -1049,11 +1058,12 @@
           <h2>{{about.h2}}</h2>
           <p>{{about.p1}}</p>
           <p>{{about.p2}}</p>
+          <p>{{about.p3}}</p>
           <div class="tags">
             <span class="tag">{{about.tag1}}</span>
             <span class="tag">{{about.tag2}}</span>
-            <span class="tag">Cadwork-API</span>
-            <span class="tag">LLMs &amp; MCP</span>
+            <span class="tag">Open MCP CAD</span>
+            <span class="tag">{{about.tag4}}</span>
             <span class="tag">{{about.tag5}}</span>
           </div>
         </div>
@@ -1169,6 +1179,10 @@
               <span class="hint">{{pw.min}}</span>
             </div>
             <div class="field"><label for="rgOrg" id="rgOrgLabel">{{reg.orgStudent}}</label><input id="rgOrg" autocomplete="organization" maxlength="120" placeholder="{{reg.orgPh}}"></div>
+            <div class="row2" id="rgStudentFields">
+              <div class="field"><label for="rgStudyEnd">{{stud.end}}</label><select id="rgStudyEnd" data-study-end></select><span class="hint">{{stud.endHint}}</span></div>
+              <div class="field"><label for="rgSchoolEmail">{{stud.schoolEmail}}</label><input id="rgSchoolEmail" type="email" autocomplete="off" maxlength="200" placeholder="{{reg.emailPh}}"><span class="hint">{{stud.schoolEmailHint}}</span></div>
+            </div>
             <label class="check"><input type="checkbox" id="rgConsent" required> <span>{{reg.consent}}</span></label>
             <label class="check"><input type="checkbox" id="rgNews" checked> <span>{{reg.news}}</span></label>
             <div class="form-msg" role="alert" hidden></div>
@@ -1275,6 +1289,7 @@
               <button class="btn btn-primary" type="submit">{{terms.confirm}}</button>
             </form>
             <div class="card" id="licenseBox" aria-live="polite"></div>
+            <div class="card" id="studentBox" aria-live="polite" hidden></div>
             <div class="card">
               <h3>{{acc.appH3}}</h3>
               <p class="sub" style="margin-bottom: 0;">{{acc.appSub}}</p>
@@ -1649,7 +1664,25 @@
       $('#rgOrg').placeholder = role === 'student' ? '{{js.orgPhStudent}}' : role === 'office' ? '{{js.orgPhOffice}}' : '';
       $('#rgEmail').placeholder = role === 'student' ? '{{js.emailPhStudent}}' : '{{js.emailPhOther}}';
       $('#rgEmailHint').hidden = role !== 'student';
+      $('#rgStudentFields').hidden = role !== 'student';
     }
+
+    /* Studienende: Semesterende 31. Juli oder 31. Januar, als "JJJJ-07" bzw. "JJJJ-01". */
+    function fillStudyEnd(select, current) {
+      var now = new Date(), y = now.getFullYear(), opts = [];
+      for (var year = y - 1; year <= y + 7; year++) [1, 7].forEach(function (m) {
+        var d = new Date(year, m - 1, 31, 23, 59);
+        if (d >= now || (year + '-0' + m) === current) opts.push({ v: year + '-0' + m, d: d });
+      });
+      select.textContent = '';
+      var first = el('option', null, '{{js.studyChoose}}'); first.value = ''; select.appendChild(first);
+      opts.slice(0, 13).forEach(function (o) {
+        var opt = el('option', null, o.d.toLocaleDateString(LOCALE, { day: 'numeric', month: 'long', year: 'numeric' }));
+        opt.value = o.v; select.appendChild(opt);
+      });
+      select.value = current || '';
+    }
+    fillStudyEnd($('#rgStudyEnd'), '');
     $$('input[name="role"]').forEach(function (r) { r.addEventListener('change', syncRoleHints); });
 
     $('#registerForm').addEventListener('submit', function (e) {
@@ -1661,6 +1694,10 @@
       if (!validEmail(email)) { showMsg(box, '{{js.invalidEmail}}', 'error'); return; }
       var pw = $('#rgPassword').value;
       if (!checkPassword(box, $('#rgPassword'))) return;
+      var isStudent = $('input[name="role"]:checked').value === 'student';
+      var studyEnd = $('#rgStudyEnd').value, schoolEmail = $('#rgSchoolEmail').value.trim().toLowerCase();
+      if (isStudent && !studyEnd) { showMsg(box, '{{js.studyMissing}}', 'error'); return; }
+      if (isStudent && schoolEmail && !validEmail(schoolEmail)) { showMsg(box, '{{js.schoolEmailInvalid}}', 'error'); return; }
       if (!$('#rgConsent').checked) { showMsg(box, '{{js.acceptTerms}}', 'error'); return; }
       if (!sb) { showMsg(box, '{{js.registerUnavailable}}', 'error'); return; }
       var data = {
@@ -1673,6 +1710,7 @@
         signup_source: 'website',
         lang: LANG
       };
+      if (isStudent) { data.study_until = studyEnd; if (schoolEmail && schoolEmail !== email) data.school_email = schoolEmail; }
       showMsg(box, ''); setBusy(btn, true, '{{js.creatingAccount}}');
       pendingOtp = { email: email, view: 'registrieren', signup: true };
       sb.auth.signUp({ email: email, password: pw, options: { data: data, emailRedirectTo: authRedirectUrl() } }).then(function (res) {
@@ -1839,7 +1877,7 @@
         });
         kv.style.gridTemplateColumns = 'repeat(2, 1fr)';
         box.appendChild(kv);
-        if (/vorläufig/.test(lic.plan)) box.appendChild(el('p', 'lic-text', '{{js.provisional}}'));
+        if (/vorläufig/.test(lic.plan)) box.appendChild(el('p', 'lic-text', meta().account_type === 'student' ? '{{js.provisionalStudent}}' : '{{js.provisional}}'));
         var act = el('div', 'lic-actions');
         var dl = el('a', 'btn btn-primary', '{{js.download}}'); dl.href = TRAGWERK_DOWNLOAD_URL; act.appendChild(dl);
         act.appendChild(el('span', 'lic-note', TRAGWERK_VERSION_NOTE));
@@ -1870,11 +1908,176 @@
         return res.json();
       }).then(function (d) {
         renderLicense('ok', d.license);
+        loadStudent(d.license);
       }).catch(function (err) {
         if (err && err.code === 'session_expired') { toast('{{js.sessionExpired}}'); sb.auth.signOut({ scope: 'local' }); return; }
         console.warn('Lizenzstatus nicht verfügbar', err && err.message);
         renderLicense('error');
       }).then(function () { licenseLoading = false; });
+    }
+
+    /* ---------- Studium (Lizenz für Studierende) ----------
+       Nachweis per Hochschul-Adresse (Code) oder hochgeladener Studienbestätigung, jährliche
+       Bestätigung im September, Wechsel zu Fachperson nach dem Studium. Alles prüft und schreibt
+       die Edge Function student-license. Hier nur Anzeige und Weitergabe, Texte per textContent. */
+    var STUDENT_URL = SUPABASE_URL + '/functions/v1/student-license';
+    var STUDENT_PLAN = 'LignoCAD Tragwerk Studien-Beta';
+    var STUD_ERR = {
+      invalid_study_end: '{{js.studyMissing}}', study_end_missing: '{{js.studErrStudyEnd}}',
+      invalid_email: '{{js.schoolEmailInvalid}}', free_mail: '{{js.studErrFree}}', too_soon: '{{js.studErrSoon}}',
+      too_many: '{{js.studErrMany}}', no_code: '{{js.studErrExpired}}', code_expired: '{{js.studErrExpired}}',
+      too_many_attempts: '{{js.studErrAttempts}}', wrong_code: '{{js.studErrCode}}', study_ended: '{{js.studErrEnded}}',
+      no_file: '{{js.studErrFile}}', wrong_type: '{{js.studErrFile}}', too_large: '{{js.studErrFile}}', not_allowed: '{{js.studNotAllowed}}'
+    };
+    function studentCall(body) {
+      return sb.auth.getSession().then(function (r) {
+        var token = r.data && r.data.session && r.data.session.access_token;
+        if (!token) throw { code: 'session_expired' };
+        var form = body instanceof FormData;
+        return fetch(STUDENT_URL, {
+          method: 'POST',
+          headers: form ? { Authorization: 'Bearer ' + token, apikey: SUPABASE_KEY } : { Authorization: 'Bearer ' + token, apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
+          body: form ? body : JSON.stringify(body)
+        });
+      }).then(function (res) {
+        if (res.status === 401) throw { code: 'session_expired' };
+        return res.json().catch(function () { return { error: 'generic' }; });
+      });
+    }
+    function loadStudent(lic) {
+      var box = $('#studentBox');
+      var relevant = meta().account_type === 'student' || (lic && lic.plan === STUDENT_PLAN);
+      box.hidden = !relevant;
+      if (!relevant) return;
+      studentCall({ type: 'status' }).then(function (s) {
+        if (s.error) throw s; renderStudent(s);
+      }).catch(function (err) {
+        if (err && err.code === 'session_expired') return;
+        box.textContent = ''; box.appendChild(el('h3', null, '{{js.studH3}}')); box.appendChild(el('p', 'sub', '{{js.licError}}'));
+      });
+    }
+    function studentAction(body, box, btn, done) {
+      showMsg(box, ''); setBusy(btn, true);
+      studentCall(body).then(function (s) {
+        setBusy(btn, false);
+        if (s.error) {
+          if (s.student) renderStudent(s, { msg: STUD_ERR[s.error] || '{{js.generic}}', kind: 'error', part: box.dataset.part });
+          else showMsg(box, STUD_ERR[s.error] || '{{js.generic}}', 'error');
+          return;
+        }
+        var msg = done(s);
+        renderStudent(s, msg ? { msg: msg, kind: 'ok', part: box.dataset.part } : null);
+        loadLicenseOnly();
+      }, function (err) {
+        setBusy(btn, false);
+        if (err && err.code === 'session_expired') { toast('{{js.sessionExpired}}'); return; }
+        showMsg(box, '{{js.noConnection}}', 'error');
+      });
+    }
+    // Lizenzkarte neu laden, ohne die Studienkarte nochmals zu holen.
+    function loadLicenseOnly() {
+      sb.auth.getSession().then(function (r) {
+        var token = r.data && r.data.session && r.data.session.access_token;
+        return token && fetch(LICENSE_STATUS_URL, { headers: { Authorization: 'Bearer ' + token, apikey: SUPABASE_KEY } }).then(function (res) { return res.ok ? res.json() : null; });
+      }).then(function (d) { if (d) renderLicense('ok', d.license); }).catch(function () {});
+    }
+    function studPart(card, title, hint, partName) {
+      var part = el('div', 'stud-part'); if (title) part.appendChild(el('h4', null, title)); if (hint) part.appendChild(el('p', 'hint', hint));
+      var row = el('div', 'stud-row'); part.appendChild(row);
+      var msg = el('div', 'form-msg'); msg.hidden = true; msg.setAttribute('role', 'alert'); msg.dataset.part = partName; part.appendChild(msg);
+      card.appendChild(part);
+      return { row: row, msg: msg };
+    }
+    function studField(row, id, label, input) {
+      var f = el('div', 'field'); var l = el('label', null, label); l.htmlFor = id; input.id = id;
+      f.appendChild(l); f.appendChild(input); row.appendChild(f); return input;
+    }
+    function studButton(row, label, cls) { var b = el('button', 'btn ' + (cls || 'btn-primary'), label); b.type = 'button'; row.appendChild(b); return b; }
+
+    function renderStudent(s, flash) {
+      var card = $('#studentBox'), st = s.student || {}, lic = s.license;
+      card.textContent = ''; card.hidden = false;
+      card.appendChild(el('h3', null, '{{js.studH3}}'));
+      var until = lic && lic.validUntil ? fmtDate(lic.validUntil) : '';
+      var gift = fmtDate(s.giftUntil), text, hi = false;
+      if (s.notice && s.notice.kind === 'graduation') { text = fmt('{{js.studGraduation}}', fmtDate(st.studyUntil), gift); hi = true; }
+      else if (s.notice) { text = fmt('{{js.studRenewal}}', fmtDate(s.notice.deadline), gift); hi = true; }
+      else if (lic && lic.plan === STUDENT_PLAN && lic.status === 'expired') { text = fmt('{{js.studExpired}}', gift); hi = true; }
+      else if (s.inReview) text = '{{js.studReview}}';
+      else if (!s.needsProof) text = '{{js.studOk}}' + (st.schoolEmail ? ' ' + fmt('{{js.studOkMail}}', st.schoolEmail) : '');
+      else text = '{{js.studIntro}}';
+      card.appendChild(el('p', 'stud-note' + (hi ? ' hi' : ''), text));
+
+      // Studienende
+      var endPart = studPart(card, null, null, 'end');
+      var sel = document.createElement('select');
+      fillStudyEnd(studField(endPart.row, 'stEnd', '{{js.studEndLabel}}', sel), st.studyUntil ? st.studyUntil.slice(0, 7) : '');
+      var saveBtn = studButton(endPart.row, '{{js.studSave}}', 'btn-outline');
+      saveBtn.addEventListener('click', function () {
+        if (!sel.value) { showMsg(endPart.msg, '{{js.studyMissing}}', 'error'); return; }
+        studentAction({ type: 'set_study', value: sel.value }, endPart.msg, saveBtn, function () { return '{{js.studSaved}}'; });
+      });
+
+      if (s.needsProof) {
+        // Hochschul-Adresse mit Code
+        var mailPart = studPart(card, '{{js.studMailH}}', null, 'mail');
+        if (st.codeTo) {
+          mailPart.msg.hidden = false; mailPart.msg.className = 'form-msg ok'; mailPart.msg.textContent = fmt('{{js.studCodeSent}}', st.codeTo);
+          var code = document.createElement('input'); code.inputMode = 'numeric'; code.autocomplete = 'one-time-code'; code.maxLength = 6; code.className = 'code-input'; code.placeholder = '123456';
+          studField(mailPart.row, 'stCode', '{{js.studCodeLabel}}', code);
+          var okBtn = studButton(mailPart.row, '{{js.studConfirm}}');
+          var again = studButton(mailPart.row, '{{js.studNewCode}}', 'btn-outline');
+          okBtn.addEventListener('click', function () {
+            studentAction({ type: 'verify_code', code: code.value.trim() }, mailPart.msg, okBtn, function (r) {
+              return r.review ? '{{js.studConfirmedReview}}' : fmt('{{js.studConfirmed}}', fmtDate(r.until));
+            });
+          });
+          again.addEventListener('click', function () {
+            studentAction({ type: 'send_code', email: st.codeTo }, mailPart.msg, again, function () { return ''; });
+          });
+        } else {
+          var mail = document.createElement('input'); mail.type = 'email'; mail.maxLength = 200; mail.autocomplete = 'off'; mail.placeholder = '{{reg.emailPh}}';
+          mail.value = st.schoolEmail || '';
+          studField(mailPart.row, 'stMail', '{{js.studMailLabel}}', mail);
+          var sendBtn = studButton(mailPart.row, '{{js.studSendCode}}');
+          sendBtn.addEventListener('click', function () {
+            var v = mail.value.trim().toLowerCase();
+            if (!validEmail(v)) { showMsg(mailPart.msg, '{{js.schoolEmailInvalid}}', 'error'); return; }
+            studentAction({ type: 'send_code', email: v }, mailPart.msg, sendBtn, function (r) {
+              return r.confirmed ? (r.review ? '{{js.studConfirmedReview}}' : fmt('{{js.studConfirmed}}', fmtDate(r.until))) : '';
+            });
+          });
+        }
+        // Studienbestätigung hochladen
+        var upPart = studPart(card, '{{js.studUploadH}}', '{{js.studUploadHint}}', 'upload');
+        var file = document.createElement('input'); file.type = 'file'; file.accept = 'application/pdf,image/jpeg,image/png';
+        studField(upPart.row, 'stFile', '{{js.studFileLabel}}', file);
+        var upBtn = studButton(upPart.row, '{{js.studUpload}}', 'btn-outline');
+        upBtn.addEventListener('click', function () {
+          var f = file.files && file.files[0];
+          if (!f || f.size > 5 * 1024 * 1024 || ['application/pdf', 'image/jpeg', 'image/png'].indexOf(f.type) < 0) { showMsg(upPart.msg, '{{js.studErrFile}}', 'error'); return; }
+          var fd = new FormData(); fd.append('file', f);
+          studentAction(fd, upPart.msg, upBtn, function () { return '{{js.studUploaded}}'; });
+        });
+      }
+
+      if (s.canGraduate) {
+        var gradPart = studPart(card, '{{js.studGradH}}', fmt('{{js.studGradHint}}', gift), 'grad');
+        var gradBtn = studButton(gradPart.row, '{{js.studGraduate}}', 'btn-outline');
+        gradBtn.addEventListener('click', function () {
+          if (!confirm(fmt('{{js.studGradConfirm}}', gift))) return;
+          studentAction({ type: 'graduate' }, gradPart.msg, gradBtn, function (r) {
+            toast(fmt('{{js.studGraduated}}', fmtDate(r.until)));
+            sb.auth.refreshSession().then(function (res) { if (res.data && res.data.user) { user = res.data.user; renderUser(); } });
+            return fmt('{{js.studGraduated}}', fmtDate(r.until));
+          });
+        });
+      }
+
+      if (flash && flash.msg) {
+        var target = card.querySelector('.form-msg[data-part="' + flash.part + '"]') || card.querySelector('.form-msg');
+        if (target) showMsg(target, flash.msg, flash.kind);
+      }
     }
 
     $('#profileForm').addEventListener('submit', function (e) {

@@ -621,6 +621,15 @@
     .lic-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); }
     .lic-note { font-size: .86rem; color: var(--muted); }
     .lic-text { margin-top: 16px; color: var(--ink-2); font-size: .93rem; }
+    .stud-note { margin: 12px 0 0; padding: 12px 14px; border-radius: 10px; background: var(--bg-soft); border: 1px solid var(--line); color: var(--ink-2); font-size: .9rem; line-height: 1.5; }
+    .stud-note.hi { background: var(--green-50); border-color: var(--green-100); color: var(--green-700); }
+    .stud-part { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+    .stud-part h4 { font-size: .92rem; margin: 0 0 4px; }
+    .stud-part .hint { font-size: .8rem; color: var(--muted); margin: 0 0 10px; }
+    .stud-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
+    .stud-row .field { flex: 1 1 220px; margin: 0; }
+    .stud-row input[type=file] { height: auto; padding: 9px 12px; }
+    .stud-part .form-msg { margin: 12px 0 0; }
     [hidden] { display: none !important; }
     .toast {
       position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); opacity: 0;
@@ -1071,12 +1080,13 @@
           <span class="eyebrow">Fondatore</span>
           <h2>Il carpentiere incontra il codice.</h2>
           <p>Sono Sebastian Koukoui, carpentiere di formazione, studente di tecnica del legno alla BFH di Bienne e fondatore di LignoAI.</p>
-          <p>Conosco il settore del legno dalla pratica e so bene dove duole il dente. LignoAI nasce dalla convinzione che l’IA nella costruzione in legno non sia un giocattolo, ma possa togliere lavoro vero a progettiste e progettisti. A patto che a svilupparla sia qualcuno che conosce il mestiere.</p>
+          <p>Non sviluppo una mia IA. Porto l’IA esistente nel lavoro quotidiano di progettazione nella costruzione in legno, nei programmi che usiamo oggi e in strumenti miei, dove non ne esistono di adatti.</p>
+          <p>Sono convinto che molti passaggi, dal progetto di massima al piano finito, si possano automatizzare. Il mestiere che studio tra qualche anno sarà diverso. LignoAI vuole essere il punto di riferimento che sa come usare l’IA in modo sensato nella costruzione in legno.</p>
           <div class="tags">
             <span class="tag">Carpentiere AFC</span>
             <span class="tag">BSc Tecnica del legno · BFH</span>
-            <span class="tag">Cadwork-API</span>
-            <span class="tag">LLMs &amp; MCP</span>
+            <span class="tag">Open MCP CAD</span>
+            <span class="tag">IA e MCP</span>
             <span class="tag">Fondata nel 2025</span>
           </div>
         </div>
@@ -1184,7 +1194,7 @@
             <div class="field">
               <label for="rgEmail">E-mail</label>
               <input id="rgEmail" type="email" autocomplete="email" placeholder="nome.cognome@students.bfh.ch" required>
-              <span class="hint" id="rgEmailHint">Con l’indirizzo della scuola universitaria possiamo verificare più in fretta la tua registrazione.</span>
+              <span class="hint" id="rgEmailHint">Con il tuo indirizzo universitario la licenza per studenti vale subito dopo la conferma.</span>
             </div>
             <div class="field">
               <label for="rgPassword">Password</label>
@@ -1192,6 +1202,10 @@
               <span class="hint">Almeno 8 caratteri.</span>
             </div>
             <div class="field"><label for="rgOrg" id="rgOrgLabel">Scuola universitaria</label><input id="rgOrg" autocomplete="organization" maxlength="120" placeholder="BFH Bienne"></div>
+            <div class="row2" id="rgStudentFields">
+              <div class="field"><label for="rgStudyEnd">Fine prevista degli studi</label><select id="rgStudyEnd" data-study-end></select><span class="hint">Fine dell’ultimo semestre. Potrai modificarla più tardi nel tuo account.</span></div>
+              <div class="field"><label for="rgSchoolEmail">E-mail universitaria (facoltativa)</label><input id="rgSchoolEmail" type="email" autocomplete="off" maxlength="200" placeholder="nome.cognome@students.bfh.ch"><span class="hint">Serve solo se sopra ti registri con un altro indirizzo. Ti inviamo un codice. Non ne hai uno? Più tardi caricherai un certificato di immatricolazione.</span></div>
+            </div>
             <label class="check"><input type="checkbox" id="rgConsent" required> <span>Accetto le <a href="#/nutzungsbedingungen" target="_blank" rel="noopener">Condizioni d’uso</a>, comprese le condizioni di licenza, e confermo di aver letto la <a href="#/datenschutz" target="_blank" rel="noopener">Dichiarazione sulla protezione dei dati</a>.</span></label>
             <label class="check"><input type="checkbox" id="rgNews" checked> <span>Avvisatemi quando escono nuovi moduli di LignoPlan.</span></label>
             <div class="form-msg" role="alert" hidden></div>
@@ -1298,6 +1312,7 @@
               <button class="btn btn-primary" type="submit">Conferma</button>
             </form>
             <div class="card" id="licenseBox" aria-live="polite"></div>
+            <div class="card" id="studentBox" aria-live="polite" hidden></div>
             <div class="card">
               <h3>Come accedere all’app</h3>
               <p class="sub" style="margin-bottom: 0;">In LignoCAD accedi con lo stesso indirizzo e-mail e la stessa password che usi qui. I tuoi progetti e i tuoi file CAD restano sempre sul tuo computer.</p>
@@ -1465,7 +1480,7 @@
 
       <section id="nb-5">
         <h2>5. Tipi di licenza e costi</h2>
-        <p><span class="n">5.1</span> <strong>Licenza per studenti.</strong> È gratuita per tutta la durata della formazione e vale solo per la formazione, per esempio per esercitazioni, lavori semestrali e lavori di diploma presso una scuola universitaria, una scuola universitaria professionale o una scuola professionale. L’uso commerciale non è consentito, in particolare per incarichi retribuiti, per un’attività accessoria o per il lavoro presso un datore di lavoro. Possiamo chiedere una prova della formazione, per esempio un indirizzo e-mail della scuola universitaria o una tessera di legittimazione. La licenza termina alla sua scadenza o alla fine della formazione.</p>
+        <p><span class="n">5.1</span> <strong>Licenza per studenti.</strong> È gratuita per tutta la durata della formazione e vale solo per la formazione, per esempio per esercitazioni, lavori semestrali e lavori di diploma presso una scuola universitaria, una scuola universitaria professionale o una scuola professionale. L’uso commerciale non è consentito, in particolare per incarichi retribuiti, per un’attività accessoria o per il lavoro presso un datore di lavoro. Possiamo chiedere una prova della formazione, per esempio un indirizzo e-mail della scuola universitaria o una tessera di legittimazione. Con un attestato confermato la licenza vale ogni volta fino al 30 settembre, per almeno tre mesi e mai oltre la fine della formazione indicata. In seguito confermi la formazione ogni anno. La licenza termina alla sua scadenza o alla fine della formazione. Chi conclude la formazione e passa alla licenza per professionisti la usa gratuitamente fino a tre mesi dopo la fine dell’ultimo semestre.</p>
         <p><span class="n">5.2</span> <strong>Licenza per professionisti.</strong> Offerta di lancio: chi si registra entro il 31 dicembre 2026 la usa gratis almeno per tre mesi dall’attivazione. Vale per l’uso nei tuoi progetti professionali.</p>
         <p><span class="n">5.3</span> <strong>Altre licenze</strong>, per esempio per l’insegnamento o per aziende più grandi, le concordiamo caso per caso.</p>
         <p><span class="n">5.4</span> <strong>Le offerte a pagamento</strong> le annunciamo con almeno 30 giorni di anticipo. Ci sono costi solo se ordini espressamente un’offerta a pagamento. Una licenza gratuita non viene mai trasformata automaticamente in una licenza a pagamento. Se non ordini nulla, la licenza gratuita termina alla sua scadenza.</p>
@@ -1650,6 +1665,7 @@
         <p>Le e-mail con link di accesso e codice sono inviate per nostro conto dal servizio Resend. Vengono trattati il tuo indirizzo e-mail, il contenuto del messaggio e lo stato di consegna. In caso di nuova registrazione inviamo inoltre i dati del tuo account per e-mail a info@lignoai.ch, per poter verificare la licenza.</p>
         <h3>2.4 Licenza</h3>
         <p>Per la tua licenza salviamo stato, tipo di licenza e validità. Per ogni dispositivo registrato salviamo un ID del dispositivo e i momenti di attivazione, ultima verifica e disattivazione. L’ID del dispositivo è un numero casuale generato dall’app. Non contiene numeri di serie né informazioni sull’hardware. Sul tuo dispositivo l’app salva un’autorizzazione offline firmata e la tua sessione di accesso.</p>
+        <p>Per la licenza per studenti salviamo la fine degli studi indicata, l’indirizzo della tua scuola universitaria e quando l’hai confermato. Se carichi un certificato di immatricolazione, questo si trova in uno spazio protetto presso Supabase che solo noi possiamo consultare. Dopo la nostra verifica eliminiamo il documento e conserviamo solo il risultato. Il codice di conferma e i promemoria per il rinnovo sono inviati da Resend.</p>
         <h3>2.5 LignoCAD Tragwerk</h3>
         <p>L’app elabora progetti, piani e file CAD esclusivamente sul tuo computer. Non ci trasmette contenuti dei progetti, statistiche d’uso né rapporti sugli arresti anomali. Si collega ai nostri server solo per l’accesso e la verifica della licenza.</p>
         <h3>2.6 Contatto per e-mail</h3>
@@ -1703,6 +1719,7 @@
           <li>Fanno eccezione i dati che dobbiamo conservare o che ci servono come prova, per esempio i documenti commerciali relativi a offerte a pagamento per dieci anni oppure la prova del tuo consenso e di eventuali violazioni delle condizioni di licenza, finché ne possono derivare pretese.</li>
           <li>I log tecnici dei nostri fornitori di servizi vengono cancellati secondo i loro termini, di regola dopo pochi giorni o settimane.</li>
           <li>Conserviamo le e-mail inviate a info@lignoai.ch finché è necessario per la tua richiesta e per eventuali domande successive.</li>
+          <li>Eliminiamo i certificati di immatricolazione caricati dopo la verifica, al più tardi dopo 60 giorni.</li>
           <li>Non salviamo le conversazioni con il Lignobot. Anthropic conserva i dati per un periodo limitato secondo le proprie direttive e, secondo quanto dichiara, non li usa per addestrare i suoi modelli.</li>
         </ul>
       </section>
@@ -2080,7 +2097,25 @@
       $('#rgOrg').placeholder = role === 'student' ? 'BFH Bienne' : role === 'office' ? 'Legno Esempio SA' : '';
       $('#rgEmail').placeholder = role === 'student' ? 'nome.cognome@students.bfh.ch' : 'nome@studio.ch';
       $('#rgEmailHint').hidden = role !== 'student';
+      $('#rgStudentFields').hidden = role !== 'student';
     }
+
+    /* Studienende: Semesterende 31. Juli oder 31. Januar, als "JJJJ-07" bzw. "JJJJ-01". */
+    function fillStudyEnd(select, current) {
+      var now = new Date(), y = now.getFullYear(), opts = [];
+      for (var year = y - 1; year <= y + 7; year++) [1, 7].forEach(function (m) {
+        var d = new Date(year, m - 1, 31, 23, 59);
+        if (d >= now || (year + '-0' + m) === current) opts.push({ v: year + '-0' + m, d: d });
+      });
+      select.textContent = '';
+      var first = el('option', null, 'Seleziona'); first.value = ''; select.appendChild(first);
+      opts.slice(0, 13).forEach(function (o) {
+        var opt = el('option', null, o.d.toLocaleDateString(LOCALE, { day: 'numeric', month: 'long', year: 'numeric' }));
+        opt.value = o.v; select.appendChild(opt);
+      });
+      select.value = current || '';
+    }
+    fillStudyEnd($('#rgStudyEnd'), '');
     $$('input[name="role"]').forEach(function (r) { r.addEventListener('change', syncRoleHints); });
 
     $('#registerForm').addEventListener('submit', function (e) {
@@ -2092,6 +2127,10 @@
       if (!validEmail(email)) { showMsg(box, 'Inserisci un indirizzo e-mail valido.', 'error'); return; }
       var pw = $('#rgPassword').value;
       if (!checkPassword(box, $('#rgPassword'))) return;
+      var isStudent = $('input[name="role"]:checked').value === 'student';
+      var studyEnd = $('#rgStudyEnd').value, schoolEmail = $('#rgSchoolEmail').value.trim().toLowerCase();
+      if (isStudent && !studyEnd) { showMsg(box, 'Indica quando terminano presumibilmente i tuoi studi.', 'error'); return; }
+      if (isStudent && schoolEmail && !validEmail(schoolEmail)) { showMsg(box, 'L’indirizzo universitario non sembra valido. Controlla come l’hai scritto.', 'error'); return; }
       if (!$('#rgConsent').checked) { showMsg(box, 'Accetta le Condizioni d’uso, così possiamo creare il tuo account.', 'error'); return; }
       if (!sb) { showMsg(box, 'La registrazione al momento non è raggiungibile. Ricarica la pagina.', 'error'); return; }
       var data = {
@@ -2104,6 +2143,7 @@
         signup_source: 'website',
         lang: LANG
       };
+      if (isStudent) { data.study_until = studyEnd; if (schoolEmail && schoolEmail !== email) data.school_email = schoolEmail; }
       showMsg(box, ''); setBusy(btn, true, 'Creazione dell’account …');
       pendingOtp = { email: email, view: 'registrieren', signup: true };
       sb.auth.signUp({ email: email, password: pw, options: { data: data, emailRedirectTo: authRedirectUrl() } }).then(function (res) {
@@ -2270,7 +2310,7 @@
         });
         kv.style.gridTemplateColumns = 'repeat(2, 1fr)';
         box.appendChild(kv);
-        if (/vorläufig/.test(lic.plan)) box.appendChild(el('p', 'lic-text', 'Questa è una licenza provvisoria. Verifichiamo la tua registrazione e poi la estendiamo.'));
+        if (/vorläufig/.test(lic.plan)) box.appendChild(el('p', 'lic-text', meta().account_type === 'student' ? 'Questa è una licenza provvisoria di 14 giorni. Conferma qui sotto i tuoi studi, poi la estendiamo.' : 'Questa è una licenza provvisoria. Verifichiamo la tua registrazione e poi la estendiamo.'));
         var act = el('div', 'lic-actions');
         var dl = el('a', 'btn btn-primary', 'Scarica LignoCAD per Windows'); dl.href = TRAGWERK_DOWNLOAD_URL; act.appendChild(dl);
         act.appendChild(el('span', 'lic-note', TRAGWERK_VERSION_NOTE));
@@ -2301,11 +2341,176 @@
         return res.json();
       }).then(function (d) {
         renderLicense('ok', d.license);
+        loadStudent(d.license);
       }).catch(function (err) {
         if (err && err.code === 'session_expired') { toast('La tua sessione è scaduta. Accedi di nuovo.'); sb.auth.signOut({ scope: 'local' }); return; }
         console.warn('Lizenzstatus nicht verfügbar', err && err.message);
         renderLicense('error');
       }).then(function () { licenseLoading = false; });
+    }
+
+    /* ---------- Studium (Lizenz für Studierende) ----------
+       Nachweis per Hochschul-Adresse (Code) oder hochgeladener Studienbestätigung, jährliche
+       Bestätigung im September, Wechsel zu Fachperson nach dem Studium. Alles prüft und schreibt
+       die Edge Function student-license. Hier nur Anzeige und Weitergabe, Texte per textContent. */
+    var STUDENT_URL = SUPABASE_URL + '/functions/v1/student-license';
+    var STUDENT_PLAN = 'LignoCAD Tragwerk Studien-Beta';
+    var STUD_ERR = {
+      invalid_study_end: 'Indica quando terminano presumibilmente i tuoi studi.', study_end_missing: 'Scegli prima qui sopra quando terminano i tuoi studi e salvalo.',
+      invalid_email: 'L’indirizzo universitario non sembra valido. Controlla come l’hai scritto.', free_mail: 'Questo è un indirizzo privato. Indica l’indirizzo della tua scuola universitaria o carica un certificato di immatricolazione.', too_soon: 'Attendi un minuto prima di richiedere un nuovo codice.',
+      too_many: 'Oggi sono stati richiesti troppi codici. Riprova domani o carica un certificato di immatricolazione.', no_code: 'Il codice è scaduto. Richiedine semplicemente uno nuovo.', code_expired: 'Il codice è scaduto. Richiedine semplicemente uno nuovo.',
+      too_many_attempts: 'Troppi tentativi errati. Richiedi un nuovo codice.', wrong_code: 'Il codice non è corretto. Controlla le cifre.', study_ended: 'Secondo i tuoi dati, i tuoi studi sono già conclusi. Modifica la fine degli studi o passa alla licenza per professionisti.',
+      no_file: 'Scegli un PDF o un’immagine (JPG, PNG) di al massimo 5 MB.', wrong_type: 'Scegli un PDF o un’immagine (JPG, PNG) di al massimo 5 MB.', too_large: 'Scegli un PDF o un’immagine (JPG, PNG) di al massimo 5 MB.', not_allowed: 'Il cambio è possibile verso la fine degli studi. Hai concluso prima? Allora scrivici.'
+    };
+    function studentCall(body) {
+      return sb.auth.getSession().then(function (r) {
+        var token = r.data && r.data.session && r.data.session.access_token;
+        if (!token) throw { code: 'session_expired' };
+        var form = body instanceof FormData;
+        return fetch(STUDENT_URL, {
+          method: 'POST',
+          headers: form ? { Authorization: 'Bearer ' + token, apikey: SUPABASE_KEY } : { Authorization: 'Bearer ' + token, apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
+          body: form ? body : JSON.stringify(body)
+        });
+      }).then(function (res) {
+        if (res.status === 401) throw { code: 'session_expired' };
+        return res.json().catch(function () { return { error: 'generic' }; });
+      });
+    }
+    function loadStudent(lic) {
+      var box = $('#studentBox');
+      var relevant = meta().account_type === 'student' || (lic && lic.plan === STUDENT_PLAN);
+      box.hidden = !relevant;
+      if (!relevant) return;
+      studentCall({ type: 'status' }).then(function (s) {
+        if (s.error) throw s; renderStudent(s);
+      }).catch(function (err) {
+        if (err && err.code === 'session_expired') return;
+        box.textContent = ''; box.appendChild(el('h3', null, 'Studi')); box.appendChild(el('p', 'sub', 'Non è stato possibile caricare lo stato della licenza. Riprova tra un momento.'));
+      });
+    }
+    function studentAction(body, box, btn, done) {
+      showMsg(box, ''); setBusy(btn, true);
+      studentCall(body).then(function (s) {
+        setBusy(btn, false);
+        if (s.error) {
+          if (s.student) renderStudent(s, { msg: STUD_ERR[s.error] || 'Purtroppo non ha funzionato. Riprova.', kind: 'error', part: box.dataset.part });
+          else showMsg(box, STUD_ERR[s.error] || 'Purtroppo non ha funzionato. Riprova.', 'error');
+          return;
+        }
+        var msg = done(s);
+        renderStudent(s, msg ? { msg: msg, kind: 'ok', part: box.dataset.part } : null);
+        loadLicenseOnly();
+      }, function (err) {
+        setBusy(btn, false);
+        if (err && err.code === 'session_expired') { toast('La tua sessione è scaduta. Accedi di nuovo.'); return; }
+        showMsg(box, 'Nessuna connessione al server. Controlla la tua connessione a Internet e riprova.', 'error');
+      });
+    }
+    // Lizenzkarte neu laden, ohne die Studienkarte nochmals zu holen.
+    function loadLicenseOnly() {
+      sb.auth.getSession().then(function (r) {
+        var token = r.data && r.data.session && r.data.session.access_token;
+        return token && fetch(LICENSE_STATUS_URL, { headers: { Authorization: 'Bearer ' + token, apikey: SUPABASE_KEY } }).then(function (res) { return res.ok ? res.json() : null; });
+      }).then(function (d) { if (d) renderLicense('ok', d.license); }).catch(function () {});
+    }
+    function studPart(card, title, hint, partName) {
+      var part = el('div', 'stud-part'); if (title) part.appendChild(el('h4', null, title)); if (hint) part.appendChild(el('p', 'hint', hint));
+      var row = el('div', 'stud-row'); part.appendChild(row);
+      var msg = el('div', 'form-msg'); msg.hidden = true; msg.setAttribute('role', 'alert'); msg.dataset.part = partName; part.appendChild(msg);
+      card.appendChild(part);
+      return { row: row, msg: msg };
+    }
+    function studField(row, id, label, input) {
+      var f = el('div', 'field'); var l = el('label', null, label); l.htmlFor = id; input.id = id;
+      f.appendChild(l); f.appendChild(input); row.appendChild(f); return input;
+    }
+    function studButton(row, label, cls) { var b = el('button', 'btn ' + (cls || 'btn-primary'), label); b.type = 'button'; row.appendChild(b); return b; }
+
+    function renderStudent(s, flash) {
+      var card = $('#studentBox'), st = s.student || {}, lic = s.license;
+      card.textContent = ''; card.hidden = false;
+      card.appendChild(el('h3', null, 'Studi'));
+      var until = lic && lic.validUntil ? fmtDate(lic.validUntil) : '';
+      var gift = fmtDate(s.giftUntil), text, hi = false;
+      if (s.notice && s.notice.kind === 'graduation') { text = fmt('Secondo i tuoi dati, i tuoi studi terminano il {0}. Passa alla licenza per professionisti, fino al {1} è gratuita per te. Continui a studiare? Allora inserisci la nuova fine degli studi e confermala.', fmtDate(st.studyUntil), gift); hi = true; }
+      else if (s.notice) { text = fmt('La tua licenza per studenti è valida fino al {0}. Continui a studiare? Allora confermalo entro questa data. Hai concluso gli studi? Passa allora alla licenza per professionisti. Fino al {1} è gratuita per te.', fmtDate(s.notice.deadline), gift); hi = true; }
+      else if (lic && lic.plan === STUDENT_PLAN && lic.status === 'expired') { text = fmt('La tua licenza per studenti è scaduta. Conferma i tuoi studi e sarà di nuovo valida. Hai concluso gli studi? Passa allora alla licenza per professionisti, gratuita fino al {0}.', gift); hi = true; }
+      else if (s.inReview) text = 'Il tuo attestato è in verifica. Appena lo avremo esaminato riceverai un’e-mail.';
+      else if (!s.needsProof) text = 'I tuoi studi sono confermati. Ogni anno a settembre ti chiediamo brevemente se continui a studiare.' + (st.schoolEmail ? ' ' + fmt('Confermato tramite {0}.', st.schoolEmail) : '');
+      else text = 'Conferma i tuoi studi, poi la tua licenza vale ogni volta fino al 30 settembre. Con il tuo indirizzo universitario è immediato. Altrimenti carichi un certificato di immatricolazione.';
+      card.appendChild(el('p', 'stud-note' + (hi ? ' hi' : ''), text));
+
+      // Studienende
+      var endPart = studPart(card, null, null, 'end');
+      var sel = document.createElement('select');
+      fillStudyEnd(studField(endPart.row, 'stEnd', 'Fine degli studi', sel), st.studyUntil ? st.studyUntil.slice(0, 7) : '');
+      var saveBtn = studButton(endPart.row, 'Salva', 'btn-outline');
+      saveBtn.addEventListener('click', function () {
+        if (!sel.value) { showMsg(endPart.msg, 'Indica quando terminano presumibilmente i tuoi studi.', 'error'); return; }
+        studentAction({ type: 'set_study', value: sel.value }, endPart.msg, saveBtn, function () { return 'Salvato.'; });
+      });
+
+      if (s.needsProof) {
+        // Hochschul-Adresse mit Code
+        var mailPart = studPart(card, 'Conferma con l’indirizzo universitario', null, 'mail');
+        if (st.codeTo) {
+          mailPart.msg.hidden = false; mailPart.msg.className = 'form-msg ok'; mailPart.msg.textContent = fmt('Abbiamo inviato un codice a {0}. È valido 30 minuti.', st.codeTo);
+          var code = document.createElement('input'); code.inputMode = 'numeric'; code.autocomplete = 'one-time-code'; code.maxLength = 6; code.className = 'code-input'; code.placeholder = '123456';
+          studField(mailPart.row, 'stCode', 'Codice dall’e-mail', code);
+          var okBtn = studButton(mailPart.row, 'Conferma');
+          var again = studButton(mailPart.row, 'Invia un nuovo codice', 'btn-outline');
+          okBtn.addEventListener('click', function () {
+            studentAction({ type: 'verify_code', code: code.value.trim() }, mailPart.msg, okBtn, function (r) {
+              return r.review ? 'Grazie, il tuo indirizzo è confermato. Non conosciamo ancora questa scuola e la verifichiamo brevemente. Riceverai un’e-mail.' : fmt('Grazie, i tuoi studi sono confermati. La tua licenza è valida fino al {0}.', fmtDate(r.until));
+            });
+          });
+          again.addEventListener('click', function () {
+            studentAction({ type: 'send_code', email: st.codeTo }, mailPart.msg, again, function () { return ''; });
+          });
+        } else {
+          var mail = document.createElement('input'); mail.type = 'email'; mail.maxLength = 200; mail.autocomplete = 'off'; mail.placeholder = 'nome.cognome@students.bfh.ch';
+          mail.value = st.schoolEmail || '';
+          studField(mailPart.row, 'stMail', 'E-mail universitaria', mail);
+          var sendBtn = studButton(mailPart.row, 'Invia codice');
+          sendBtn.addEventListener('click', function () {
+            var v = mail.value.trim().toLowerCase();
+            if (!validEmail(v)) { showMsg(mailPart.msg, 'L’indirizzo universitario non sembra valido. Controlla come l’hai scritto.', 'error'); return; }
+            studentAction({ type: 'send_code', email: v }, mailPart.msg, sendBtn, function (r) {
+              return r.confirmed ? (r.review ? 'Grazie, il tuo indirizzo è confermato. Non conosciamo ancora questa scuola e la verifichiamo brevemente. Riceverai un’e-mail.' : fmt('Grazie, i tuoi studi sono confermati. La tua licenza è valida fino al {0}.', fmtDate(r.until))) : '';
+            });
+          });
+        }
+        // Studienbestätigung hochladen
+        var upPart = studPart(card, 'Nessun indirizzo universitario?', 'Carica un certificato di immatricolazione attuale con nome, scuola e semestre. PDF, JPG o PNG, al massimo 5 MB. Dopo la verifica eliminiamo il documento.', 'upload');
+        var file = document.createElement('input'); file.type = 'file'; file.accept = 'application/pdf,image/jpeg,image/png';
+        studField(upPart.row, 'stFile', 'Certificato di immatricolazione', file);
+        var upBtn = studButton(upPart.row, 'Carica', 'btn-outline');
+        upBtn.addEventListener('click', function () {
+          var f = file.files && file.files[0];
+          if (!f || f.size > 5 * 1024 * 1024 || ['application/pdf', 'image/jpeg', 'image/png'].indexOf(f.type) < 0) { showMsg(upPart.msg, 'Scegli un PDF o un’immagine (JPG, PNG) di al massimo 5 MB.', 'error'); return; }
+          var fd = new FormData(); fd.append('file', f);
+          studentAction(fd, upPart.msg, upBtn, function () { return 'Grazie, il tuo documento è arrivato. Lo verifichiamo e ti inviamo un’e-mail.'; });
+        });
+      }
+
+      if (s.canGraduate) {
+        var gradPart = studPart(card, 'Studi conclusi?', fmt('Allora passi alla licenza per professionisti. Fino al {0} è gratuita per te.', gift), 'grad');
+        var gradBtn = studButton(gradPart.row, 'Ho concluso gli studi', 'btn-outline');
+        gradBtn.addEventListener('click', function () {
+          if (!confirm(fmt('Passi alla licenza per professionisti. È gratuita per te fino al {0}. Continuare?', gift))) return;
+          studentAction({ type: 'graduate' }, gradPart.msg, gradBtn, function (r) {
+            toast(fmt('Congratulazioni! La tua licenza per professionisti è valida fino al {0}.', fmtDate(r.until)));
+            sb.auth.refreshSession().then(function (res) { if (res.data && res.data.user) { user = res.data.user; renderUser(); } });
+            return fmt('Congratulazioni! La tua licenza per professionisti è valida fino al {0}.', fmtDate(r.until));
+          });
+        });
+      }
+
+      if (flash && flash.msg) {
+        var target = card.querySelector('.form-msg[data-part="' + flash.part + '"]') || card.querySelector('.form-msg');
+        if (target) showMsg(target, flash.msg, flash.kind);
+      }
     }
 
     $('#profileForm').addEventListener('submit', function (e) {
