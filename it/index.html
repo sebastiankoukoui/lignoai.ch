@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://djijagmwottlscxguimc.supabase.co https://nwrvvqufmlmdbfubfoqs.supabase.co; form-action 'self'; base-uri 'self'; object-src 'none'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://djijagmwottlscxguimc.supabase.co; form-action 'self'; base-uri 'self'; object-src 'none'" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>LignoAI | L’IA nella progettazione delle costruzioni in legno</title>
   <meta name="description" content="LignoAI sviluppa software per la costruzione in legno: Open MCP CAD, il primo server MCP pubblico per Cadwork, e LignoPlan con LignoCAD Tragwerk per piani delle posizioni e piani di trasmissione dei carichi." />
@@ -1655,7 +1655,7 @@
         <h3>2.6 Contatto per e-mail</h3>
         <p>Se ci scrivi a info@lignoai.ch, trattiamo il tuo indirizzo e il contenuto del tuo messaggio per risponderti. Riceviamo i messaggi tramite il servizio e-mail iCloud di Apple.</p>
         <h3>2.7 Lignobot</h3>
-        <p>Se scrivi al Lignobot, il tuo messaggio e la cronologia di questa conversazione vengono inviati a una funzione presso Supabase a Zurigo e da lì al fornitore di IA Anthropic negli Stati Uniti, che genera la risposta. Non salviamo le conversazioni. La cronologia scompare appena ricarichi la pagina. Per favore non inserire nella chat dati confidenziali o degni di particolare protezione.</p>
+        <p>Se scrivi al Lignobot, il tuo messaggio e la cronologia di questa conversazione vengono inviati a una funzione presso Supabase e da lì al fornitore di IA Anthropic negli Stati Uniti, che genera la risposta. Non salviamo le conversazioni. La cronologia scompare appena ricarichi la pagina. Per favore non inserire nella chat dati confidenziali o degni di particolare protezione.</p>
         <h3>2.8 Memorizzazione nel tuo browser</h3>
         <p>Se accedi al sito web, il tuo browser salva la sessione di accesso nella memoria locale, così resti connesso. Anche la lingua che hai scelto viene salvata localmente dal browser. Nella pagina di accesso per l’app, durante l’accesso viene salvato brevemente uno stato intermedio nella memoria di sessione. Non usiamo cookie per la pubblicità o l’analisi.</p>
         <h3>2.9 Novità</h3>
@@ -1683,7 +1683,7 @@
         <h2>5. Fornitori di servizi e comunicazione all’estero</h2>
         <p>Ci avvaliamo dei seguenti fornitori di servizi, che trattano dati per nostro conto:</p>
         <ul>
-          <li><strong>Supabase Inc.</strong>, USA: account, accesso e dati di licenza. I dati si trovano in un centro dati a Stoccolma, Svezia. La funzione del Lignobot è eseguita a Zurigo.</li>
+          <li><strong>Supabase Inc.</strong>, USA: account, accesso e dati di licenza. I dati si trovano in un centro dati a Stoccolma, Svezia. Lì viene eseguita anche la funzione del Lignobot.</li>
           <li><strong>Resend Inc.</strong>, USA: invio delle e-mail di accesso</li>
           <li><strong>GitHub Inc.</strong>, USA: hosting del sito web con GitHub Pages tramite una rete mondiale di server e download dei programmi di installazione</li>
           <li><strong>Anthropic PBC</strong>, USA: modello di IA per le risposte del Lignobot</li>
@@ -1847,11 +1847,10 @@
 
     /* ------------------------------------------------------------------
        Konfiguration
-       CHAT_ENDPOINT: neuer Chat-Endpunkt (z. B. Cloudflare Worker).
+       CHAT_ENDPOINT: Lignobot, Edge Function chat im Projekt lignocad-beta (Quelle supabase/functions/chat).
        Leer lassen = Ligno antwortet mit einer Offline-Nachricht.
     ------------------------------------------------------------------ */
-    var CHAT_ENDPOINT = 'https://nwrvvqufmlmdbfubfoqs.supabase.co/functions/v1/chat';
-    var CHAT_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53cnZ2cXVmbWxtZGJmdWJmb3FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDMxNzYsImV4cCI6MjA5MDg3OTE3Nn0.ji817y28YAEYE1WbZ6ChpgmNPJyeri7va9GFS5FS7jg';   // öffentlicher Anon-Key des Chat-Projekts
+    var CHAT_ENDPOINT = 'https://djijagmwottlscxguimc.supabase.co/functions/v1/chat';
 
     var $ = function (s, r) { return (r || document).querySelector(s); };
     var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -2548,7 +2547,7 @@
       input.value = ''; addMsg('user', esc(text)); chatHistory.push({ role: 'user', content: text });
       var offline = 'Al momento sono offline. Scrivici direttamente: <a href="mailto:info@lignoai.ch">info@lignoai.ch</a>';
       if (!CHAT_ENDPOINT) { setTimeout(function () { addMsg('bot', offline); }, 350); return; }
-      fetch(CHAT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + CHAT_KEY }, body: JSON.stringify({ messages: chatHistory.slice(-12), lang: LANG }) })
+      fetch(CHAT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: SUPABASE_KEY }, body: JSON.stringify({ messages: chatHistory.slice(-12), lang: LANG }) })
         .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
         .then(function (d) { chatHistory.push({ role: 'assistant', content: d.reply }); addMsg('bot', botHtml(d.reply)); })
         .catch(function () { addMsg('bot', offline); });

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://djijagmwottlscxguimc.supabase.co https://nwrvvqufmlmdbfubfoqs.supabase.co; form-action 'self'; base-uri 'self'; object-src 'none'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://djijagmwottlscxguimc.supabase.co; form-action 'self'; base-uri 'self'; object-src 'none'" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 {{headMeta}}
 {{langRedirect}}  <meta name="author" content="Sebastian Koukoui" />
@@ -1416,11 +1416,10 @@
 
     /* ------------------------------------------------------------------
        Konfiguration
-       CHAT_ENDPOINT: neuer Chat-Endpunkt (z. B. Cloudflare Worker).
+       CHAT_ENDPOINT: Lignobot, Edge Function chat im Projekt lignocad-beta (Quelle supabase/functions/chat).
        Leer lassen = Ligno antwortet mit einer Offline-Nachricht.
     ------------------------------------------------------------------ */
-    var CHAT_ENDPOINT = 'https://nwrvvqufmlmdbfubfoqs.supabase.co/functions/v1/chat';
-    var CHAT_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53cnZ2cXVmbWxtZGJmdWJmb3FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDMxNzYsImV4cCI6MjA5MDg3OTE3Nn0.ji817y28YAEYE1WbZ6ChpgmNPJyeri7va9GFS5FS7jg';   // öffentlicher Anon-Key des Chat-Projekts
+    var CHAT_ENDPOINT = 'https://djijagmwottlscxguimc.supabase.co/functions/v1/chat';
 
     var $ = function (s, r) { return (r || document).querySelector(s); };
     var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -2117,7 +2116,7 @@
       input.value = ''; addMsg('user', esc(text)); chatHistory.push({ role: 'user', content: text });
       var offline = '{{js.chatOffline}}';
       if (!CHAT_ENDPOINT) { setTimeout(function () { addMsg('bot', offline); }, 350); return; }
-      fetch(CHAT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + CHAT_KEY }, body: JSON.stringify({ messages: chatHistory.slice(-12), lang: LANG }) })
+      fetch(CHAT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: SUPABASE_KEY }, body: JSON.stringify({ messages: chatHistory.slice(-12), lang: LANG }) })
         .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
         .then(function (d) { chatHistory.push({ role: 'assistant', content: d.reply }); addMsg('bot', botHtml(d.reply)); })
         .catch(function () { addMsg('bot', offline); });

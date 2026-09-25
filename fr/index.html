@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://djijagmwottlscxguimc.supabase.co https://nwrvvqufmlmdbfubfoqs.supabase.co; form-action 'self'; base-uri 'self'; object-src 'none'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://djijagmwottlscxguimc.supabase.co; form-action 'self'; base-uri 'self'; object-src 'none'" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>LignoAI | L’IA dans le processus de planification de la construction bois</title>
   <meta name="description" content="LignoAI développe des logiciels pour la construction bois : Open MCP CAD, le premier serveur MCP public pour Cadwork, et LignoPlan avec LignoCAD Tragwerk pour les plans de positions et de transmission des charges." />
@@ -1655,7 +1655,7 @@
         <h3>2.6 Contact par e-mail</h3>
         <p>Si vous nous écrivez à info@lignoai.ch, nous traitons votre adresse et le contenu de votre message pour vous répondre. Nous recevons les messages via le service de messagerie iCloud d’Apple.</p>
         <h3>2.7 Lignobot</h3>
-        <p>Si vous écrivez au Lignobot, votre message et l’historique de cette conversation sont transmis à une fonction hébergée chez Supabase à Zurich, puis au fournisseur d’IA Anthropic aux États-Unis, qui génère la réponse. Nous n’enregistrons pas les conversations. L’historique disparaît dès que vous rechargez la page. Veuillez ne saisir dans le chat aucune donnée confidentielle ni aucune donnée personnelle sensible.</p>
+        <p>Si vous écrivez au Lignobot, votre message et l’historique de cette conversation sont transmis à une fonction hébergée chez Supabase, puis au fournisseur d’IA Anthropic aux États-Unis, qui génère la réponse. Nous n’enregistrons pas les conversations. L’historique disparaît dès que vous rechargez la page. Veuillez ne saisir dans le chat aucune donnée confidentielle ni aucune donnée personnelle sensible.</p>
         <h3>2.8 Stockage dans votre navigateur</h3>
         <p>Si vous vous connectez sur le site web, votre navigateur enregistre la session de connexion dans le stockage local, afin de maintenir votre connexion. Votre navigateur enregistre aussi localement votre choix de langue. Sur la page de connexion pour l’application, un état intermédiaire est brièvement enregistré dans le stockage de session pendant la connexion. Nous n’utilisons pas de cookies publicitaires ou d’analyse.</p>
         <h3>2.9 Nouveautés</h3>
@@ -1683,7 +1683,7 @@
         <h2>5. Prestataires et communication à l’étranger</h2>
         <p>Nous faisons appel aux prestataires suivants, qui traitent des données pour notre compte :</p>
         <ul>
-          <li><strong>Supabase Inc.</strong>, États-Unis : compte, connexion et données de licence. Les données sont hébergées dans un centre de données à Stockholm, en Suède. La fonction du Lignobot s’exécute à Zurich.</li>
+          <li><strong>Supabase Inc.</strong>, États-Unis : compte, connexion et données de licence. Les données sont hébergées dans un centre de données à Stockholm, en Suède. La fonction du Lignobot y est également exécutée.</li>
           <li><strong>Resend Inc.</strong>, États-Unis : envoi des e-mails de connexion</li>
           <li><strong>GitHub Inc.</strong>, États-Unis : hébergement du site web avec GitHub Pages via un réseau mondial de serveurs et téléchargement des programmes d’installation</li>
           <li><strong>Anthropic PBC</strong>, États-Unis : modèle d’IA pour les réponses du Lignobot</li>
@@ -1847,11 +1847,10 @@
 
     /* ------------------------------------------------------------------
        Konfiguration
-       CHAT_ENDPOINT: neuer Chat-Endpunkt (z. B. Cloudflare Worker).
+       CHAT_ENDPOINT: Lignobot, Edge Function chat im Projekt lignocad-beta (Quelle supabase/functions/chat).
        Leer lassen = Ligno antwortet mit einer Offline-Nachricht.
     ------------------------------------------------------------------ */
-    var CHAT_ENDPOINT = 'https://nwrvvqufmlmdbfubfoqs.supabase.co/functions/v1/chat';
-    var CHAT_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53cnZ2cXVmbWxtZGJmdWJmb3FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDMxNzYsImV4cCI6MjA5MDg3OTE3Nn0.ji817y28YAEYE1WbZ6ChpgmNPJyeri7va9GFS5FS7jg';   // öffentlicher Anon-Key des Chat-Projekts
+    var CHAT_ENDPOINT = 'https://djijagmwottlscxguimc.supabase.co/functions/v1/chat';
 
     var $ = function (s, r) { return (r || document).querySelector(s); };
     var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -2548,7 +2547,7 @@
       input.value = ''; addMsg('user', esc(text)); chatHistory.push({ role: 'user', content: text });
       var offline = 'Je suis hors ligne pour le moment. Écrivez-nous directement : <a href="mailto:info@lignoai.ch">info@lignoai.ch</a>';
       if (!CHAT_ENDPOINT) { setTimeout(function () { addMsg('bot', offline); }, 350); return; }
-      fetch(CHAT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + CHAT_KEY }, body: JSON.stringify({ messages: chatHistory.slice(-12), lang: LANG }) })
+      fetch(CHAT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: SUPABASE_KEY }, body: JSON.stringify({ messages: chatHistory.slice(-12), lang: LANG }) })
         .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
         .then(function (d) { chatHistory.push({ role: 'assistant', content: d.reply }); addMsg('bot', botHtml(d.reply)); })
         .catch(function () { addMsg('bot', offline); });
