@@ -634,7 +634,7 @@
     .chat-head .x { margin-left: auto; background: none; border: 0; width: 32px; height: 32px; border-radius: 8px; color: var(--muted); font-size: 1.3rem; }
     .chat-head .x:hover { background: var(--bg-soft); color: var(--ink); }
     .chat-msgs { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: var(--bg-soft); }
-    .msg { max-width: 84%; padding: 10px 13px; border-radius: 14px; font-size: .9rem; line-height: 1.5; }
+    .msg { max-width: 84%; min-width: 0; padding: 10px 13px; border-radius: 14px; font-size: .9rem; line-height: 1.5; overflow-wrap: anywhere; }
     .msg.bot { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-bottom-left-radius: 4px; }
     .msg.user { align-self: flex-end; background: var(--green); color: #fff; border-bottom-right-radius: 4px; }
     .msg a { color: var(--green-700); font-weight: 700; }
