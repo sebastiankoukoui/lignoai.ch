@@ -279,6 +279,11 @@
     .product.mcp .product-art { background: linear-gradient(160deg, #f6f4fd, #fff 60%); }
     .product.tragwerk .product-art { background: linear-gradient(160deg, #f3f6fc, #fff 60%); }
     .product-body { padding: 44px 48px; }
+    .product-video { grid-column: 1 / -1; margin: 0; border-bottom: 1px solid var(--line); background: #fff; }
+    .product-video video { display: block; width: 100%; height: auto; aspect-ratio: 1920 / 704; background: #fff; }
+    .product-video figcaption { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 12px 20px; border-top: 1px solid var(--line); font-size: .88rem; color: var(--ink-2); }
+    .product-video figcaption .btn { flex-shrink: 0; }
+    .product-video figcaption svg { width: 14px; height: 14px; }
     .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
     .badge {
       display: inline-flex; align-items: center; gap: 6px;
@@ -863,6 +868,18 @@
 
         <!-- Open MCP CAD -->
         <article class="product mcp reveal" id="mcp">
+          <figure class="product-video">
+            <video id="mcpVideo" width="1920" height="704" muted playsinline loop controls preload="none" poster="/assets/video/kuppel_poster.webp" aria-label="Démo : Open MCP CAD dessine une coupole dans Cadwork" data-full="/assets/video/kuppel_web.mp4">
+              <source src="/assets/video/kuppel_30s.mp4" type="video/mp4">
+            </video>
+            <figcaption>
+              <span>Une coupole entière dans Cadwork, dessinée par Open MCP CAD : 286 barres avec leurs usinages d’about, 2288 broches et tous les nœuds en acier en 31 minutes. En accéléré.</span>
+              <button class="btn btn-ghost" type="button" id="mcpVideoFull">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                Vidéo complète (70 s)
+              </button>
+            </figcaption>
+          </figure>
           <div class="product-art">
             <img src="/assets/open-mcp-cad.webp" alt="Logo Open MCP CAD" width="280" height="280">
           </div>
@@ -2720,6 +2737,29 @@
       }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
       $$('.reveal').forEach(function (el) { io.observe(el); });
     } else { $$('.reveal').forEach(function (el) { el.classList.add('in'); }); }
+
+    /* ---------- Demo-Video Open MCP CAD ---------- */
+    // Kurzfassung läuft stumm, sobald sie sichtbar ist (nicht bei reduzierter Bewegung). Der Knopf lädt die ganze Fassung.
+    (function () {
+      var v = $('#mcpVideo'), full = $('#mcpVideoFull');
+      if (!v) return;
+      var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!calm && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+            else if (!v.paused && v.loop) v.pause();
+          });
+        }, { threshold: 0.4 }).observe(v);
+      }
+      full.addEventListener('click', function () {
+        v.loop = false;
+        v.src = v.getAttribute('data-full');
+        v.currentTime = 0;
+        var p = v.play(); if (p && p.catch) p.catch(function () {});
+        full.hidden = true;
+      });
+    })();
 
     /* ---------- Chat ---------- */
     var chat = $('#chat'), msgs = $('#chatMsgs'), chatHistory = [], greeted = false;

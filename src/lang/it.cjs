@@ -145,6 +145,9 @@ module.exports = {
     'mcp.download': 'Scarica (.zip)',
     'mcp.github': 'Vedi su GitHub',
     'mcp.foot': 'Installazione: estrai lo ZIP e fai doppio clic su <code>install.cmd</code>. Non copiare tu stesso il codice sorgente da GitHub in Cadwork. Requisiti: Windows, Cadwork 3D 2026, Python da 3.10 a 3.13. Se Python manca, il programma di installazione propone di installarlo. La <a href="https://github.com/sebastiankoukoui/open-mcp-cad/blob/main/verteilung/ANLEITUNG.it.md" target="_blank" rel="noopener">guida all’installazione</a> è disponibile in tedesco, inglese, francese e italiano.',
+    'mcp.videoLabel': 'Demo: Open MCP CAD disegna una cupola in Cadwork',
+    'mcp.videoCaption': 'Una cupola intera in Cadwork, disegnata da Open MCP CAD: 286 aste con le lavorazioni di testa, 2288 spinotti e tutti i nodi in acciaio in 31 minuti. Video accelerato.',
+    'mcp.videoFull': 'Video completo (70 s)',
 
     'share.button': 'Condividi',
     'share.copy': 'Copia link',

@@ -145,6 +145,9 @@ module.exports = {
     'mcp.download': 'Download (.zip)',
     'mcp.github': 'View on GitHub',
     'mcp.foot': 'Installation: unzip the ZIP file and double-click <code>install.cmd</code>. Do not copy the source code from GitHub into Cadwork yourself. Requirements: Windows, Cadwork 3D 2026, Python 3.10 to 3.13. If Python is missing, the installer offers to install it. The <a href="https://github.com/sebastiankoukoui/open-mcp-cad/blob/main/verteilung/ANLEITUNG.en.md" target="_blank" rel="noopener">installation guide</a> is available in German, English, French and Italian.',
+    'mcp.videoLabel': 'Demo: Open MCP CAD draws a dome in Cadwork',
+    'mcp.videoCaption': 'A whole dome in Cadwork, drawn by Open MCP CAD: 286 members with end types, 2288 dowels and all steel nodes in 31 minutes. Sped up.',
+    'mcp.videoFull': 'Full video (70 s)',
 
     'share.button': 'Share',
     'share.copy': 'Copy link',
