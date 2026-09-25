@@ -259,11 +259,22 @@
     .product.mcp .product-art { background: linear-gradient(160deg, #f6f4fd, #fff 60%); }
     .product.tragwerk .product-art { background: linear-gradient(160deg, #f3f6fc, #fff 60%); }
     .product-body { padding: 44px 48px; }
-    .product-video { grid-column: 1 / -1; margin: 0; border-bottom: 1px solid var(--line); background: #fff; }
-    .product-video video { display: block; width: 100%; height: auto; aspect-ratio: 1920 / 704; background: #fff; }
-    .product-video figcaption { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 12px 20px; border-top: 1px solid var(--line); font-size: .88rem; color: var(--ink-2); }
-    .product-video figcaption .btn { flex-shrink: 0; }
-    .product-video figcaption svg { width: 14px; height: 14px; }
+    .demo { margin: -4px 0 28px; }
+    .demo-title { font-size: .8rem; font-weight: 700; color: var(--muted); margin-bottom: 10px; }
+    .demo-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 560px; }
+    .demo-tile { position: relative; display: block; padding: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; cursor: zoom-in; text-align: left; font: inherit; }
+    .demo-tile[data-video] { cursor: pointer; }
+    .demo-tile img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; transition: transform .3s ease; }
+    .demo-tile:hover img { transform: scale(1.04); }
+    .demo-tile:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+    .demo-play { position: absolute; left: 50%; top: 38%; transform: translate(-50%, -50%); width: 34px; height: 34px; border-radius: 50%; background: rgba(17, 23, 19, .78); color: #fff; display: grid; place-items: center; }
+    .demo-play svg { width: 16px; height: 16px; margin-left: 2px; }
+    .demo-cap { display: block; padding: 6px 9px; font-size: .74rem; font-weight: 600; color: var(--ink-2); border-top: 1px solid var(--line); }
+    .demo-dialog { margin: auto; border: 0; padding: 0; border-radius: 14px; width: min(1100px, calc(100vw - 32px)); max-height: calc(100vh - 32px); background: #fff; box-shadow: var(--shadow-lg); }
+    .demo-dialog::backdrop { background: rgba(17, 23, 19, .72); }
+    .demo-dialog img, .demo-dialog video { display: block; width: 100%; height: auto; max-height: calc(100vh - 140px); object-fit: contain; background: #fff; }
+    .demo-dialog p { padding: 12px 56px 14px 18px; font-size: .9rem; color: var(--ink-2); }
+    .demo-close { position: absolute; right: 10px; bottom: 8px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: var(--bg-soft); color: var(--ink); font-size: 1.3rem; line-height: 1; cursor: pointer; }
     .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
     .badge {
       display: inline-flex; align-items: center; gap: 6px;
@@ -845,18 +856,6 @@
 
         <!-- Open MCP CAD -->
         <article class="product mcp reveal" id="mcp">
-          <figure class="product-video">
-            <video id="mcpVideo" width="1920" height="704" muted playsinline loop controls preload="none" poster="/assets/video/kuppel_poster.webp" aria-label="{{mcp.videoLabel}}" data-full="/assets/video/kuppel_web.mp4">
-              <source src="/assets/video/kuppel_30s.mp4" type="video/mp4">
-            </video>
-            <figcaption>
-              <span>{{mcp.videoCaption}}</span>
-              <button class="btn btn-ghost" type="button" id="mcpVideoFull">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-                {{mcp.videoFull}}
-              </button>
-            </figcaption>
-          </figure>
           <div class="product-art">
             <img src="/assets/open-mcp-cad.webp" alt="{{mcp.logoAlt}}" width="280" height="280">
           </div>
@@ -877,6 +876,24 @@
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>{{mcp.check3}}</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>{{mcp.check4}}</li>
             </ul>
+            <div class="demo">
+              <p class="demo-title">{{mcp.demoTitle}}</p>
+              <div class="demo-tiles">
+                <button class="demo-tile" type="button" data-video="/assets/demo/kuppel_30s.mp4" data-text="{{mcp.videoCaption}}">
+                  <img src="/assets/demo/kuppel.webp" alt="" width="1200" height="800" loading="lazy">
+                  <span class="demo-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                  <span class="demo-cap">{{mcp.demoVideo}}</span>
+                </button>
+                <button class="demo-tile" type="button" data-img="/assets/demo/knoten.webp" data-text="{{mcp.demoNodeText}}">
+                  <img src="/assets/demo/knoten.webp" alt="" width="1400" height="717" loading="lazy">
+                  <span class="demo-cap">{{mcp.demoNode}}</span>
+                </button>
+                <button class="demo-tile" type="button" data-img="/assets/demo/knoten-nah.webp" data-text="{{mcp.demoDetailText}}">
+                  <img src="/assets/demo/knoten-nah.webp" alt="" width="1400" height="661" loading="lazy">
+                  <span class="demo-cap">{{mcp.demoDetail}}</span>
+                </button>
+              </div>
+            </div>
             <div class="product-actions">
               <a class="btn btn-dark" href="https://github.com/sebastiankoukoui/open-mcp-cad/releases/latest" target="_blank" rel="noopener">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>
@@ -1387,6 +1404,12 @@
   </main>
 
 {{legal}}
+  <dialog class="demo-dialog" id="demoDialog" aria-label="{{mcp.demoTitle}}">
+    <div id="demoMedia"></div>
+    <p id="demoText"></p>
+    <button class="demo-close" type="button" id="demoClose" aria-label="{{mcp.demoClose}}">×</button>
+  </dialog>
+
   <!-- ============ FOOTER ============ -->
   <footer class="site-footer">
     <div class="wrap">
@@ -1408,6 +1431,7 @@
           <ul>
             <li><a href="#mission">{{nav.about}}</a></li>
             <li><a href="#kontakt">{{nav.contact}}</a></li>
+            <li><a href="https://www.instagram.com/lignoai/" target="_blank" rel="noopener">Instagram</a></li>
             <li class="member-only"><a href="#/konto">{{nav.myAccount}}</a></li>
             <li class="guest-only"><a href="#/anmelden">{{nav.login}}</a></li>
           </ul>
@@ -2305,27 +2329,32 @@
       $$('.reveal').forEach(function (el) { io.observe(el); });
     } else { $$('.reveal').forEach(function (el) { el.classList.add('in'); }); }
 
-    /* ---------- Demo-Video Open MCP CAD ---------- */
-    // Kurzfassung läuft stumm, sobald sie sichtbar ist (nicht bei reduzierter Bewegung). Der Knopf lädt die ganze Fassung.
+    /* ---------- Demo Open MCP CAD ---------- */
+    // Vorschaubilder öffnen Video oder Bild gross in einem Dialog. Das Video lädt erst beim Klick.
     (function () {
-      var v = $('#mcpVideo'), full = $('#mcpVideoFull');
-      if (!v) return;
-      var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!calm && 'IntersectionObserver' in window) {
-        new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) {
-            if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
-            else if (!v.paused && v.loop) v.pause();
-          });
-        }, { threshold: 0.4 }).observe(v);
-      }
-      full.addEventListener('click', function () {
-        v.loop = false;
-        v.src = v.getAttribute('data-full');
-        v.currentTime = 0;
-        var p = v.play(); if (p && p.catch) p.catch(function () {});
-        full.hidden = true;
+      var dlg = $('#demoDialog'), media = $('#demoMedia'), text = $('#demoText');
+      if (!dlg || !dlg.showModal) return;
+      $$('.demo-tile').forEach(function (b) {
+        b.addEventListener('click', function () {
+          media.innerHTML = '';
+          var src = b.getAttribute('data-video'), el;
+          if (src) {
+            el = document.createElement('video');
+            el.src = src; el.controls = true; el.muted = true; el.playsInline = true; el.autoplay = true;
+            el.poster = '/assets/demo/kuppel_poster.webp';
+          } else {
+            el = document.createElement('img');
+            el.src = b.getAttribute('data-img'); el.alt = b.getAttribute('data-text');
+          }
+          media.appendChild(el);
+          text.textContent = b.getAttribute('data-text');
+          dlg.showModal();
+        });
       });
+      function close() { dlg.close(); }
+      $('#demoClose').addEventListener('click', close);
+      dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });
+      dlg.addEventListener('close', function () { media.innerHTML = ''; });
     })();
 
     /* ---------- Chat ---------- */
