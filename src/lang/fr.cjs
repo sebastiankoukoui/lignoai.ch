@@ -188,6 +188,8 @@ module.exports = {
     'plan.p': 'LignoPlan réunit les outils de planification de LignoAI. Son cœur sera <strong>LignoCAD</strong>, un logiciel de CAO autonome pour la construction bois, qui comprend comment pensent les ingénieurs.',
     'plan.aside': 'Tragwerk est le premier module. D’autres suivront progressivement et fonctionneront tous avec le même compte LignoPlan. Vos projets restent en local sur votre ordinateur.',
     'plan.available': 'Disponible',
+    'plan.fireName': 'LignoCAD Brandschutz',
+    'plan.fireImg': '/assets/lignocad-brandschutz.webp',
     'plan.soon': 'Bientôt',
     'plan.revealSoon': 'Bientôt dévoilé',
     'plan.moreModule': 'Autre module',

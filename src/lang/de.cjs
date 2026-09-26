@@ -188,6 +188,8 @@ module.exports = {
     'plan.p': 'LignoPlan bündelt die Planungswerkzeuge von LignoAI. Herzstück wird <strong>LignoCAD</strong>, ein eigenständiges Holzbau-CAD, das versteht, wie Ingenieure denken.',
     'plan.aside': 'Tragwerk ist das erste Modul. Weitere folgen nach und nach und laufen alle über dasselbe LignoPlan-Konto. Deine Projekte bleiben dabei lokal auf deinem Rechner.',
     'plan.available': 'Verfügbar',
+    'plan.fireName': 'LignoCAD Brandschutz',
+    'plan.fireImg': '/assets/lignocad-brandschutz.webp',
     'plan.soon': 'Demnächst',
     'plan.revealSoon': 'Wird bald vorgestellt',
     'plan.moreModule': 'Weiteres Modul',

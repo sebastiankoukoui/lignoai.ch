@@ -188,6 +188,8 @@ module.exports = {
     'plan.p': 'LignoPlan brings together the planning tools from LignoAI. At its heart will be <strong>LignoCAD</strong>, a standalone timber construction CAD that understands how engineers think.',
     'plan.aside': 'Tragwerk is the first module. More will follow step by step, all running on the same LignoPlan account. Your projects stay local on your computer.',
     'plan.available': 'Available',
+    'plan.fireName': 'LignoCAD Fire',
+    'plan.fireImg': '/assets/lignocad-fire.webp',
     'plan.soon': 'Coming soon',
     'plan.revealSoon': 'To be unveiled soon',
     'plan.moreModule': 'Another module',
