@@ -145,7 +145,7 @@ module.exports = {
     'mcp.download': 'Herunterladen (.zip)',
     'mcp.github': 'Auf GitHub ansehen',
     'mcp.foot': 'Installation: ZIP entpacken, <code>install.cmd</code> doppelklicken. Den Quellcode von GitHub nicht selbst in Cadwork kopieren. Voraussetzung: Windows, Cadwork 3D 2026, Python 3.10 bis 3.13. Fehlt Python, installiert es der Installer auf Nachfrage. Die Anleitung gibt es auf Deutsch, Englisch, Französisch und Italienisch.',
-    'mcp.videoCaption': 'Eine ganze Kuppel in Cadwork, gezeichnet von Open MCP CAD: 286 Stäbe mit Endtypen, 2288 Stabdübel und alle Stahlknoten in 31 Minuten. Im Zeitraffer.',
+    'mcp.videoCaption': 'Eine ganze Kuppel in Cadwork, gezeichnet von Open MCP CAD: 286 Stäbe mit Endtypen, 2288 Bolzen M16 und alle Stahlknoten in 31 Minuten. Im Zeitraffer.',
     'mcp.demoTitle': 'Demo: eine ganze Kuppel in Cadwork',
     'mcp.demoVideo': 'Video, 30 s',
     'mcp.demoNode': 'Stahlknoten',
