@@ -158,6 +158,13 @@ module.exports = {
     'share.copy': 'Copier le lien',
     'common.email': 'E-mail',
 
+    "builders.beta": "Bêta précoce",
+    "builders.tagline": "Planifier le bois de manière paramétrique. Poursuivre dans Cadwork.",
+    "builders.desc": "Ligno Builders associe l’IA à des composants paramétriques. L’exemple actuel présente des parois à ossature bois avec ouvertures, un modèle 3D et les plans 2D qui en sont issus.",
+    "builders.outlook": "En développement : d’autres composants, des parois en bois massif et des détails constructifs. L’objectif est de couvrir la planification de bâtiments en bois complets.",
+    "builders.link": "Voir la démonstration bêta",
+    "builders.linkHint": "Ouvre la démonstration sur une page séparée dans un nouvel onglet.",
+
     'tw.logoAlt': 'Logo LignoCAD Tragwerk',
     'tw.badgePart': 'Module de LignoPlan',
     'tw.badgeApp': 'Application Windows',

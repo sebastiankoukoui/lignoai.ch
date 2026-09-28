@@ -158,6 +158,13 @@ module.exports = {
     'share.copy': 'Link kopieren',
     'common.email': 'E-Mail',
 
+    "builders.beta": "Frühe Beta",
+    "builders.tagline": "Holzbau parametrisch planen. In Cadwork weiterarbeiten.",
+    "builders.desc": "Ligno Builders verbindet KI mit parametrischen Bauteilen. Das aktuelle Beispiel zeigt Holzrahmenwände mit Fenster- und Türöffnungen, ein 3D-Modell und daraus abgeleitete 2D-Pläne.",
+    "builders.outlook": "In Entwicklung: weitere Bauteile, Massivholzwände und Konstruktionsdetails. Das Ziel ist die durchgängige Planung ganzer Holzgebäude.",
+    "builders.link": "Beta-Demo ansehen",
+    "builders.linkHint": "Öffnet die separate Demo-Seite in einem neuen Tab.",
+
     'tw.logoAlt': 'LignoCAD Tragwerk Logo',
     'tw.badgePart': 'Teil von LignoPlan',
     'tw.badgeApp': 'Windows-App',

@@ -158,6 +158,13 @@ module.exports = {
     'share.copy': 'Copy link',
     'common.email': 'Email',
 
+    "builders.beta": "Early beta",
+    "builders.tagline": "Parametric timber design. Continue in Cadwork.",
+    "builders.desc": "Ligno Builders combines AI with parametric components. The current example shows timber-frame walls with window and door openings, a 3D model and derived 2D drawings.",
+    "builders.outlook": "In development: further components, solid timber walls and construction details. The aim is to support the design of complete timber buildings.",
+    "builders.link": "Explore the beta demo",
+    "builders.linkHint": "Opens the separate demo page in a new tab.",
+
     'tw.logoAlt': 'LignoCAD Tragwerk logo',
     'tw.badgePart': 'Part of LignoPlan',
     'tw.badgeApp': 'Windows app',

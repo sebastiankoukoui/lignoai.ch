@@ -158,6 +158,13 @@ module.exports = {
     'share.copy': 'Copia link',
     'common.email': 'E-mail',
 
+    "builders.beta": "Beta iniziale",
+    "builders.tagline": "Progettare il legno in modo parametrico. Proseguire in Cadwork.",
+    "builders.desc": "Ligno Builders unisce l’IA a componenti parametrici. L’esempio attuale mostra pareti a telaio con aperture, un modello 3D e i piani 2D ricavati dal modello.",
+    "builders.outlook": "In sviluppo: altri componenti, pareti in legno massiccio e dettagli costruttivi. L’obiettivo è coprire la progettazione di interi edifici in legno.",
+    "builders.link": "Guarda la demo beta",
+    "builders.linkHint": "Apre la demo su una pagina separata in una nuova scheda.",
+
     'tw.logoAlt': 'Logo LignoCAD Tragwerk',
     'tw.badgePart': 'Parte di LignoPlan',
     'tw.badgeApp': 'App per Windows',

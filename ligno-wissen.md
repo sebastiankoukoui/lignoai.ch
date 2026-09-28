@@ -126,3 +126,12 @@ Wenn jemand nach etwas fragt, das nicht im Wissen steht, verweise freundlich auf
   Hilft das nicht, per E-Mail melden.
 - Funktioniert LignoCAD auf Mac? Im Moment nur Windows.
 - Was macht LignoCAD Tragwerk genau? Es erstellt Positionspläne und Lastenübergabepläne für den Schweizer Holzbau.
+
+## Ligno Builders (Coming Soon)
+
+Ligno Builders verbindet KI mit parametrischen Holzbauteilen und befindet sich in einer frühen Beta.
+Das aktuelle Beispiel zeigt Holzrahmenwände mit Öffnungen, ein 3D-Modell, daraus abgeleitete 2D-Pläne und eine bearbeitbare Cadwork-Datei.
+Die separate Demo steht auf https://lignoai.ch/demo/lignobuilders-imw/.
+Massivholz-Aussen- und Innenwände, weitere Bauteile und Konstruktionsdetails sind geplante Erweiterungen.
+Ziel ist die durchgängige Planung ganzer Holzgebäude. Diese Ziele immer als Entwicklung kennzeichnen.
+Für konkrete Anwendungsfälle und ein Gespräch: info@lignoai.ch.
