@@ -1151,7 +1151,7 @@ function makePlanDocument(markup) {
 
 scene.add(new THREE.HemisphereLight(0xffffff,0x718171,1.15));const light=new THREE.DirectionalLight(0xffffff,.65);light.position.set(-10000,-20000,30000);scene.add(light);
 const group=new THREE.Group();scene.add(group);const meshes=[];
-for(const d of DATA){const parent=new THREE.Group();parent.userData=d;group.add(parent);const mat=new THREE.MeshLambertMaterial({color:d.color,side:THREE.DoubleSide,transparent:d.kind==='Windpapier',opacity:d.kind==='Windpapier'?.38:1,depthWrite:d.kind!=='Windpapier',polygonOffset:d.kind==='Windpapier',polygonOffsetFactor:-1,polygonOffsetUnits:-1});
+for(const d of DATA){const parent=new THREE.Group();parent.userData=d;group.add(parent);const mat=new THREE.MeshLambertMaterial({color:d.color,side:THREE.DoubleSide,transparent:d.kind==='Windpapier',opacity:d.kind==='Windpapier'?.38:1,depthWrite:d.kind!=='Windpapier',polygonOffset:true,polygonOffsetFactor:d.kind==='Windpapier'?-1:1,polygonOffsetUnits:d.kind==='Windpapier'?-1:1});
 if(d.mesh){const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(d.mesh.vertices.flat(),3));geo.setIndex(d.mesh.faces.flat());geo.computeVertexNormals();const mesh=new THREE.Mesh(geo,mat);mesh.userData=d;parent.add(mesh);meshes.push(mesh);}else for(const [lo,hi] of d.pieces){const geo=new THREE.BoxGeometry(hi[0]-lo[0],hi[1]-lo[1],hi[2]-lo[2]);const mesh=new THREE.Mesh(geo,mat);mesh.position.set(...lo.map((v,i)=>(v+hi[i])/2));mesh.userData=d;parent.add(mesh);meshes.push(mesh);}
 }
 // Display filters only; all geometry comes from the Python builder export.
