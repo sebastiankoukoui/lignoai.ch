@@ -41,7 +41,7 @@
     "integration": "In dieser Demo verbindet Open MCP CAD die KI mit Cadwork. Ligno Builders liefert dafür die parametrischen Bauteile und Konstruktionsregeln. Das Konzept ist unabhängig vom CAD-System. Grundsätzlich ist auch die Anbindung anderer CAD-Programme möglich, sofern sie eine passende Schnittstelle bieten.",
     "integrationLabel": "CAD-Anbindung",
     "integrationLink": "Open MCP CAD entdecken",
-    "downloadHint": "Native .3d-Datei · 4.6 MB · Zum Öffnen in Cadwork"
+    "downloadHint": "Native .3d-Datei · 5.6 MB · Zum Öffnen in Cadwork"
   },
   "fr": {
     "private": "En développement",
@@ -85,7 +85,7 @@
     "integration": "Dans cette démonstration, Open MCP CAD relie l’IA à Cadwork. Ligno Builders fournit les composants paramétriques et les règles constructives. Le concept est indépendant du logiciel de CAO. D’autres logiciels peuvent en principe être intégrés s’ils disposent d’une interface adaptée.",
     "integrationLabel": "Intégration CAO",
     "integrationLink": "Découvrir Open MCP CAD",
-    "downloadHint": "Fichier natif .3d · 4.6 Mo · À ouvrir dans Cadwork"
+    "downloadHint": "Fichier natif .3d · 5.6 Mo · À ouvrir dans Cadwork"
   },
   "it": {
     "private": "In sviluppo",
@@ -129,7 +129,7 @@
     "integration": "In questa demo, Open MCP CAD collega l’IA a Cadwork. Ligno Builders fornisce i componenti parametrici e le regole costruttive. Il concetto è indipendente dal sistema CAD. In linea di principio è possibile integrare anche altri programmi CAD, purché offrano un’interfaccia adatta.",
     "integrationLabel": "Integrazione CAD",
     "integrationLink": "Scopri Open MCP CAD",
-    "downloadHint": "File nativo .3d · 4.6 MB · Da aprire in Cadwork"
+    "downloadHint": "File nativo .3d · 5.6 MB · Da aprire in Cadwork"
   },
   "en": {
     "private": "In development",
@@ -173,6 +173,6 @@
     "integration": "In this demo, Open MCP CAD connects AI to Cadwork. Ligno Builders provides the parametric components and construction rules. The concept is independent of the CAD system. Other CAD programs could also be connected, provided they offer a suitable interface.",
     "integrationLabel": "CAD integration",
     "integrationLink": "Explore Open MCP CAD",
-    "downloadHint": "Native .3d file · 4.6 MB · Open in Cadwork"
+    "downloadHint": "Native .3d file · 5.6 MB · Open in Cadwork"
   }
 }
