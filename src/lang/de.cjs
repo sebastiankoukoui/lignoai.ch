@@ -114,8 +114,8 @@ module.exports = {
     'nav.account': 'Konto',
     'nav.menuOpen': 'Menü öffnen',
 
-    'hero.pill': 'Neu',
-    'hero.announce': 'Open MCP CAD ist jetzt öffentlich',
+    "hero.pill": "In Entwicklung",
+    "hero.announce": "Ligno Builders: die Demo entdecken",
     'hero.h1': 'KI im Planungs&shy;prozess des <span class="hl">Holzbaus.</span>',
     'hero.lead': 'LignoAI entwickelt Software, die Planerinnen und Ingenieure im Holzbau entlastet. Dazu gehören der erste öffentliche MCP-Server für Cadwork und <strong>LignoPlan</strong>, unsere Planungsplattform für den Schweizer Holzbau.',
     'hero.ctaTragwerk': 'LignoCAD Tragwerk laden',
@@ -129,8 +129,8 @@ module.exports = {
     'hero.term1': '<span class="p">du&gt;</span> Zeichne die Kuppel in GL 24h mit Stahlknoten und VBA M16',
     'hero.term2': '↳ cadwork: 286 Stäbe, 1025 Stahlteile, 2288 VBA',
 
-    'products.h2': 'Jetzt verfügbar.',
-    'products.p': 'Zwei Werkzeuge, die heute schon im Planungsalltag helfen. Das eine ist frei für alle, das andere ist der erste Baustein von LignoPlan.',
+    "products.h2": "Verfügbar und in Entwicklung.",
+    "products.p": "Open MCP CAD und LignoCAD Tragwerk sind bereits verfügbar. Ligno Builders ist in Entwicklung und zeigt in einer interaktiven Demo, was heute schon möglich ist.",
 
     'mcp.logoAlt': 'Open MCP CAD Logo',
     'mcp.badgeOss': 'Open Source',
@@ -159,7 +159,7 @@ module.exports = {
     'common.email': 'E-Mail',
 
     "builders.beta": "Frühe Beta",
-    "builders.tagline": "Holzbau parametrisch planen. In Cadwork weiterarbeiten.",
+    "builders.tagline": "Vom Grundriss zum parametrischen Holzbaumodell.",
     "builders.desc": "Ligno Builders verbindet KI mit parametrischen Bauteilen. Das aktuelle Beispiel zeigt Holzrahmenwände mit Fenster- und Türöffnungen, ein 3D-Modell und daraus abgeleitete 2D-Pläne.",
     "builders.outlook": "In Entwicklung: weitere Bauteile, Massivholzwände und Konstruktionsdetails. Das Ziel ist die durchgängige Planung ganzer Holzgebäude.",
     "builders.link": "Beta-Demo ansehen",
@@ -192,8 +192,8 @@ module.exports = {
     'tw.toLicense': 'Zu meiner Lizenz',
 
     'plan.h2': 'Eine Plattform für alle Module.',
-    'plan.p': 'LignoPlan bündelt die Planungswerkzeuge von LignoAI. Herzstück wird <strong>LignoCAD</strong>, ein eigenständiges Holzbau-CAD, das versteht, wie Ingenieure denken.',
-    'plan.aside': 'Tragwerk ist das erste Modul. Weitere folgen nach und nach und laufen alle über dasselbe LignoPlan-Konto. Deine Projekte bleiben dabei lokal auf deinem Rechner.',
+    "plan.p": "LignoPlan bündelt die Planungswerkzeuge von LignoAI. Dazu gehören LignoCAD Tragwerk und künftig Ligno Builders für parametrische Holzbauteile. Herzstück wird <strong>LignoCAD</strong>, ein eigenständiges Holzbau-CAD.",
+    "plan.aside": "Ligno Builders lässt sich mit Open MCP CAD in Cadwork einsetzen. Das Konzept ist CAD-unabhängig. Weitere CAD-Programme lassen sich grundsätzlich über passende Schnittstellen anbinden.",
     'plan.available': 'Verfügbar',
     'plan.fireName': 'LignoCAD Brandschutz',
     'plan.fireImg': '/assets/lignocad-brandschutz.webp',

@@ -159,7 +159,8 @@ function renderSitemap() {
   const alt = LANGS.map(l => '    <xhtml:link rel="alternate" hreflang="' + l + '" href="' + url(l) + '"/>').join('\n') +
     '\n    <xhtml:link rel="alternate" hreflang="x-default" href="' + url('de') + '"/>';
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' +
-    LANGS.map(l => '  <url>\n    <loc>' + url(l) + '</loc>\n' + alt + '\n  </url>').join('\n') + '\n</urlset>\n';
+    LANGS.map(l => '  <url>\n    <loc>' + url(l) + '</loc>\n' + alt + '\n  </url>').join('\n') +
+    '\n  <url><loc>' + site.origin + '/lignoplan/</loc></url>\n</urlset>\n';
 }
 
 // Texte der App-Anmeldeseite stehen direkt in desktop-login.js (zwischen den Markierungen), damit der Test sie mitprüft.
@@ -173,6 +174,24 @@ function renderDesktopJs() {
 }
 
 const out = {};
+// The Builders demo uses the same design source as the home page.
+out['assets/site.css'] = read('src/index.html').match(/<style>([\s\S]*?)<\/style>/)[1].trim() + '\n';
+const buildersCopy = JSON.parse(read('src/builders-copy.json'));
+const buildersKeys = Object.keys(buildersCopy.de);
+for (const l of LANGS) {
+  for (const key of buildersKeys) {
+    if (buildersCopy[l]?.[key] == null) fail([l + ': missing Builders copy ' + key]);
+  }
+  for (const key of ['nav.products', 'nav.consulting', 'nav.about', 'nav.contact', 'nav.login', 'nav.register', 'nav.menuOpen', 'footer.blurb', 'legal.terms', 'legal.privacy', 'legal.imprint']) {
+    buildersCopy[l][key] = lang[l].t[key];
+  }
+}
+out['lignoplan/index.html'] = read('src/builders.html')
+  .replace('{{buildersCopy}}', json(buildersCopy))
+  .replace(/data-t="([\w.]+)"><\//g, (match, key) => {
+    if (buildersCopy.de[key] == null) fail(['Missing Builders text: ' + key]);
+    return 'data-t="' + key + '">' + attr(buildersCopy.de[key]) + '</';
+  });
 for (const l of LANGS) {
   const dir = l === 'de' ? '' : l + '/';
   out[dir + 'index.html'] = renderIndex(l);

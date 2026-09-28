@@ -131,7 +131,11 @@ Wenn jemand nach etwas fragt, das nicht im Wissen steht, verweise freundlich auf
 
 Ligno Builders verbindet KI mit parametrischen Holzbauteilen und befindet sich in einer frühen Beta.
 Das aktuelle Beispiel zeigt Holzrahmenwände mit Öffnungen, ein 3D-Modell, daraus abgeleitete 2D-Pläne und eine bearbeitbare Cadwork-Datei.
-Die separate Demo steht auf https://lignoai.ch/demo/lignobuilders-imw/.
+Die separate Demo steht auf https://lignoai.ch/lignoplan/.
 Massivholz-Aussen- und Innenwände, weitere Bauteile und Konstruktionsdetails sind geplante Erweiterungen.
 Ziel ist die durchgängige Planung ganzer Holzgebäude. Diese Ziele immer als Entwicklung kennzeichnen.
 Für konkrete Anwendungsfälle und ein Gespräch: info@lignoai.ch.
+
+Die Demo dient zur Veranschaulichung des aktuellen Entwicklungsstands.
+Open MCP CAD verbindet in der Demo die KI mit Cadwork. Ligno Builders liefert parametrische Bauteile und Konstruktionsregeln.
+Das Konzept ist CAD-unabhängig. Andere CAD-Programme sind grundsätzlich über geeignete Schnittstellen anbindbar. Das ist keine Zusage bereits verfügbarer Integrationen.

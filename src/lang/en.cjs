@@ -114,8 +114,8 @@ module.exports = {
     'nav.account': 'Account',
     'nav.menuOpen': 'Open menu',
 
-    'hero.pill': 'New',
-    'hero.announce': 'Open MCP CAD is now public',
+    "hero.pill": "In development",
+    "hero.announce": "Ligno Builders: explore the demo",
     'hero.h1': 'AI in the planning process for <span class="hl">timber construction.</span>',
     'hero.lead': 'LignoAI develops software that eases the workload of planners and engineers in timber construction. This includes the first public MCP server for Cadwork and <strong>LignoPlan</strong>, our planning platform for Swiss timber construction.',
     'hero.ctaTragwerk': 'Download LignoCAD Tragwerk',
@@ -129,8 +129,8 @@ module.exports = {
     'hero.term1': '<span class="p">you&gt;</span> Draw the dome in GL 24h with steel nodes and M16 bolts',
     'hero.term2': '↳ cadwork: 286 members, 1025 steel parts, 2288 M16 bolts',
 
-    'products.h2': 'Available now.',
-    'products.p': 'Two tools that already help with everyday planning work. One is free for everyone, the other is the first building block of LignoPlan.',
+    "products.h2": "Available and in development.",
+    "products.p": "Open MCP CAD and LignoCAD Tragwerk are already available. Ligno Builders is in development, with an interactive demo showing what is possible today.",
 
     'mcp.logoAlt': 'Open MCP CAD logo',
     'mcp.badgeOss': 'Open source',
@@ -159,7 +159,7 @@ module.exports = {
     'common.email': 'Email',
 
     "builders.beta": "Early beta",
-    "builders.tagline": "Parametric timber design. Continue in Cadwork.",
+    "builders.tagline": "From floor plan to parametric timber model.",
     "builders.desc": "Ligno Builders combines AI with parametric components. The current example shows timber-frame walls with window and door openings, a 3D model and derived 2D drawings.",
     "builders.outlook": "In development: further components, solid timber walls and construction details. The aim is to support the design of complete timber buildings.",
     "builders.link": "Explore the beta demo",
@@ -192,8 +192,8 @@ module.exports = {
     'tw.toLicense': 'Go to my licence',
 
     'plan.h2': 'One platform for all modules.',
-    'plan.p': 'LignoPlan brings together the planning tools from LignoAI. At its heart will be <strong>LignoCAD</strong>, a standalone timber construction CAD that understands how engineers think.',
-    'plan.aside': 'Tragwerk is the first module. More will follow step by step, all running on the same LignoPlan account. Your projects stay local on your computer.',
+    "plan.p": "LignoPlan brings together the planning tools from LignoAI, including LignoCAD Tragwerk and, in future, Ligno Builders for parametric timber components. <strong>LignoCAD</strong>, a standalone timber CAD application, will be at its core.",
+    "plan.aside": "Ligno Builders can be used in Cadwork with Open MCP CAD. The concept is independent of the CAD system. Other CAD programs could be connected through suitable interfaces.",
     'plan.available': 'Available',
     'plan.fireName': 'LignoCAD Fire',
     'plan.fireImg': '/assets/lignocad-fire.webp',

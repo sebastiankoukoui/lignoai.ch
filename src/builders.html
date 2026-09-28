@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Ligno Builders in Entwicklung. Erkunde das parametrisch erzeugte Holzbaumodell in 3D und 2D und lade das Beispiel für Cadwork herunter.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="canonical" href="https://lignoai.ch/lignoplan/">
+  <meta property="og:title" content="Ligno Builders · Die interaktive Demo">
+  <meta property="og:description" content="Vom Grundriss zum parametrischen Holzbaumodell. In Entwicklung, heute schon erlebbar.">
+  <meta property="og:url" content="https://lignoai.ch/lignoplan/">
+  <meta property="og:image" content="https://lignoai.ch/assets/ligno-builders-logo.png">
+  <title>Ligno Builders · LignoPlan · LignoAI</title>
+  <link rel="icon" href="/favicon.ico?v=2" sizes="any">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="stylesheet" href="/assets/builders.css">
+</head>
+<body class="builders-page">
+  <header class="site-header scrolled">
+    <div class="wrap header-inner">
+      <a class="logo" href="/" data-home=""><img src="/assets/lignoai-wordmark.webp" alt="LignoAI" width="720" height="150"></a>
+      <nav class="main-nav">
+        <a href="/#produkte" data-home="#produkte" data-t="nav.products"></a>
+        <a href="/#lignoplan" data-home="#lignoplan">LignoPlan</a>
+        <a href="/#beratung" data-home="#beratung" data-t="nav.consulting"></a>
+        <a href="/#mission" data-home="#mission" data-t="nav.about"></a>
+        <a href="/#kontakt" data-home="#kontakt" data-t="nav.contact"></a>
+      </nav>
+      <div class="header-actions">
+        <select id="language" class="language-select" aria-label="Language"><option value="de">DE</option><option value="fr">FR</option><option value="it">IT</option><option value="en">EN</option></select>
+        <a class="btn btn-ghost btn-sm demo-login" href="/#/anmelden" data-home="#/anmelden" data-t="nav.login"></a>
+        <a class="btn btn-primary btn-sm demo-register" href="/#/registrieren" data-home="#/registrieren" data-t="nav.register"></a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Menü öffnen" aria-controls="mobileNav" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      </div>
+    </div>
+    <nav class="mobile-nav" id="mobileNav">
+      <a href="/#produkte" data-home="#produkte" data-t="nav.products"></a>
+      <a href="/#lignoplan" data-home="#lignoplan">LignoPlan</a>
+      <a href="/#beratung" data-home="#beratung" data-t="nav.consulting"></a>
+      <a href="/#mission" data-home="#mission" data-t="nav.about"></a>
+      <a href="/#kontakt" data-home="#kontakt" data-t="nav.contact"></a>
+      <a href="/#/anmelden" data-home="#/anmelden" data-t="nav.login"></a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" id="top">
+      <div class="wrap builders-hero">
+        <div>
+          <div class="badges"><span class="badge violet">Coming Soon</span><span class="badge" data-t="private"></span><a class="badge green" href="/#lignoplan" data-home="#lignoplan">LignoPlan</a></div>
+          <h1 data-t="title"></h1>
+          <p class="lead" data-t="lead"></p>
+          <div class="hero-cta">
+            <a class="btn btn-dark btn-lg" href="#model" data-t="view"></a>
+            <a class="btn btn-primary btn-lg" data-download href="/demo/lignobuilders-imw/IMW_LignoBuilders_mit_Referenzplan.3d" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 21h14"/></svg><span data-t="download"></span></a>
+          </div>
+          <p class="builders-beta" data-t="betaNotice"></p>
+        </div>
+        <div class="builders-logo"><img src="/assets/ligno-builders-logo.png" alt="Ligno Builders" width="1254" height="1254"><div class="fc-label"><span>Ligno Builders</span><span class="status violet" data-t="private"></span></div></div>
+      </div>
+      <div class="wrap builders-facts"><span><b>2</b> <span data-t="floors"></span></span><span><b>1 881</b> <span data-t="parts"></span></span><span><b>3D + 2D</b> <span data-t="fromOneModel"></span></span><span><b>Cadwork</b> <span data-t="editable"></span></span></div>
+    </section>
+
+    <section class="block soft" id="model">
+      <div class="wrap">
+        <div class="builders-result-head">
+          <div class="section-head"><span class="eyebrow" data-t="step3"></span><h2 data-t="modelTitle"></h2><p data-t="controls"></p></div>
+          <button class="btn btn-outline" type="button" id="fullscreen" data-t="fullscreen"></button>
+        </div>
+        <div class="builders-viewer"><iframe id="viewer" src="/demo/lignobuilders-imw/viewer.html" title="Ligno Builders · 3D / 2D" allow="fullscreen" allowfullscreen></iframe></div>
+        <p class="builders-note" data-t="prototype"></p>
+        <details class="builders-details"><summary data-t="detailsTitle"></summary><p data-t="details"></p></details>
+        <div class="builders-download" id="cadwork">
+          <div><span class="eyebrow" data-t="step4"></span><h2 data-t="cadTitle"></h2><p data-t="cadIntro"></p><ul><li data-t="cad1"></li><li data-t="cad2"></li><li data-t="cad3"></li></ul></div>
+          <div><a class="btn btn-primary btn-lg" id="cadDownload" data-download href="/demo/lignobuilders-imw/IMW_LignoBuilders_mit_Referenzplan.3d" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 21h14"/></svg><span data-t="download"></span></a><p class="download-hint" data-t="downloadHint"></p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="input"><div class="wrap">
+      <div class="section-head"><span class="eyebrow">Ligno Builders</span><h2 data-t="inputButton"></h2></div>
+      <div class="builders-grid">
+        <div class="mv-card"><span class="eyebrow" data-t="step1"></span><h3 data-t="planTitle"></h3><p data-t="planIntro"></p><img class="builders-plan" id="sourcePlan" src="/demo/lignobuilders-imw/ausgangsplan.png" alt="Grundriss als Ausgangspunkt der Demo" loading="lazy"><p class="builders-caption" data-t="planCaption"></p></div>
+        <div class="mv-card"><span class="eyebrow" data-t="step2"></span><h3 data-t="promptTitle"></h3><blockquote class="builders-prompt" data-t="prompt"></blockquote></div>
+      </div>
+    </div></section>
+
+    <section class="block soft" id="development"><div class="wrap">
+      <div class="builders-grid">
+        <div class="section-head"><span class="eyebrow" data-t="integrationLabel"></span><h2 data-t="integrationTitle"></h2><p data-t="integration"></p><a class="btn btn-outline" href="/#mcp" data-home="#mcp" data-t="integrationLink"></a></div>
+        <div class="section-head"><span class="eyebrow" data-t="next"></span><h2 data-t="roadmapTitle"></h2><p data-t="roadmap"></p></div>
+      </div>
+      <div class="builders-contact"><p data-t="contact"></p><a class="btn btn-dark" href="mailto:info@lignoai.ch?subject=Ligno%20Builders" data-t="contactButton"></a></div>
+    </div></section>
+  </main>
+  <footer class="site-footer"><div class="wrap">
+    <div class="footer-grid">
+      <div><a class="logo" href="/" data-home=""><img src="/assets/lignoai-wordmark.webp" alt="LignoAI" width="720" height="150"></a><p class="blurb" data-t="footer.blurb"></p></div>
+      <div><h5 data-t="nav.products"></h5><ul><li><a href="/#mcp" data-home="#mcp">Open MCP CAD</a></li><li><a href="/#tragwerk" data-home="#tragwerk">LignoCAD Tragwerk</a></li><li><a href="/#lignoplan" data-home="#lignoplan">LignoPlan</a></li><li><a href="#top">Ligno Builders</a></li></ul></div>
+      <div><h5>LignoAI</h5><ul><li><a href="/#mission" data-home="#mission" data-t="nav.about"></a></li><li><a href="/#kontakt" data-home="#kontakt" data-t="nav.contact"></a></li><li><a href="mailto:info@lignoai.ch">info@lignoai.ch</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© <span id="year">2026</span> LignoAI · Sebastian Koukoui</span><span class="legal-links"><a href="/#/nutzungsbedingungen" data-home="#/nutzungsbedingungen" data-t="legal.terms"></a> · <a href="/#/datenschutz" data-home="#/datenschutz" data-t="legal.privacy"></a> · <a href="/#/impressum" data-home="#/impressum" data-t="legal.imprint"></a></span></div>
+  </div></footer>
+  <script>
+const COPY={{buildersCopy}};
+const languageSelect=document.getElementById('language');
+function language(code){
+  document.documentElement.lang=code==='de'?'de-CH':code;
+  for(const el of document.querySelectorAll('[data-t]'))el.textContent=COPY[code][el.dataset.t];
+  for(const el of document.querySelectorAll('[data-home]'))el.href=(code==='de'?'/':'/'+code+'/')+el.dataset.home;
+  document.getElementById('sourcePlan').alt=COPY[code].planCaption;
+  document.getElementById('menuToggle').setAttribute('aria-label',COPY[code]['nav.menuOpen']);
+}
+const requestedLanguage=new URLSearchParams(location.search).get('lang');
+const initialLanguage=Object.hasOwn(COPY,requestedLanguage)?requestedLanguage:'de';
+languageSelect.value=initialLanguage;
+languageSelect.onchange=e=>{language(e.target.value);const url=new URL(location.href);url.searchParams.set('lang',e.target.value);history.replaceState(null,'',url);};
+language(initialLanguage);
+document.getElementById('year').textContent=new Date().getFullYear();
+document.getElementById('fullscreen').onclick=async()=>{const v=document.getElementById('viewer');try{if(v.requestFullscreen)await v.requestFullscreen();else window.open(v.src,'_blank','noopener');}catch(e){window.open(v.src,'_blank','noopener');}};
+const menu=document.getElementById('mobileNav'),toggle=document.getElementById('menuToggle');
+toggle.onclick=()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));menu.classList.toggle('open',open);};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu.classList.contains('open')){menu.classList.remove('open');toggle.setAttribute('aria-expanded','false');toggle.focus();}});
+  </script>
+</body>
+</html>

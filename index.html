@@ -373,6 +373,9 @@
     .module .m-img { flex: 1; display: grid; place-items: center; padding: 8px 20px; }
     .module .m-img img { max-height: 190px; width: auto; }
     .module.soon .m-img img { filter: grayscale(1); opacity: .32; }
+    a.module { text-decoration: none; }
+    .module.builders .m-img img { filter: none; opacity: 1; }
+    .module.builders:hover { border-color: var(--green); box-shadow: var(--shadow); transform: translateY(-2px); }
     .module .m-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 16px; border-top: 1px solid var(--line); }
     .module .m-name { font-weight: 800; letter-spacing: -.01em; }
     .module.soon .m-name { color: var(--muted); }
@@ -826,9 +829,9 @@
       <svg class="hero-rings" id="heroRings" viewBox="0 0 820 820" aria-hidden="true"></svg>
       <div class="wrap hero-grid">
         <div>
-          <a class="announce" href="#produkte">
-            <span class="pill">Neu</span>
-            Open MCP CAD ist jetzt öffentlich
+          <a class="announce" href="/lignoplan/?lang=de">
+            <span class="pill">In Entwicklung</span>
+            Ligno Builders: die Demo entdecken
             <span class="arrow">→</span>
           </a>
           <h1>KI im Planungs&shy;prozess des <span class="hl">Holzbaus.</span></h1>
@@ -875,8 +878,8 @@
       <div class="wrap">
         <div class="section-head reveal">
           <span class="eyebrow">Produkte</span>
-          <h2>Jetzt verfügbar.</h2>
-          <p>Zwei Werkzeuge, die heute schon im Planungsalltag helfen. Das eine ist frei für alle, das andere ist der erste Baustein von LignoPlan.</p>
+          <h2>Verfügbar und in Entwicklung.</h2>
+          <p>Open MCP CAD und LignoCAD Tragwerk sind bereits verfügbar. Ligno Builders ist in Entwicklung und zeigt in einer interaktiven Demo, was heute schon möglich ist.</p>
         </div>
 
         <!-- Open MCP CAD -->
@@ -1005,11 +1008,11 @@
           <div class="product-body">
             <div class="badges"><span class="badge violet">Coming Soon</span><span class="badge">Frühe Beta</span></div>
             <h3>Ligno Builders</h3>
-            <p class="tagline">Holzbau parametrisch planen. In Cadwork weiterarbeiten.</p>
+            <p class="tagline">Vom Grundriss zum parametrischen Holzbaumodell.</p>
             <p class="desc">Ligno Builders verbindet KI mit parametrischen Bauteilen. Das aktuelle Beispiel zeigt Holzrahmenwände mit Fenster- und Türöffnungen, ein 3D-Modell und daraus abgeleitete 2D-Pläne.</p>
             <p class="desc">In Entwicklung: weitere Bauteile, Massivholzwände und Konstruktionsdetails. Das Ziel ist die durchgängige Planung ganzer Holzgebäude.</p>
             <div class="product-actions">
-              <a class="btn btn-dark" href="https://lignoai.ch/demo/lignobuilders-imw/?lang=de" target="_blank" rel="noopener noreferrer">Beta-Demo ansehen <span aria-hidden="true">↗</span></a>
+              <a class="btn btn-dark" href="/lignoplan/?lang=de" target="_blank" rel="noopener noreferrer">Beta-Demo ansehen <span aria-hidden="true">↗</span></a>
             </div>
             <p class="product-foot">Öffnet die separate Demo-Seite in einem neuen Tab.</p>
           </div>
@@ -1024,10 +1027,10 @@
           <div class="section-head reveal">
             <span class="eyebrow">LignoPlan</span>
             <h2>Eine Plattform für alle Module.</h2>
-            <p>LignoPlan bündelt die Planungswerkzeuge von LignoAI. Herzstück wird <strong>LignoCAD</strong>, ein eigenständiges Holzbau-CAD, das versteht, wie Ingenieure denken.</p>
+            <p>LignoPlan bündelt die Planungswerkzeuge von LignoAI. Dazu gehören LignoCAD Tragwerk und künftig Ligno Builders für parametrische Holzbauteile. Herzstück wird <strong>LignoCAD</strong>, ein eigenständiges Holzbau-CAD.</p>
           </div>
           <p class="aside reveal">
-            Tragwerk ist das erste Modul. Weitere folgen nach und nach und laufen alle über dasselbe LignoPlan-Konto. Deine Projekte bleiben dabei lokal auf deinem Rechner.
+            Ligno Builders lässt sich mit Open MCP CAD in Cadwork einsetzen. Das Konzept ist CAD-unabhängig. Weitere CAD-Programme lassen sich grundsätzlich über passende Schnittstellen anbinden.
           </p>
         </div>
 
@@ -1048,10 +1051,10 @@
             <div class="m-img"><img src="/assets/lignocad-brandschutz.webp" alt="LignoCAD Brandschutz" width="190" height="190"></div>
             <div class="m-foot"><span class="m-name">LignoCAD Brandschutz</span><span class="m-status">Demnächst</span></div>
           </div>
-          <div class="module soon mystery reveal">
-            <div class="m-img"><div><div class="q">?</div><p>Wird bald vorgestellt</p></div></div>
-            <div class="m-foot"><span class="m-name">Weiteres Modul</span><span class="m-status">In Arbeit</span></div>
-          </div>
+          <a class="module soon builders reveal" href="/lignoplan/?lang=de">
+            <div class="m-img"><img src="/assets/ligno-builders-logo.png" alt="Ligno Builders" width="190" height="190" loading="lazy"></div>
+            <div class="m-foot"><span class="m-name">Ligno Builders</span><span class="m-status">Demnächst</span></div>
+          </a>
           <div class="module soon mystery reveal">
             <div class="m-img"><div><div class="q">?</div><p>Wird bald vorgestellt</p></div></div>
             <div class="m-foot"><span class="m-name">Weiteres Modul</span><span class="m-status">In Arbeit</span></div>

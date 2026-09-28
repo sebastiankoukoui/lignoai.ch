@@ -32,4 +32,5 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://lignoai.ch/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lignoai.ch/"/>
   </url>
+  <url><loc>https://lignoai.ch/lignoplan/</loc></url>
 </urlset>
