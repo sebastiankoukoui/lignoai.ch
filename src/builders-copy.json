@@ -41,7 +41,15 @@
     "integration": "In dieser Demo verbindet Open MCP CAD die KI mit Cadwork. Ligno Builders liefert dafür die parametrischen Bauteile und Konstruktionsregeln. Das Konzept ist unabhängig vom CAD-System. Grundsätzlich ist auch die Anbindung anderer CAD-Programme möglich, sofern sie eine passende Schnittstelle bieten.",
     "integrationLabel": "CAD-Anbindung",
     "integrationLink": "Open MCP CAD entdecken",
-    "downloadHint": "Native .3d-Datei · 5.6 MB · Zum Öffnen in Cadwork"
+    "downloadHint": "Native .3d-Datei · 5.6 MB · Zum Öffnen in Cadwork",
+    "reelEyebrow": "Die Video-Demo",
+    "reelTitle": "Ligno Builders in 30 Sekunden.",
+    "reelDescription": "Vom Grundriss zum Holzbaumodell: Das Video zeigt das Gebäude, einzelne Wandelemente, Bauteilschichten und vermasste 2D-Ansichten aus der aktuellen Demo.",
+    "reelExplore": "Jetzt selbst erkunden",
+    "reelFallback": "Video öffnen",
+    "reelLanguage_de": "Video auf Deutsch · 30 Sekunden",
+    "reelLanguage_en": "Video auf Englisch · 30 Sekunden",
+    "reelLanguage_fr": "Video auf Französisch · 30 Sekunden"
   },
   "fr": {
     "private": "En développement",
@@ -85,7 +93,15 @@
     "integration": "Dans cette démonstration, Open MCP CAD relie l’IA à Cadwork. Ligno Builders fournit les composants paramétriques et les règles constructives. Le concept est indépendant du logiciel de CAO. D’autres logiciels peuvent en principe être intégrés s’ils disposent d’une interface adaptée.",
     "integrationLabel": "Intégration CAO",
     "integrationLink": "Découvrir Open MCP CAD",
-    "downloadHint": "Fichier natif .3d · 5.6 Mo · À ouvrir dans Cadwork"
+    "downloadHint": "Fichier natif .3d · 5.6 Mo · À ouvrir dans Cadwork",
+    "reelEyebrow": "La démo en vidéo",
+    "reelTitle": "Ligno Builders en 30 secondes.",
+    "reelDescription": "Du plan au modèle bois : la vidéo présente le bâtiment, les éléments de paroi, les couches et les vues 2D cotées de la démonstration actuelle.",
+    "reelExplore": "Explorer le modèle",
+    "reelFallback": "Ouvrir la vidéo",
+    "reelLanguage_de": "Vidéo en allemand · 30 secondes",
+    "reelLanguage_en": "Vidéo en anglais · 30 secondes",
+    "reelLanguage_fr": "Vidéo en français · 30 secondes"
   },
   "it": {
     "private": "In sviluppo",
@@ -129,7 +145,15 @@
     "integration": "In questa demo, Open MCP CAD collega l’IA a Cadwork. Ligno Builders fornisce i componenti parametrici e le regole costruttive. Il concetto è indipendente dal sistema CAD. In linea di principio è possibile integrare anche altri programmi CAD, purché offrano un’interfaccia adatta.",
     "integrationLabel": "Integrazione CAD",
     "integrationLink": "Scopri Open MCP CAD",
-    "downloadHint": "File nativo .3d · 5.6 MB · Da aprire in Cadwork"
+    "downloadHint": "File nativo .3d · 5.6 MB · Da aprire in Cadwork",
+    "reelEyebrow": "La demo in video",
+    "reelTitle": "Ligno Builders in 30 secondi.",
+    "reelDescription": "Dalla pianta al modello in legno: il video mostra l’edificio, i singoli elementi di parete, gli strati e le viste 2D quotate della demo attuale.",
+    "reelExplore": "Esplora il modello",
+    "reelFallback": "Apri il video",
+    "reelLanguage_de": "Video in tedesco · 30 secondi",
+    "reelLanguage_en": "Video in inglese · 30 secondi",
+    "reelLanguage_fr": "Video in francese · 30 secondi"
   },
   "en": {
     "private": "In development",
@@ -173,6 +197,14 @@
     "integration": "In this demo, Open MCP CAD connects AI to Cadwork. Ligno Builders provides the parametric components and construction rules. The concept is independent of the CAD system. Other CAD programs could also be connected, provided they offer a suitable interface.",
     "integrationLabel": "CAD integration",
     "integrationLink": "Explore Open MCP CAD",
-    "downloadHint": "Native .3d file · 5.6 MB · Open in Cadwork"
+    "downloadHint": "Native .3d file · 5.6 MB · Open in Cadwork",
+    "reelEyebrow": "The video demo",
+    "reelTitle": "Ligno Builders in 30 seconds.",
+    "reelDescription": "From floor plan to timber model: the video shows the building, individual wall elements, material layers and dimensioned 2D views from the current demo.",
+    "reelExplore": "Explore it yourself",
+    "reelFallback": "Open the video",
+    "reelLanguage_de": "Video in German · 30 seconds",
+    "reelLanguage_en": "Video in English · 30 seconds",
+    "reelLanguage_fr": "Video in French · 30 seconds"
   }
 }

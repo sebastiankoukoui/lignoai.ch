@@ -63,6 +63,25 @@
       <div class="wrap builders-facts"><span><b>2</b> <span data-t="floors"></span></span><span><b>1 855</b> <span data-t="parts"></span></span><span><b>3D + 2D</b> <span data-t="fromOneModel"></span></span><span><b>Cadwork</b> <span data-t="editable"></span></span></div>
     </section>
 
+    <section class="builders-reel-section" id="reel" aria-labelledby="reelTitle">
+      <div class="wrap">
+        <div class="builders-reel-card">
+          <div class="builders-reel-media">
+            <video id="buildersReel" width="1080" height="1920" controls playsinline muted preload="none" poster="/assets/demo/lignobuilders-reel-de.jpg" src="/assets/demo/lignobuilders-reel-de.mp4" aria-labelledby="reelTitle" aria-describedby="reelDescription">
+              <a href="/assets/demo/lignobuilders-reel-de.mp4" id="reelFallback" data-t="reelFallback"></a>
+            </video>
+          </div>
+          <div class="section-head">
+            <span class="eyebrow" data-t="reelEyebrow"></span>
+            <h2 id="reelTitle" data-t="reelTitle"></h2>
+            <p id="reelDescription" data-t="reelDescription"></p>
+            <p class="builders-reel-language" id="reelLanguage" data-t="reelLanguage_de"></p>
+            <a class="btn btn-dark" href="#model" data-t="reelExplore"></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="block soft" id="model">
       <div class="wrap">
         <div class="builders-result-head">
@@ -105,6 +124,7 @@
   </div></footer>
   <script>
 const COPY={{buildersCopy}};
+const REEL_LANGUAGES=['de','en','fr'];
 const languageSelect=document.getElementById('language');
 function language(code){
   document.documentElement.lang=code==='de'?'de-CH':code;
@@ -112,6 +132,20 @@ function language(code){
   for(const el of document.querySelectorAll('[data-home]'))el.href=(code==='de'?'/':'/'+code+'/')+el.dataset.home;
   document.getElementById('sourcePlan').alt=COPY[code].planCaption;
   document.getElementById('menuToggle').setAttribute('aria-label',COPY[code]['nav.menuOpen']);
+  const reelLanguage=REEL_LANGUAGES.includes(code)?code:'de';
+  const reel=document.getElementById('buildersReel');
+  const reelBase='/assets/demo/lignobuilders-reel-'+reelLanguage;
+  reel.pause();
+  reel.muted=true;
+  if(reel.getAttribute('src')!==reelBase+'.mp4'){
+    reel.poster=reelBase+'.jpg';
+    reel.src=reelBase+'.mp4';
+    reel.load();
+  }else if(reel.currentTime!==0){
+    reel.currentTime=0;
+  }
+  document.getElementById('reelFallback').href=reelBase+'.mp4';
+  document.getElementById('reelLanguage').textContent=COPY[code]['reelLanguage_'+reelLanguage];
 }
 const requestedLanguage=new URLSearchParams(location.search).get('lang');
 const initialLanguage=Object.hasOwn(COPY,requestedLanguage)?requestedLanguage:'de';
