@@ -22,28 +22,13 @@
   <header class="site-header scrolled">
     <div class="wrap header-inner">
       <a class="logo" href="/" data-home=""><img src="/assets/lignoai-wordmark.webp" alt="LignoAI" width="720" height="150"></a>
-      <nav class="main-nav">
-        <a href="/#produkte" data-home="#produkte" data-t="nav.products"></a>
-        <a href="/#lignoplan" data-home="#lignoplan">LignoPlan</a>
-        <a href="/#beratung" data-home="#beratung" data-t="nav.consulting"></a>
-        <a href="/#mission" data-home="#mission" data-t="nav.about"></a>
-        <a href="/#kontakt" data-home="#kontakt" data-t="nav.contact"></a>
-      </nav>
       <div class="header-actions">
+        <a class="btn btn-ghost btn-sm builders-home" href="/" data-home=""><span aria-hidden="true">←</span><span data-t="backHome"></span></a>
         <select id="language" class="language-select" aria-label="Language"><option value="de">DE</option><option value="fr">FR</option><option value="it">IT</option><option value="en">EN</option></select>
         <a class="btn btn-ghost btn-sm demo-login" href="/#/anmelden" data-home="#/anmelden" data-t="nav.login"></a>
         <a class="btn btn-primary btn-sm demo-register" href="/#/registrieren" data-home="#/registrieren" data-t="nav.register"></a>
-        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Menü öffnen" aria-controls="mobileNav" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       </div>
     </div>
-    <nav class="mobile-nav" id="mobileNav">
-      <a href="/#produkte" data-home="#produkte" data-t="nav.products"></a>
-      <a href="/#lignoplan" data-home="#lignoplan">LignoPlan</a>
-      <a href="/#beratung" data-home="#beratung" data-t="nav.consulting"></a>
-      <a href="/#mission" data-home="#mission" data-t="nav.about"></a>
-      <a href="/#kontakt" data-home="#kontakt" data-t="nav.contact"></a>
-      <a href="/#/anmelden" data-home="#/anmelden" data-t="nav.login"></a>
-    </nav>
   </header>
   <main>
     <section class="hero" id="top">
@@ -131,7 +116,6 @@ function language(code){
   for(const el of document.querySelectorAll('[data-t]'))el.textContent=COPY[code][el.dataset.t];
   for(const el of document.querySelectorAll('[data-home]'))el.href=(code==='de'?'/':'/'+code+'/')+el.dataset.home;
   document.getElementById('sourcePlan').alt=COPY[code].planCaption;
-  document.getElementById('menuToggle').setAttribute('aria-label',COPY[code]['nav.menuOpen']);
   const reelLanguage=REEL_LANGUAGES.includes(code)?code:'de';
   const reel=document.getElementById('buildersReel');
   const reelBase='/assets/demo/lignobuilders-reel-'+reelLanguage;
@@ -154,9 +138,6 @@ languageSelect.onchange=e=>{language(e.target.value);const url=new URL(location.
 language(initialLanguage);
 document.getElementById('year').textContent=new Date().getFullYear();
 document.getElementById('fullscreen').onclick=async()=>{const v=document.getElementById('viewer');try{if(v.requestFullscreen)await v.requestFullscreen();else window.open(v.src,'_blank','noopener');}catch(e){window.open(v.src,'_blank','noopener');}};
-const menu=document.getElementById('mobileNav'),toggle=document.getElementById('menuToggle');
-toggle.onclick=()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));menu.classList.toggle('open',open);};
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu.classList.contains('open')){menu.classList.remove('open');toggle.setAttribute('aria-expanded','false');toggle.focus();}});
   </script>
 </body>
 </html>

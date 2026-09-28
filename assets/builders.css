@@ -58,8 +58,8 @@
   .builders-logo > img { padding: 10px; }
   .builders-logo .fc-label { display: none; }
   .builders-hero .hero-cta .btn { width: 100%; }
-  .builders-page .demo-login { display: none; }
-  .builders-page .demo-register { font-size: .76rem; padding: 8px 10px; }
+  .builders-page .demo-login, .builders-page .demo-register { display: none; }
+  .builders-page .builders-home { font-size: .76rem; padding: 8px; gap: 5px; }
   .builders-page .logo img { height: 22px; }
   .builders-page .header-inner { gap: 8px; }
   .builders-page .header-actions { gap: 6px; }
@@ -74,5 +74,4 @@
   .builders-reel-card .section-head { grid-row: 1; }
   .builders-reel-media { width: 100%; max-width: 292px; justify-self: center; }
 }
-@media (max-width: 380px) { .builders-page .demo-register { display: none; } }
 @media (prefers-reduced-motion: reduce) { .builders-page { scroll-behavior: auto; } }

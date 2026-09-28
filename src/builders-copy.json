@@ -49,7 +49,8 @@
     "reelFallback": "Video öffnen",
     "reelLanguage_de": "Video auf Deutsch · 30 Sekunden",
     "reelLanguage_en": "Video auf Englisch · 30 Sekunden",
-    "reelLanguage_fr": "Video auf Französisch · 30 Sekunden"
+    "reelLanguage_fr": "Video auf Französisch · 30 Sekunden",
+    "backHome": "Zur Hauptseite"
   },
   "fr": {
     "private": "En développement",
@@ -101,7 +102,8 @@
     "reelFallback": "Ouvrir la vidéo",
     "reelLanguage_de": "Vidéo en allemand · 30 secondes",
     "reelLanguage_en": "Vidéo en anglais · 30 secondes",
-    "reelLanguage_fr": "Vidéo en français · 30 secondes"
+    "reelLanguage_fr": "Vidéo en français · 30 secondes",
+    "backHome": "Retour à l’accueil"
   },
   "it": {
     "private": "In sviluppo",
@@ -153,7 +155,8 @@
     "reelFallback": "Apri il video",
     "reelLanguage_de": "Video in tedesco · 30 secondi",
     "reelLanguage_en": "Video in inglese · 30 secondi",
-    "reelLanguage_fr": "Video in francese · 30 secondi"
+    "reelLanguage_fr": "Video in francese · 30 secondi",
+    "backHome": "Torna alla home"
   },
   "en": {
     "private": "In development",
@@ -205,6 +208,7 @@
     "reelFallback": "Open the video",
     "reelLanguage_de": "Video in German · 30 seconds",
     "reelLanguage_en": "Video in English · 30 seconds",
-    "reelLanguage_fr": "Video in French · 30 seconds"
+    "reelLanguage_fr": "Video in French · 30 seconds",
+    "backHome": "Back to home"
   }
 }
