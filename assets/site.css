@@ -328,16 +328,17 @@
       padding: 22px; display: flex; flex-direction: column; min-height: 320px;
       transition: box-shadow .2s, transform .2s, border-color .2s;
     }
-    .module.live { box-shadow: var(--shadow); border-color: #d6e1f4; }
-    .module.live:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .module.live, .module.builders { box-shadow: var(--shadow); border-color: #d6e1f4; }
+    .module.live:hover, .module.builders:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    a.module:focus-visible { outline-color: var(--blue); }
     .module .m-img { flex: 1; display: grid; place-items: center; padding: 8px 20px; }
     .module .m-img img { max-height: 190px; width: auto; }
     .module.soon .m-img img { filter: grayscale(1); opacity: .32; }
     a.module { text-decoration: none; }
     .module.builders .m-img img { filter: none; opacity: 1; }
-    .module.builders:hover { border-color: var(--green); box-shadow: var(--shadow); transform: translateY(-2px); }
     .module .m-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 16px; border-top: 1px solid var(--line); }
     .module .m-name { font-weight: 800; letter-spacing: -.01em; }
+    .module .m-desc { font-size: .8rem; color: var(--muted); margin-top: 10px; min-height: 3.2em; }
     .module.soon .m-name { color: var(--muted); }
     .module .m-status { font-size: .72rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
     .module.live .m-status { background: var(--blue-50); color: var(--blue); }
