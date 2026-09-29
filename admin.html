@@ -68,6 +68,7 @@
   .empty { text-align: center; color: var(--muted); padding: 40px 0; }
   .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; max-width: calc(100vw - 32px); }
   .toast.show { opacity: 1; }
+  .invite-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 16px}.invite-row{border-top:1px solid var(--line);padding:16px 0;margin-top:10px}.invite-row p{margin:4px 0 10px}.invite-row button{margin:4px 8px 0 0}.invite-row pre{white-space:pre-wrap;font:14px/1.5 system-ui;background:var(--bg);padding:14px;border-radius:8px}
   @media (max-width: 860px) {
     .stats { grid-template-columns: repeat(2, 1fr); }
     .row { grid-template-columns: minmax(0, 1fr) auto; }
@@ -106,7 +107,19 @@
   <section id="adminView" hidden>
     <h1>Konten und Lizenzen</h1>
     <p class="sub">Alle Registrierungen für LignoCAD Tragwerk. Neue Konten erhalten automatisch 14 Tage vorläufig.</p>
-    <div class="stats" id="stats"></div>
+    <details class="card" id="partnerInvites" style="margin:20px 0"><summary>Testpartner einladen</summary>
+<p class="sub">Persönlicher Einladungslink für 24 Stunden. Die kostenlose Lizenz beginnt bei Aktivierung.</p>
+<form id="partnerInviteForm"><div class="invite-grid">
+<label>Vorname<input id="inviteFirst" required maxlength="80" autocomplete="off"></label>
+<label>Nachname<input id="inviteLast" required maxlength="80" autocomplete="off"></label>
+<label>E-Mail<input id="inviteEmail" type="email" required maxlength="254" autocomplete="off"></label>
+<label>Firma<input id="inviteOrg" maxlength="160" autocomplete="off"></label>
+<label>Sprache<select id="inviteLang"><option value="de">Deutsch</option><option value="fr">Français</option><option value="it">Italiano</option><option value="en">English</option></select></label>
+<label>Kostenlose Lizenz<select id="inviteMonths"><option value="6">6 Monate</option><option value="1">1 Monat</option><option value="3">3 Monate</option><option value="12">12 Monate</option><option value="">Bis zum Widerruf</option></select></label>
+<label>Geräte<select id="inviteDevices"><option value="1">1 Gerät</option><option value="2">2 Geräte</option><option value="3">3 Geräte</option></select></label></div>
+<p style="margin-top:16px"><button class="btn-outline" type="submit">Einladung vorbereiten</button></p></form>
+<p class="msg" id="inviteMsg" role="status"></p><div id="inviteList"></div></details>
+<div class="stats" id="stats"></div>
     <div class="tools">
       <input id="search" type="search" placeholder="Name, E-Mail oder Firma suchen" aria-label="Suchen">
       <div class="chips" id="chips"></div>

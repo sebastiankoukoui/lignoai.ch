@@ -55,6 +55,27 @@
     return data;
   }
 
+  async function inviteApi(body) {
+    var res=await fetch(SUPABASE_URL+'/functions/v1/partner-invitations',{method:'POST',signal:AbortSignal.timeout(30000),headers:{'Content-Type':'application/json',Authorization:'Bearer '+session.access_token},body:JSON.stringify(body)});
+    var data=await res.json();if(!res.ok)throw Error(({invitation_exists:'Für diese Adresse gibt es bereits eine offene Einladung.',busy_or_rate_limited:'Bitte kurz warten. Maximal fünf Einladungen pro Tag.',mail_failed:'Die Mail konnte nicht versendet werden. Bitte später nochmals versuchen.',forbidden:'Kein Admin-Zugriff.'})[data.error]||'Einladung konnte nicht bearbeitet werden.');return data;
+  }
+  function renderInvites(items) {
+    var list=$('inviteList');list.replaceChildren();
+    items.forEach(function(inv){
+      var row=el('div','invite-row');row.appendChild(el('strong','',inv.first_name+' '+inv.last_name+' · '+inv.email));
+      var state=inv.accepted_at?'Aktiviert':inv.revoked_at?'Zurückgezogen':!inv.last_sent_at?'Vorbereitet, noch nicht versendet':!inv.delivered_at?'Versand nicht bestätigt':Date.parse(inv.expires_at)<Date.now()?'Link abgelaufen':'Einladung versendet';
+      row.appendChild(el('p','meta',state+' · '+(inv.license_months?inv.license_months+' Monate kostenlos ab Aktivierung':'Kostenlos bis zum Widerruf')+' · '+inv.max_devices+' Gerät(e)'));
+      if(!inv.accepted_at&&!inv.revoked_at){
+        var preview=el('p','meta','Die persönliche Mail erklärt das Passwortsetzen, den Download und die Gültigkeit von 24 Stunden. Sprache: '+inv.lang.toUpperCase()+'.');row.appendChild(preview);
+        var send=el('button','btn-primary btn-sm',inv.last_sent_at?'Erneut senden':'Einladung senden');send.type='button';
+        send.onclick=async function(){if(!confirm('Einladung jetzt an '+inv.email+' senden? Ein vorheriger Link wird ungültig.'))return;send.disabled=true;try{renderInvites((await inviteApi({action:'send',id:inv.id})).invitations);toast('Einladung versendet. Der Link gilt 24 Stunden.');}catch(e){$('inviteMsg').textContent=e.message;send.disabled=false;}};
+        var revoke=el('button','btn-outline btn-sm','Zurückziehen');revoke.type='button';revoke.onclick=async function(){revoke.disabled=true;try{renderInvites((await inviteApi({action:'revoke',id:inv.id})).invitations);}catch(e){$('inviteMsg').textContent=e.message;revoke.disabled=false;}};row.append(send,revoke);
+      }list.appendChild(row);
+    });
+  }
+  async function loadInvites(){try{renderInvites((await inviteApi({action:'list'})).invitations);}catch(e){$('inviteMsg').textContent=e.message;}}
+  $('partnerInviteForm').onsubmit=async function(event){event.preventDefault();var btn=event.target.querySelector('button');btn.disabled=true;$('inviteMsg').textContent='';try{var data=await inviteApi({action:'prepare',first_name:$('inviteFirst').value,last_name:$('inviteLast').value,email:$('inviteEmail').value,organization:$('inviteOrg').value,lang:$('inviteLang').value,license_months:$('inviteMonths').value===''?null:Number($('inviteMonths').value),max_devices:Number($('inviteDevices').value)});renderInvites(data.invitations);event.target.reset();$('inviteMsg').textContent='Vorbereitet. Erst «Einladung senden» verschickt die E-Mail.';}catch(e){$('inviteMsg').textContent=e.message;}finally{btn.disabled=false;}};
+
   async function load() {
     $('listMsg').textContent = 'Wird geladen …';
     try { accounts = (await api({ type: 'admin_list' })).accounts; $('listMsg').textContent = ''; render(); }
@@ -126,6 +147,7 @@
       var u = el('div', 'until' + (d !== null && d >= 0 && d <= 14 ? ' soon' : ''), 'bis ' + fmt(a.license.validUntil) + (d !== null && d >= 0 ? ' (noch ' + d + (d === 1 ? ' Tag)' : ' Tage)') : ''));
       lic.appendChild(u);
     }
+    if(s==='active'&&!a.license.validUntil)lic.appendChild(el('div','until','Bis zum Widerruf'));
     row.appendChild(lic);
 
     var dev = el('div', 'dev', s === 'none' ? '' : 'Geräte ' + a.devices + ' von ' + (a.license.maxDevices || 1));
@@ -147,7 +169,7 @@
       main = el('button', 'btn-primary btn-sm', s === 'provisional' ? 'Freigeben, 3 Monate' : s === 'active' || s === 'pending' ? '+3 Monate' : 'Freischalten, 3 Monate'); main.type = 'button';
       main.addEventListener('click', function () { main.disabled = true; act(a, { action: 'extend', months: 3 }, 'Lizenz um 3 Monate verlängert.'); });
     }
-    actions.appendChild(main);
+    if(!(s==='active'&&!a.license.validUntil))actions.appendChild(main);
 
     var more = el('details', 'more'), sum = el('summary', '', '···'), menu = el('div', 'menu');
     sum.setAttribute('aria-label', 'Weitere Aktionen');
@@ -198,7 +220,7 @@
   function showLogin() { $('loginView').hidden = false; $('adminView').hidden = true; $('logout').hidden = true; $('me').textContent = ''; }
   function showAdmin() {
     $('loginView').hidden = true; $('adminView').hidden = false; $('logout').hidden = false;
-    $('me').textContent = session.user.email; load();
+    $('me').textContent = session.user.email; load(); loadInvites();
   }
 
   $('emailForm').addEventListener('submit', async function (e) {
@@ -219,7 +241,7 @@
     if (res.error) { $('loginMsg').textContent = 'Der Code stimmt nicht oder ist abgelaufen.'; $('loginMsg').className = 'msg error'; }
   });
   $('logout').addEventListener('click', function () { sb.auth.signOut({ scope: 'local' }); });
-  $('reload').addEventListener('click', load);
+  $('reload').addEventListener('click', function(){load();loadInvites();});
   $('search').addEventListener('input', render);
   document.addEventListener('click', function (e) {
     document.querySelectorAll('details.more[open]').forEach(function (d) { if (!d.contains(e.target)) d.open = false; });
