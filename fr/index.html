@@ -282,6 +282,8 @@
     .demo { margin: -4px 0 28px; }
     .demo-title { font-size: .8rem; font-weight: 700; color: var(--muted); margin-bottom: 10px; }
     .demo-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 560px; }
+    .demo-tiles.single { grid-template-columns: minmax(0, 1fr); max-width: 360px; }
+    .demo-tiles.single img { aspect-ratio: 16 / 9; object-fit: contain; }
     .demo-tile { position: relative; display: block; padding: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; cursor: zoom-in; text-align: left; font: inherit; }
     .demo-tile[data-video] { cursor: pointer; }
     .demo-tile img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; transition: transform .3s ease; }
@@ -968,6 +970,15 @@
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Sortie PDF à l’échelle, sans boîte de dialogue d’impression</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Fonctionne en local, vos projets restent sur votre ordinateur</li>
             </ul>
+            <div class="demo">
+              <p class="demo-title">Exemple dans LignoCAD Tragwerk</p>
+              <div class="demo-tiles single">
+                <button class="demo-tile" type="button" data-img="/assets/demo/tragwerk-positionsplan-editor-v2.png" data-text="Un plan de positions dessiné dans LignoCAD Tragwerk. Les murs, poutres et dalles sont positionnés sur le fond de plan. Capture de l’interface en allemand.">
+                  <img src="/assets/demo/tragwerk-positionsplan-editor-v2.png" alt="" width="1920" height="1080" loading="lazy">
+                  <span class="demo-cap">Plan de positions dans l’éditeur</span>
+                </button>
+              </div>
+            </div>
             <div class="license-box">
               <div><div class="k">Étudiants</div><div class="v free">Gratuit</div><div class="s">pendant toute la durée de vos études</div></div>
               <div><div class="k">Professionnels</div><div class="v free">Gratuit</div><div class="s">3 mois pour toute inscription jusqu’au 31.12.2026</div></div>
@@ -1867,7 +1878,7 @@
     </div>
   </main>
 
-  <dialog class="demo-dialog" id="demoDialog" aria-label="Démo : une coupole entière dans Cadwork">
+  <dialog class="demo-dialog" id="demoDialog" aria-labelledby="demoText">
     <div id="demoMedia"></div>
     <p id="demoText"></p>
     <button class="demo-close" type="button" id="demoClose" aria-label="Fermer">×</button>
@@ -2793,7 +2804,7 @@
       $$('.reveal').forEach(function (el) { io.observe(el); });
     } else { $$('.reveal').forEach(function (el) { el.classList.add('in'); }); }
 
-    /* ---------- Demo Open MCP CAD ---------- */
+    /* ---------- Produktbeispiele ---------- */
     // Vorschaubilder öffnen Video oder Bild gross in einem Dialog. Das Video lädt erst beim Klick.
     (function () {
       var dlg = $('#demoDialog'), media = $('#demoMedia'), text = $('#demoText');

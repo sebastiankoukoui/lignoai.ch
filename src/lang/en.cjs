@@ -166,6 +166,9 @@ module.exports = {
     "builders.linkHint": "Opens the separate demo page in a new tab.",
 
     'tw.logoAlt': 'LignoCAD Tragwerk logo',
+    'tw.demoTitle': 'Example from LignoCAD Tragwerk',
+    'tw.demoCaption': 'Position plan in the editor',
+    'tw.demoText': 'A position plan drawn in LignoCAD Tragwerk. Walls, beams and floor slabs are positioned on the base plan. Screenshot of the German interface.',
     'tw.badgePart': 'Part of LignoPlan',
     'tw.badgeApp': 'Windows app',
     'tw.badgeSwiss': 'For Swiss timber construction',

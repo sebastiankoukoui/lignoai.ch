@@ -243,6 +243,8 @@
     .demo { margin: -4px 0 28px; }
     .demo-title { font-size: .8rem; font-weight: 700; color: var(--muted); margin-bottom: 10px; }
     .demo-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 560px; }
+    .demo-tiles.single { grid-template-columns: minmax(0, 1fr); max-width: 360px; }
+    .demo-tiles.single img { aspect-ratio: 16 / 9; object-fit: contain; }
     .demo-tile { position: relative; display: block; padding: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; cursor: zoom-in; text-align: left; font: inherit; }
     .demo-tile[data-video] { cursor: pointer; }
     .demo-tile img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; transition: transform .3s ease; }

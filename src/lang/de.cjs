@@ -166,6 +166,9 @@ module.exports = {
     "builders.linkHint": "Öffnet die separate Demo-Seite in einem neuen Tab.",
 
     'tw.logoAlt': 'LignoCAD Tragwerk Logo',
+    'tw.demoTitle': 'Beispiel aus LignoCAD Tragwerk',
+    'tw.demoCaption': 'Positionsplan im Editor',
+    'tw.demoText': 'Ein selbst gezeichneter Positionsplan in LignoCAD Tragwerk. Wände, Träger und Decken sind auf der Plangrundlage positioniert. Aufnahme der deutschen Oberfläche.',
     'tw.badgePart': 'Teil von LignoPlan',
     'tw.badgeApp': 'Windows-App',
     'tw.badgeSwiss': 'Für den Schweizer Holzbau',

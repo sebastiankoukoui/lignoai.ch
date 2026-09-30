@@ -166,6 +166,9 @@ module.exports = {
     "builders.linkHint": "Apre la demo su una pagina separata in una nuova scheda.",
 
     'tw.logoAlt': 'Logo LignoCAD Tragwerk',
+    'tw.demoTitle': 'Esempio in LignoCAD Tragwerk',
+    'tw.demoCaption': 'Piano delle posizioni nell’editor',
+    'tw.demoText': 'Un piano delle posizioni disegnato in LignoCAD Tragwerk. Pareti, travi e solai sono posizionati sulla pianta di riferimento. Schermata dell’interfaccia in tedesco.',
     'tw.badgePart': 'Parte di LignoPlan',
     'tw.badgeApp': 'App per Windows',
     'tw.badgeSwiss': 'Per la costruzione in legno svizzera',
