@@ -357,6 +357,11 @@
     .ai-help-btn svg { width: 15px; height: 15px; }
     .ai-help-btn:hover { background: var(--violet-50); }
     .ai-help-btn:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+    .ai-help-link { display: inline; padding: 0; border: 0; background: none; font: inherit; color: var(--violet); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+    .ai-help-link:hover { color: var(--ink); }
+    .ai-help-link:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; border-radius: 3px; }
+    .ai-help-btn { padding: 8px; }
+    .ai-help-btn svg { width: 18px; height: 18px; }
     .ai-help-status { font-size: .82rem; font-weight: 600; color: var(--green-700); }
     .ai-help-text { display: none; }
     .ai-help.zeigen .ai-help-text { display: block; flex-basis: 100%; padding: 8px 10px; border-radius: 8px; background: #fff; border: 1px solid var(--line); font-size: .8rem; user-select: all; }
@@ -1963,8 +1968,8 @@
           <li>Ici se trouve tout ce dont la fenêtre d’installation a besoin. Vous n’avez rien à y ouvrir.</li>
         </ol>
         <div class="ai-help">
-          <p><strong>Faites-vous aider par votre IA.</strong> Vous utilisez déjà une application d’IA sur votre PC ? Copiez ce texte et envoyez-le-lui. Elle vous guide pas à pas dans l’installation.</p>
-          <button class="ai-help-btn" type="button" data-copy="aiHelpPrompt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copier le texte</span></button>
+          <p><strong>Faites-vous aider par votre IA.</strong> Vous utilisez déjà une application d’IA sur votre PC ? Copiez <button class="ai-help-link" type="button" data-copy="aiHelpPrompt">ce texte</button> d’un clic et envoyez-le-lui. Elle vous guide pas à pas dans l’installation.</p>
+          <button class="ai-help-btn" type="button" data-copy="aiHelpPrompt" aria-label="Copier le texte" title="Copier le texte"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
           <span class="ai-help-status" role="status" aria-live="polite"></span>
           <p class="ai-help-text" id="aiHelpPrompt">Aide-moi s'il te plaît à installer Open MCP CAD. Il relie Cadwork 3D 2026 à une IA. Guide-moi pas à pas, une seule étape à la fois, et attends que je l'aie faite. 1) Télécharger le dernier fichier ZIP : https://github.com/sebastiankoukoui/open-mcp-cad/releases/latest 2) Fermer Cadwork et extraire le fichier ZIP (clic droit, «Extraire tout»). 3) Dans le dossier extrait, double-cliquer sur 1_INSTALLIEREN.cmd et cliquer sur «Installieren» dans la fenêtre d'installation. C'est le chemin recommandé. 4) Ensuite, quitter complètement l'application d'IA et la redémarrer. 5) Dans Cadwork, cliquer sur «Open MCP CAD» jusqu'à ce que «Bereit» s'affiche. Si quelque chose ne marche pas, lis le fichier Programmdateien\FUER_KI_ASSISTENTEN.md dans le dossier extrait. Ne construis pas d'adaptateur et ne parle pas toi-même au port du plugin, tout est déjà là.</p>
         </div>

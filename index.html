@@ -358,6 +358,11 @@
     .ai-help-btn svg { width: 15px; height: 15px; }
     .ai-help-btn:hover { background: var(--violet-50); }
     .ai-help-btn:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+    .ai-help-link { display: inline; padding: 0; border: 0; background: none; font: inherit; color: var(--violet); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+    .ai-help-link:hover { color: var(--ink); }
+    .ai-help-link:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; border-radius: 3px; }
+    .ai-help-btn { padding: 8px; }
+    .ai-help-btn svg { width: 18px; height: 18px; }
     .ai-help-status { font-size: .82rem; font-weight: 600; color: var(--green-700); }
     .ai-help-text { display: none; }
     .ai-help.zeigen .ai-help-text { display: block; flex-basis: 100%; padding: 8px 10px; border-radius: 8px; background: #fff; border: 1px solid var(--line); font-size: .8rem; user-select: all; }
@@ -1961,8 +1966,8 @@
           <li>Hier liegt alles, was das Einrichtungsfenster braucht. Du musst darin nichts öffnen.</li>
         </ol>
         <div class="ai-help">
-          <p><strong>Lass dir von deiner KI helfen.</strong> Du nutzt schon eine KI-App am PC? Kopiere diesen Text und schick ihn ihr. Sie führt dich Schritt für Schritt durch die Einrichtung.</p>
-          <button class="ai-help-btn" type="button" data-copy="aiHelpPrompt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Text kopieren</span></button>
+          <p><strong>Lass dir von deiner KI helfen.</strong> Du nutzt schon eine KI-App am PC? Kopiere <button class="ai-help-link" type="button" data-copy="aiHelpPrompt">diesen Text</button> mit einem Klick und schick ihn ihr. Sie führt dich Schritt für Schritt durch die Einrichtung.</p>
+          <button class="ai-help-btn" type="button" data-copy="aiHelpPrompt" aria-label="Text kopieren" title="Text kopieren"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
           <span class="ai-help-status" role="status" aria-live="polite"></span>
           <p class="ai-help-text" id="aiHelpPrompt">Hilf mir bitte, Open MCP CAD einzurichten. Es verbindet Cadwork 3D 2026 mit einer KI. Führe mich Schritt für Schritt, immer nur einen Schritt, und warte, bis ich ihn erledigt habe. 1) Die neueste ZIP-Datei herunterladen: https://github.com/sebastiankoukoui/open-mcp-cad/releases/latest 2) Cadwork schliessen und die ZIP-Datei entpacken (rechte Maustaste, «Alle extrahieren»). 3) Im entpackten Ordner 1_INSTALLIEREN.cmd doppelklicken und im Einrichtungsfenster «Installieren» klicken. Das ist der empfohlene Weg. 4) Danach die KI-App ganz beenden und neu starten. 5) In Cadwork auf «Open MCP CAD» klicken, bis «Bereit» steht. Klappt etwas nicht, lies die Datei Programmdateien\FUER_KI_ASSISTENTEN.md im entpackten Ordner. Bau keinen eigenen Adapter und sprich nicht selbst mit dem Port des Plugins, alles ist schon da.</p>
         </div>

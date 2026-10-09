@@ -337,6 +337,11 @@
     .ai-help-btn svg { width: 15px; height: 15px; }
     .ai-help-btn:hover { background: var(--violet-50); }
     .ai-help-btn:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+    .ai-help-link { display: inline; padding: 0; border: 0; background: none; font: inherit; color: var(--violet); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+    .ai-help-link:hover { color: var(--ink); }
+    .ai-help-link:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; border-radius: 3px; }
+    .ai-help-btn { padding: 8px; }
+    .ai-help-btn svg { width: 18px; height: 18px; }
     .ai-help-status { font-size: .82rem; font-weight: 600; color: var(--green-700); }
     .ai-help-text { display: none; }
     .ai-help.zeigen .ai-help-text { display: block; flex-basis: 100%; padding: 8px 10px; border-radius: 8px; background: #fff; border: 1px solid var(--line); font-size: .8rem; user-select: all; }
@@ -1529,8 +1534,8 @@
           <li>{{mcp.set1_4}}</li>
         </ol>
         <div class="ai-help">
-          <p><strong>{{mcp.aiHelpH}}</strong> {{mcp.aiHelpP}}</p>
-          <button class="ai-help-btn" type="button" data-copy="aiHelpPrompt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>{{mcp.aiHelpBtn}}</span></button>
+          <p><strong>{{mcp.aiHelpH}}</strong> {{mcp.aiHelpP1}} <button class="ai-help-link" type="button" data-copy="aiHelpPrompt">{{mcp.aiHelpLink}}</button> {{mcp.aiHelpP2}}</p>
+          <button class="ai-help-btn" type="button" data-copy="aiHelpPrompt" aria-label="{{mcp.aiHelpBtn}}" title="{{mcp.aiHelpBtn}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
           <span class="ai-help-status" role="status" aria-live="polite"></span>
           <p class="ai-help-text" id="aiHelpPrompt">{{mcp.aiHelpPrompt}}</p>
         </div>
