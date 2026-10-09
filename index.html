@@ -320,6 +320,47 @@
     .product-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
     .product-foot { margin-top: 18px; font-size: .82rem; color: var(--muted); }
     .product-foot code { font-family: var(--mono); font-size: .78rem; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px; color: var(--ink-2); }
+    .howto-open-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .howto-open { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 11px; border: 1px solid #ddd5f6; border-radius: 999px; background: var(--violet-50); color: var(--violet); font: inherit; font-size: .84rem; font-weight: 600; line-height: 1.3; cursor: pointer; transition: background .2s ease, border-color .2s ease; }
+    .howto-open svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .howto-open:hover { background: #e8e2fa; border-color: #cbbff2; }
+    .howto-open:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+    .howto-open-meta { color: var(--muted); font-weight: 500; }
+    .howto-open-meta::before { content: "\00b7"; margin-right: 8px; }
+    .product .privacy { margin: -12px 0 24px; padding: 12px 16px; gap: 12px; }
+    .product .privacy svg { width: 20px; height: 20px; margin-top: 1px; }
+    .product .privacy p { font-size: .86rem; line-height: 1.45; }
+    .howto-dialog { margin: auto; border: 0; padding: 0; border-radius: 14px; width: min(1100px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow: auto; background: #fff; box-shadow: var(--shadow-lg); overscroll-behavior: contain; }
+    .howto-dialog::backdrop { background: rgba(17, 23, 19, .72); }
+    .howto-bar { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: 8px; padding: 10px 12px 10px 18px; background: #fff; border-bottom: 1px solid var(--line); }
+    .howto-count { margin-right: auto; font-size: .85rem; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .howto-btn { width: 38px; height: 38px; border: 0; border-radius: 50%; background: var(--bg-soft); color: var(--ink); display: grid; place-items: center; cursor: pointer; font: inherit; font-size: 1.3rem; line-height: 1; }
+    .howto-btn svg { width: 18px; height: 18px; }
+    .howto-btn:hover { background: var(--line); }
+    .howto-btn:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+    .howto-slide { margin: 0; padding: 18px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 22px; align-items: start; touch-action: pan-y; }
+    .howto-slide[hidden] { display: none; }
+    .howto-slide.wide { grid-template-columns: minmax(0, 1fr); }
+    .howto-slide img { display: block; max-width: 100%; width: auto; height: auto; max-height: calc(100vh - 150px); margin: 0 auto; border: 1px solid var(--line); border-radius: 10px; background: #3c4350; }
+    .howto-slide.wide img { width: 100%; object-fit: contain; }
+    .howto-slide h4 { font-size: 1.05rem; margin-bottom: 8px; }
+    .howto-note { font-size: .84rem; color: var(--muted); margin-bottom: 10px; }
+    .howto-keys { list-style: none; counter-reset: howto; display: grid; gap: 8px; }
+    .howto-slide.wide .howto-keys { grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .howto-keys li { counter-increment: howto; position: relative; padding-left: 32px; font-size: .92rem; color: var(--ink-2); line-height: 1.5; }
+    .howto-keys li::before { content: counter(howto); position: absolute; left: 0; top: 1px; width: 22px; height: 22px; border-radius: 50%; background: var(--violet); color: #fff; font-size: .74rem; font-weight: 700; display: grid; place-items: center; }
+    .howto-keys li.wichtig { padding: 8px 12px 8px 42px; border-radius: 10px; background: var(--violet-50); color: var(--ink); font-weight: 600; }
+    .howto-keys li.wichtig::before { left: 10px; top: 9px; }
+    .ai-help { margin-top: 16px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg-soft); display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+    .ai-help p { flex: 1 1 260px; font-size: .86rem; color: var(--ink-2); line-height: 1.5; }
+    .ai-help strong { color: var(--ink); }
+    .ai-help-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid #ddd5f6; border-radius: 999px; background: #fff; color: var(--violet); font: inherit; font-size: .84rem; font-weight: 600; cursor: pointer; }
+    .ai-help-btn svg { width: 15px; height: 15px; }
+    .ai-help-btn:hover { background: var(--violet-50); }
+    .ai-help-btn:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+    .ai-help-status { font-size: .82rem; font-weight: 600; color: var(--green-700); }
+    .ai-help-text { display: none; }
+    .ai-help.zeigen .ai-help-text { display: block; flex-basis: 100%; padding: 8px 10px; border-radius: 8px; background: #fff; border: 1px solid var(--line); font-size: .8rem; user-select: all; }
 
     .code {
       display: flex; align-items: center; gap: 12px; margin: 0 0 22px;
@@ -739,6 +780,11 @@
     }
     @media (max-width: 680px) {
       :root { --gutter: 16px; }
+      .howto-open { min-height: 40px; }
+      .howto-dialog { width: calc(100vw - 16px); max-height: calc(100vh - 16px); }
+      .howto-slide, .howto-slide.wide .howto-keys { grid-template-columns: minmax(0, 1fr); }
+      .howto-slide { padding: 14px; gap: 14px; }
+      .howto-slide img { max-height: 58vh; }
       section.block { padding: 72px 0; }
       .hero { padding: 40px 0 64px; }
       .hero-visual { height: 340px; }
@@ -903,26 +949,41 @@
               Open MCP CAD verbindet deinen KI-Assistenten mit dem laufenden Cadwork. Ein MCP-Server und ein Cadwork-Plugin sorgen dafür, dass ein Sprachmodell Geometrie direkt in deinem geöffneten 3D-Dokument lesen und erzeugen kann. Du beschreibst, was du brauchst, und musst dich nicht durch Menüs klicken. Entstanden ist das Ganze über Monate im echten Holzbau-Alltag.
             </p>
             <ul class="checks">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Jeder schreibende Zugriff braucht deine Freigabe und lässt sich rückgängig machen</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Für MCP-fähige Assistenten wie Claude Desktop, Claude Code oder Codex</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Du bestimmst, wie viel die KI allein darf: von «Nur lesen» über eine Rückfrage vor jeder Änderung bis «Alles automatisch». Änderungen lassen sich rückgängig machen</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Für Claude Desktop, die ChatGPT-App (mit Codex) und Claude Code, dazu ein eigener Chat direkt im Plugin</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Mehrere Cadwork-Fenster parallel, sauber getrennt</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Läuft lokal, ohne Konto und ohne Cloud dazwischen</li>
             </ul>
+            <div class="privacy">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <div><strong>Deine Daten bleiben deine Daten.</strong><p>Open MCP CAD läuft ganz auf deinem PC. Kein Konto, kein Server von LignoAI dazwischen, LignoAI erhält keine Daten. Was die KI liest und was du ihr schreibst, geht nur an den KI-Anbieter, den du wählst. Mit einer lokalen KI (zum Beispiel Ollama) bleibt alles auf deinem Rechner.</p></div>
+            </div>
             <div class="demo">
               <p class="demo-title">Demo: eine ganze Kuppel in Cadwork</p>
               <div class="demo-tiles">
-                <button class="demo-tile" type="button" data-video="/assets/demo/kuppel_30s.mp4" data-text="Eine ganze Kuppel in Cadwork, gezeichnet von Open MCP CAD: 286 Stäbe mit Endtypen, 2288 Bolzen M16 und alle Stahlknoten in 31 Minuten. Im Zeitraffer.">
+                <button class="demo-tile" type="button" data-video="/assets/demo/kuppel_30s.mp4" data-text="Eine Kuppel mit 286 Stäben, 2288 Bolzen M16 und allen Stahlknoten, von einer KI in Cadwork gezeichnet. 31 Minuten im Zeitraffer.">
                   <img src="/assets/demo/kuppel.webp" alt="" width="1200" height="800" loading="lazy">
                   <span class="demo-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
                   <span class="demo-cap">Video, 30 s</span>
                 </button>
-                <button class="demo-tile" type="button" data-img="/assets/demo/knoten.webp" data-text="Ein Knoten der Kuppel: Stäbe mit Nut für das Stahlblech und VBA M16, von Open MCP CAD in Cadwork gezeichnet.">
+                <button class="demo-tile" type="button" data-img="/assets/demo/knoten.webp" data-text="Ein Knoten der Kuppel: Stäbe mit Nut für das Stahlblech und VBA M16, von einer KI in Cadwork gezeichnet.">
                   <img src="/assets/demo/knoten.webp" alt="" width="1400" height="717" loading="lazy">
                   <span class="demo-cap">Stahlknoten</span>
                 </button>
                 <button class="demo-tile" type="button" data-img="/assets/demo/knoten-nah.webp" data-text="Derselbe Knoten im Viewer: Stahlteile, Bleche und Schrauben sind echte Cadwork-Elemente.">
                   <img src="/assets/demo/knoten-nah.webp" alt="" width="1400" height="661" loading="lazy">
                   <span class="demo-cap">Bleche und VBA</span>
+                </button>
+              </div>
+              <div class="howto-open-row">
+                <button class="howto-open" type="button" data-gallery="setupDialog" aria-haspopup="dialog">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                  <span>Einrichten</span>
+                  <span class="howto-open-meta">8 Schritte</span>
+                </button>
+                <button class="howto-open" type="button" data-gallery="howtoDialog" aria-haspopup="dialog">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                  <span>Anleitung ansehen</span>
+                  <span class="howto-open-meta">4 Schritte</span>
                 </button>
               </div>
             </div>
@@ -945,7 +1006,7 @@
                 </div>
               </div>
             </div>
-            <p class="product-foot">Installation: ZIP entpacken, <code>install.cmd</code> doppelklicken. Den Quellcode von GitHub nicht selbst in Cadwork kopieren. Voraussetzung: Windows, Cadwork 3D 2026, Python 3.10 bis 3.13. Fehlt Python, installiert es der Installer auf Nachfrage. Die Anleitung gibt es auf Deutsch, Englisch, Französisch und Italienisch.</p>
+            <p class="product-foot">Installation: ZIP entpacken und <code>1_INSTALLIEREN.cmd</code> doppelklicken. Ein Einrichtungsfenster öffnet sich. Dort «Installieren» klicken, fertig. Das Fenster richtet alles ein und verbindet Open MCP CAD mit deiner KI-App. Fehlt dem PC ein Programmteil wie Python, fragt es vorher. Voraussetzung: Windows, Cadwork 3D 2026 und Claude Desktop oder die ChatGPT-App am PC. Den Quellcode von GitHub nicht selbst in Cadwork kopieren. Die Anleitung gibt es auf Deutsch, Englisch, Französisch und Italienisch.</p>
           </div>
         </article>
 
@@ -1784,6 +1845,7 @@
           <li><strong>jsDelivr</strong>: Auslieferung der Programmbibliothek für die Anmeldung</li>
         </ul>
         <p>Open MCP CAD und das Installationsprogramm von LignoCAD Tragwerk laden Nutzerinnen und Nutzer direkt bei GitHub herunter. Dafür gilt die Datenschutzerklärung von GitHub.</p>
+        <p>Open MCP CAD selbst sendet keine Daten an LignoAI. Die Verbindung zur KI läuft direkt zwischen dir und dem KI-Anbieter, den du wählst. Dafür gelten dessen Bedingungen. Mit einer lokalen KI (zum Beispiel Ollama) bleiben die Daten auf deinem Rechner.</p>
         <p>Einige dieser Anbieter sitzen in den USA oder bearbeiten Daten dort. Die USA gelten nur für Unternehmen als Land mit angemessenem Datenschutz, die nach dem Swiss-U.S. Data Privacy Framework zertifiziert sind. Wo das nicht der Fall ist, stützen wir uns auf die Standardvertragsklauseln der Europäischen Kommission, die der Eidgenössische Datenschutz- und Öffentlichkeitsbeauftragte (EDÖB) anerkannt hat, oder auf eine andere gesetzlich vorgesehene Garantie.</p>
         <p>Darüber hinaus geben wir Personendaten nur weiter, wenn das Gesetz oder eine Behörde es verlangt, wenn es zur Durchsetzung unserer Rechte nötig ist oder wenn eine Gesellschaft die Software übernimmt und weiterführt. Wir verkaufen keine Daten.</p>
       </section>
@@ -1880,6 +1942,175 @@
     <div id="demoMedia"></div>
     <p id="demoText"></p>
     <button class="demo-close" type="button" id="demoClose" aria-label="Schliessen">×</button>
+  </dialog>
+  <dialog class="howto-dialog" id="setupDialog" aria-labelledby="setupT1" data-titel="setupT">
+    <div class="howto-bar">
+      <span class="howto-count" id="setupCount" aria-live="polite">1 / 8</span>
+      <button class="howto-btn" type="button" id="setupPrev" data-nav="prev" aria-label="Vorheriger Schritt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="howto-btn" type="button" id="setupNext" data-nav="next" aria-label="Nächster Schritt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
+      <button class="howto-btn" type="button" id="setupClose" data-nav="close" aria-label="Schliessen">×</button>
+    </div>
+    <figure class="howto-slide wide" data-step="0">
+      <img data-src="/assets/mcp/einrichten-2-entpacken.webp" alt="Die ZIP-Datei und der entpackte Ordner mit 1_INSTALLIEREN.cmd, den Anleitungen als PDF und dem Ordner Programmdateien." width="1372" height="558">
+      <figcaption>
+        <h4 id="setupT1">ZIP entpacken und doppelklicken</h4>
+        <ol class="howto-keys">
+          <li>Die ZIP-Datei mit der rechten Maustaste anklicken, dann «Alle extrahieren» und «Extrahieren».</li>
+          <li>Cadwork schliessen. Dann im entpackten Ordner «1_INSTALLIEREN.cmd» doppelklicken. Das Einrichtungsfenster öffnet sich.</li>
+          <li>Die Anleitung als PDF.</li>
+          <li>Hier liegt alles, was das Einrichtungsfenster braucht. Du musst darin nichts öffnen.</li>
+        </ol>
+        <div class="ai-help">
+          <p><strong>Lass dir von deiner KI helfen.</strong> Du nutzt schon eine KI-App am PC? Kopiere diesen Text und schick ihn ihr. Sie führt dich Schritt für Schritt durch die Einrichtung.</p>
+          <button class="ai-help-btn" type="button" data-copy="aiHelpPrompt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Text kopieren</span></button>
+          <span class="ai-help-status" role="status" aria-live="polite"></span>
+          <p class="ai-help-text" id="aiHelpPrompt">Hilf mir bitte, Open MCP CAD einzurichten. Es verbindet Cadwork 3D 2026 mit einer KI. Führe mich Schritt für Schritt, immer nur einen Schritt, und warte, bis ich ihn erledigt habe. 1) Die neueste ZIP-Datei herunterladen: https://github.com/sebastiankoukoui/open-mcp-cad/releases/latest 2) Cadwork schliessen und die ZIP-Datei entpacken (rechte Maustaste, «Alle extrahieren»). 3) Im entpackten Ordner 1_INSTALLIEREN.cmd doppelklicken und im Einrichtungsfenster «Installieren» klicken. Das ist der empfohlene Weg. 4) Danach die KI-App ganz beenden und neu starten. 5) In Cadwork auf «Open MCP CAD» klicken, bis «Bereit» steht. Klappt etwas nicht, lies die Datei Programmdateien\FUER_KI_ASSISTENTEN.md im entpackten Ordner. Bau keinen eigenen Adapter und sprich nicht selbst mit dem Port des Plugins, alles ist schon da.</p>
+        </div>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="1" hidden>
+      <img data-src="/assets/mcp/einrichten-3a-wo.webp" alt="Die Seite «Wo möchtest du mit der KI arbeiten?» im Einrichtungsfenster mit den Wahlen In deiner KI-App, Direkt in Cadwork im Chat und Beides." width="1312" height="980">
+      <figcaption>
+        <h4 id="setupT2">Wo möchtest du arbeiten?</h4>
+        <ol class="howto-keys">
+          <li>In deiner KI-App: Claude Desktop oder die ChatGPT-App.</li>
+          <li>Direkt in Cadwork im Chat, neben der Zeichnung.</li>
+          <li>Beides. Ist schon eine KI-App da, ist das vorgewählt.</li>
+          <li>«Weiter» klicken.</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="2" hidden>
+      <img data-src="/assets/mcp/einrichten-3-ki-app.webp" alt="Die Seite «Deine KI-App» im Einrichtungsfenster mit Claude Desktop und der ChatGPT-App, beide angehakt." width="1312" height="980">
+      <figcaption>
+        <h4 id="setupT3">KI-App wählen</h4>
+        <p class="howto-note">Hast du noch keine KI-App, zeigt das Fenster, wo du Claude Desktop oder die ChatGPT-App holst.</p>
+        <ol class="howto-keys">
+          <li>Auf dem PC gefunden und angehakt: hier trägt das Fenster Open MCP CAD ein.</li>
+          <li>Ebenso. Nimm das Häkchen weg, wenn du eine App nicht verbinden willst.</li>
+          <li class="wichtig">Es geht nur mit der App am PC, nicht im Browser oder am Handy.</li>
+          <li>«Weiter» klicken.</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="3" hidden>
+      <img data-src="/assets/mcp/einrichten-8a-chat-ki.webp" alt="Die Seite «Welche KI im Chat in Cadwork?» mit Claude, ChatGPT (Codex) und Später oder mit eigenem Schlüssel." width="1312" height="980">
+      <figcaption>
+        <h4 id="setupT4">KI für den Chat in Cadwork</h4>
+        <p class="howto-note">Nur wenn du «Direkt in Cadwork im Chat» oder «Beides» gewählt hast.</p>
+        <ol class="howto-keys">
+          <li>Claude, mit einem Claude-Abo. Das Fenster installiert dafür Claude Code mit dem offiziellen Befehl von Anthropic.</li>
+          <li>ChatGPT, mit einem ChatGPT-Abo. Das Fenster installiert dafür Codex mit dem offiziellen Befehl von OpenAI. Die ChatGPT-App allein genügt für den Chat in Cadwork nicht.</li>
+          <li>Später oder mit eigenem Schlüssel. Im Chat unter Einstellungen kannst du auch eine lokale KI wie Ollama wählen.</li>
+          <li>«Weiter» klicken.</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="4" hidden>
+      <img data-src="/assets/mcp/einrichten-4-installieren.webp" alt="Die Seite «Bereit zum Installieren» im Einrichtungsfenster." width="1312" height="980">
+      <figcaption>
+        <h4 id="setupT5">Installieren</h4>
+        <ol class="howto-keys">
+          <li>Was das Fenster einrichtet. Fehlt dem PC ein Programmteil, fragt das Fenster vorher, ob es ihn mitinstallieren darf.</li>
+          <li>«Installieren» klicken.</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="5" hidden>
+      <img data-src="/assets/mcp/einrichten-5-laeuft.webp" alt="Das Einrichtungsfenster richtet ein: Fortschritt, die Zeile «Zusatzteile werden geladen» und die Schritte." width="1312" height="980">
+      <figcaption>
+        <h4 id="setupT6">Wird eingerichtet</h4>
+        <p class="howto-note">Am Ende steht «Fertig eingerichtet». Dann ist alles da.</p>
+        <ol class="howto-keys">
+          <li>Der Fortschritt. Das dauert einige Minuten.</li>
+          <li>Was gerade passiert, zum Beispiel welches Zusatzteil geladen wird. Der Strich darüber bewegt sich, solange gearbeitet wird.</li>
+          <li>Der Schritt, der gerade läuft.</li>
+          <li>Zeigt, was genau passiert.</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="6" hidden>
+      <img data-src="/assets/mcp/einrichten-8b-anmelden.webp" alt="Die Seite «Bei Claude anmelden» im Einrichtungsfenster mit den Knöpfen Später und Anmelden." width="1312" height="980">
+      <figcaption>
+        <h4 id="setupT7">Bei Claude anmelden</h4>
+        <p class="howto-note">Nur für den Chat in Cadwork. Nach dem Installieren meldest du dich einmal an.</p>
+        <ol class="howto-keys">
+          <li>Ein kleines schwarzes Fenster und dein Browser öffnen sich. Im Browser mit deinem Konto anmelden.</li>
+          <li>«Anmelden» klicken. «Später» geht auch, dann «1_INSTALLIEREN.cmd» später nochmals starten.</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="7" hidden>
+      <img data-src="/assets/mcp/einrichten-7-apps.webp" alt="Claude Desktop oder die ChatGPT-App, über Open MCP CAD mit Cadwork verbunden." width="1442" height="760">
+      <figcaption>
+        <h4 id="setupT8">Loslegen</h4>
+        <p class="howto-note">Für den Chat in Cadwork: in Cadwork auf «Open MCP CAD» klicken, dann in der Leiste auf die Sprechblase.</p>
+        <ol class="howto-keys">
+          <li>Das Einrichtungsfenster hat Open MCP CAD in der App eingetragen. Hast du die App erst danach installiert: «1_INSTALLIEREN.cmd» nochmals doppelklicken.</li>
+          <li>Die App ganz beenden und neu starten. Erst dann kennt sie Open MCP CAD.</li>
+          <li>In Cadwork auf «Open MCP CAD» klicken, bis die Leiste «Bereit» zeigt.</li>
+          <li>Im Chat der App ganz normal schreiben. Fragt die App, ob sie Open MCP CAD benutzen darf: erlauben. Zum Prüfen fragen: «Welche Datei ist in Cadwork offen?»</li>
+          <li class="wichtig">Im Browser oder am Handy geht es nicht, nur mit der App am PC.</li>
+        </ol>
+      </figcaption>
+    </figure>
+  </dialog>
+  <dialog class="howto-dialog" id="howtoDialog" aria-labelledby="howtoT1" data-titel="howtoT">
+    <div class="howto-bar">
+      <span class="howto-count" id="howtoCount" aria-live="polite">1 / 4</span>
+      <button class="howto-btn" type="button" id="howtoPrev" data-nav="prev" aria-label="Vorheriger Schritt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="howto-btn" type="button" id="howtoNext" data-nav="next" aria-label="Nächster Schritt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
+      <button class="howto-btn" type="button" id="howtoClose" data-nav="close" aria-label="Schliessen">×</button>
+    </div>
+    <figure class="howto-slide wide" data-step="0">
+      <img data-src="/assets/mcp/anleitung-1-leiste.webp" alt="Cadwork mit der Leiste von Open MCP CAD oben rechts. Markiert sind die Leiste, die Anzeige «Bereit», der Chat-Knopf und der Knopf zum Andocken." width="1470" height="403">
+      <figcaption>
+        <h4 id="howtoT1">Plugin starten</h4>
+        <ol class="howto-keys">
+          <li>Im Plugin-Menü von Cadwork auf «Open MCP CAD» klicken. Oben rechts über der Zeichnung erscheint die Leiste.</li>
+          <li>«Bereit» heisst: Cadwork ist verbunden und die KI kann loslegen.</li>
+          <li>Die Sprechblase öffnet den Chat unter der Leiste.</li>
+          <li>Dieser Knopf dockt das Fenster rechts an, in einer eigenen Spalte.</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="1" hidden>
+      <img data-src="/assets/mcp/anleitung-2-chat.webp" alt="Der Chat von Open MCP CAD in Cadwork mit der Anfrage «Zeichne eine Wand 4 m lang, 2,5 m hoch» und der Antwort der KI. Markiert sind Eingabe, Verlauf, Rückgängig, Modus und Modell." width="875" height="1435">
+      <figcaption>
+        <h4 id="howtoT2">Mit der KI chatten</h4>
+        <p class="howto-note">Der Chat läuft mit Claude Code, Codex, einem API-Schlüssel für OpenAI, Anthropic oder OpenRouter oder lokal mit Ollama oder LM Studio. Du kannst auch direkt in Claude Desktop, der ChatGPT-App oder Claude Code arbeiten.</p>
+        <ol class="howto-keys">
+          <li>Schreib, was du brauchst, zum Beispiel «Zeichne eine Wand 4 m lang, 2,5 m hoch».</li>
+          <li>Jeder Schritt in Cadwork steht im Verlauf. Ein Klick zeigt die Einzelheiten.</li>
+          <li>Der Pfeil nimmt den letzten Schritt in Cadwork zurück. Daneben: wiederherstellen und neu zeichnen.</li>
+          <li>Der Modus bestimmt, wie viel die KI allein darf: «Nur lesen», «Fragen» vor jeder Änderung, «Cadwork frei» oder «Alles automatisch».</li>
+          <li>Hier wählst du Modell und Denkstufe.</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="2" hidden>
+      <img data-src="/assets/mcp/anleitung-3-angedockt.webp" alt="Open MCP CAD rechts angedockt neben den Eigenschaften von Cadwork, im Briefkasten. Markiert sind die Umschaltung zwischen Chat und Briefkasten, der laufende Auftrag, das Notizfeld und der Knopf zum Abdocken." width="740" height="1435">
+      <figcaption>
+        <h4 id="howtoT3">Rechts angedockt</h4>
+        <ol class="howto-keys">
+          <li>Wechselt zwischen Chat und Briefkasten.</li>
+          <li>Im Briefkasten steht, was gerade in Cadwork läuft. Darunter die letzten Aufträge.</li>
+          <li>Hier legst du eine Notiz für die KI ab. Sie wartet, bis die KI sie abholt.</li>
+          <li>Löst das Fenster wieder, es schwebt dann frei.</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide wide" data-step="3" hidden>
+      <img data-src="/assets/mcp/anleitung-4-anzeige.webp" alt="Die Anzeige «KI zeichnet» über der Zeichnung mit Fortschrittsbalken und dem Knopf «Anhalten»." width="1190" height="403">
+      <figcaption>
+        <h4 id="howtoT4">Während die KI zeichnet</h4>
+        <ol class="howto-keys">
+          <li>Eine kleine Anzeige über der Zeichnung zeigt, dass die KI arbeitet.</li>
+          <li>Wie viele Bauteile schon stehen und wie lange es noch dauert.</li>
+          <li>«Anhalten» verwirft die wartenden Aufträge. Der laufende Schritt wird noch fertig.</li>
+        </ol>
+      </figcaption>
+    </figure>
   </dialog>
 
   <!-- ============ FOOTER ============ -->
@@ -2829,6 +3060,79 @@
       dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });
       dlg.addEventListener('close', function () { media.innerHTML = ''; });
     })();
+
+    /* ---------- Anleitungen als Galerie ---------- */
+    // Zwei Reihen (Einrichten, Arbeiten), dieselbe Galerie. Bilder laden erst, wenn ihr Schritt (oder der Nachbar) gezeigt wird.
+    function galerie(dlg) {
+      if (!dlg || !dlg.showModal) return;
+      var slides = $$('.howto-slide', dlg);
+      var n = slides.length, cur = 0, opener = null, x0 = null, y0 = 0;
+      var count = $('.howto-count', dlg), titel = dlg.getAttribute('data-titel');
+      function load(i) {
+        var s = slides[(i + n) % n], img = s && s.querySelector('img[data-src]');
+        if (img) { img.src = img.getAttribute('data-src'); img.removeAttribute('data-src'); }
+      }
+      function show(i) {
+        cur = (i + n) % n;
+        slides.forEach(function (s, k) { s.hidden = k !== cur; });
+        load(cur); load(cur + 1); load(cur - 1);
+        count.textContent = (cur + 1) + ' / ' + n;
+        dlg.setAttribute('aria-labelledby', titel + (cur + 1));
+        dlg.scrollTop = 0;
+      }
+      $$('[data-gallery="' + dlg.id + '"]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          opener = b;
+          show(0);
+          dlg.showModal();
+          $('[data-nav="next"]', dlg).focus();
+        });
+      });
+      $('[data-nav="prev"]', dlg).addEventListener('click', function () { show(cur - 1); });
+      $('[data-nav="next"]', dlg).addEventListener('click', function () { show(cur + 1); });
+      $('[data-nav="close"]', dlg).addEventListener('click', function () { dlg.close(); });
+      dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+      dlg.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft') { show(cur - 1); e.preventDefault(); }
+        else if (e.key === 'ArrowRight') { show(cur + 1); e.preventDefault(); }
+      });
+      dlg.addEventListener('touchstart', function (e) {
+        if (e.touches.length === 1) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }
+      }, { passive: true });
+      dlg.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+        x0 = null;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) show(cur + (dx < 0 ? 1 : -1));
+      });
+      dlg.addEventListener('close', function () { if (opener) opener.focus(); });
+    }
+    galerie($('#setupDialog'));
+    // Text fuer die eigene KI kopieren, mit Rueckmeldung. Ohne Zwischenablage wird der Text zum Markieren gezeigt.
+    $$('[data-copy]').forEach(function (b) {
+      var box = b.closest('.ai-help'), status = $('.ai-help-status', box), quelle = document.getElementById(b.getAttribute('data-copy')), uhr = null;
+      function melden(ok) {
+        status.textContent = ok ? 'Kopiert' : 'Kopieren ging nicht. Bitte den Text unten markieren und kopieren.';
+        box.classList.toggle('zeigen', !ok);
+        clearTimeout(uhr);
+        if (ok) uhr = setTimeout(function () { status.textContent = ''; }, 2500);
+      }
+      function alt(text) {
+        var t = document.createElement('textarea'), ok = false;
+        t.value = text; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+        box.appendChild(t); t.select();
+        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+        box.removeChild(t); b.focus();
+        return ok;
+      }
+      b.addEventListener('click', function () {
+        var text = quelle.textContent.trim();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () { melden(true); }, function () { melden(alt(text)); });
+        } else melden(alt(text));
+      });
+    });
+    galerie($('#howtoDialog'));
 
     /* ---------- Chat ---------- */
     var chat = $('#chat'), msgs = $('#chatMsgs'), chatHistory = [], greeted = false;

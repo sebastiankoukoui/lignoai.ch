@@ -299,6 +299,47 @@
     .product-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
     .product-foot { margin-top: 18px; font-size: .82rem; color: var(--muted); }
     .product-foot code { font-family: var(--mono); font-size: .78rem; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px; color: var(--ink-2); }
+    .howto-open-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .howto-open { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 11px; border: 1px solid #ddd5f6; border-radius: 999px; background: var(--violet-50); color: var(--violet); font: inherit; font-size: .84rem; font-weight: 600; line-height: 1.3; cursor: pointer; transition: background .2s ease, border-color .2s ease; }
+    .howto-open svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .howto-open:hover { background: #e8e2fa; border-color: #cbbff2; }
+    .howto-open:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+    .howto-open-meta { color: var(--muted); font-weight: 500; }
+    .howto-open-meta::before { content: "\00b7"; margin-right: 8px; }
+    .product .privacy { margin: -12px 0 24px; padding: 12px 16px; gap: 12px; }
+    .product .privacy svg { width: 20px; height: 20px; margin-top: 1px; }
+    .product .privacy p { font-size: .86rem; line-height: 1.45; }
+    .howto-dialog { margin: auto; border: 0; padding: 0; border-radius: 14px; width: min(1100px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow: auto; background: #fff; box-shadow: var(--shadow-lg); overscroll-behavior: contain; }
+    .howto-dialog::backdrop { background: rgba(17, 23, 19, .72); }
+    .howto-bar { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: 8px; padding: 10px 12px 10px 18px; background: #fff; border-bottom: 1px solid var(--line); }
+    .howto-count { margin-right: auto; font-size: .85rem; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .howto-btn { width: 38px; height: 38px; border: 0; border-radius: 50%; background: var(--bg-soft); color: var(--ink); display: grid; place-items: center; cursor: pointer; font: inherit; font-size: 1.3rem; line-height: 1; }
+    .howto-btn svg { width: 18px; height: 18px; }
+    .howto-btn:hover { background: var(--line); }
+    .howto-btn:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+    .howto-slide { margin: 0; padding: 18px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 22px; align-items: start; touch-action: pan-y; }
+    .howto-slide[hidden] { display: none; }
+    .howto-slide.wide { grid-template-columns: minmax(0, 1fr); }
+    .howto-slide img { display: block; max-width: 100%; width: auto; height: auto; max-height: calc(100vh - 150px); margin: 0 auto; border: 1px solid var(--line); border-radius: 10px; background: #3c4350; }
+    .howto-slide.wide img { width: 100%; object-fit: contain; }
+    .howto-slide h4 { font-size: 1.05rem; margin-bottom: 8px; }
+    .howto-note { font-size: .84rem; color: var(--muted); margin-bottom: 10px; }
+    .howto-keys { list-style: none; counter-reset: howto; display: grid; gap: 8px; }
+    .howto-slide.wide .howto-keys { grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .howto-keys li { counter-increment: howto; position: relative; padding-left: 32px; font-size: .92rem; color: var(--ink-2); line-height: 1.5; }
+    .howto-keys li::before { content: counter(howto); position: absolute; left: 0; top: 1px; width: 22px; height: 22px; border-radius: 50%; background: var(--violet); color: #fff; font-size: .74rem; font-weight: 700; display: grid; place-items: center; }
+    .howto-keys li.wichtig { padding: 8px 12px 8px 42px; border-radius: 10px; background: var(--violet-50); color: var(--ink); font-weight: 600; }
+    .howto-keys li.wichtig::before { left: 10px; top: 9px; }
+    .ai-help { margin-top: 16px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg-soft); display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+    .ai-help p { flex: 1 1 260px; font-size: .86rem; color: var(--ink-2); line-height: 1.5; }
+    .ai-help strong { color: var(--ink); }
+    .ai-help-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid #ddd5f6; border-radius: 999px; background: #fff; color: var(--violet); font: inherit; font-size: .84rem; font-weight: 600; cursor: pointer; }
+    .ai-help-btn svg { width: 15px; height: 15px; }
+    .ai-help-btn:hover { background: var(--violet-50); }
+    .ai-help-btn:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+    .ai-help-status { font-size: .82rem; font-weight: 600; color: var(--green-700); }
+    .ai-help-text { display: none; }
+    .ai-help.zeigen .ai-help-text { display: block; flex-basis: 100%; padding: 8px 10px; border-radius: 8px; background: #fff; border: 1px solid var(--line); font-size: .8rem; user-select: all; }
 
     .code {
       display: flex; align-items: center; gap: 12px; margin: 0 0 22px;
@@ -718,6 +759,11 @@
     }
     @media (max-width: 680px) {
       :root { --gutter: 16px; }
+      .howto-open { min-height: 40px; }
+      .howto-dialog { width: calc(100vw - 16px); max-height: calc(100vh - 16px); }
+      .howto-slide, .howto-slide.wide .howto-keys { grid-template-columns: minmax(0, 1fr); }
+      .howto-slide { padding: 14px; gap: 14px; }
+      .howto-slide img { max-height: 58vh; }
       section.block { padding: 72px 0; }
       .hero { padding: 40px 0 64px; }
       .hero-visual { height: 340px; }
@@ -882,8 +928,11 @@
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>{{mcp.check1}}</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>{{mcp.check2}}</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>{{mcp.check3}}</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>{{mcp.check4}}</li>
             </ul>
+            <div class="privacy">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <div><strong>{{mcp.privacyH}}</strong><p>{{mcp.privacyP}}</p></div>
+            </div>
             <div class="demo">
               <p class="demo-title">{{mcp.demoTitle}}</p>
               <div class="demo-tiles">
@@ -899,6 +948,18 @@
                 <button class="demo-tile" type="button" data-img="/assets/demo/knoten-nah.webp" data-text="{{mcp.demoDetailText}}">
                   <img src="/assets/demo/knoten-nah.webp" alt="" width="1400" height="661" loading="lazy">
                   <span class="demo-cap">{{mcp.demoDetail}}</span>
+                </button>
+              </div>
+              <div class="howto-open-row">
+                <button class="howto-open" type="button" data-gallery="setupDialog" aria-haspopup="dialog">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                  <span>{{mcp.setOpen}}</span>
+                  <span class="howto-open-meta">{{mcp.setSteps}}</span>
+                </button>
+                <button class="howto-open" type="button" data-gallery="howtoDialog" aria-haspopup="dialog">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                  <span>{{mcp.howOpen}}</span>
+                  <span class="howto-open-meta">{{mcp.howSteps}}</span>
                 </button>
               </div>
             </div>
@@ -1449,6 +1510,175 @@
     <div id="demoMedia"></div>
     <p id="demoText"></p>
     <button class="demo-close" type="button" id="demoClose" aria-label="{{mcp.demoClose}}">×</button>
+  </dialog>
+  <dialog class="howto-dialog" id="setupDialog" aria-labelledby="setupT1" data-titel="setupT">
+    <div class="howto-bar">
+      <span class="howto-count" id="setupCount" aria-live="polite">1 / 8</span>
+      <button class="howto-btn" type="button" id="setupPrev" data-nav="prev" aria-label="{{mcp.howPrev}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="howto-btn" type="button" id="setupNext" data-nav="next" aria-label="{{mcp.howNext}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
+      <button class="howto-btn" type="button" id="setupClose" data-nav="close" aria-label="{{mcp.demoClose}}">×</button>
+    </div>
+    <figure class="howto-slide wide" data-step="0">
+      <img data-src="/assets/mcp/einrichten-2-entpacken.webp" alt="{{mcp.set1Alt}}" width="1372" height="558">
+      <figcaption>
+        <h4 id="setupT1">{{mcp.set1Title}}</h4>
+        <ol class="howto-keys">
+          <li>{{mcp.set1_1}}</li>
+          <li>{{mcp.set1_2}}</li>
+          <li>{{mcp.set1_3}}</li>
+          <li>{{mcp.set1_4}}</li>
+        </ol>
+        <div class="ai-help">
+          <p><strong>{{mcp.aiHelpH}}</strong> {{mcp.aiHelpP}}</p>
+          <button class="ai-help-btn" type="button" data-copy="aiHelpPrompt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>{{mcp.aiHelpBtn}}</span></button>
+          <span class="ai-help-status" role="status" aria-live="polite"></span>
+          <p class="ai-help-text" id="aiHelpPrompt">{{mcp.aiHelpPrompt}}</p>
+        </div>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="1" hidden>
+      <img data-src="/assets/mcp/einrichten-3a-wo.webp" alt="{{mcp.set2Alt}}" width="1312" height="980">
+      <figcaption>
+        <h4 id="setupT2">{{mcp.set2Title}}</h4>
+        <ol class="howto-keys">
+          <li>{{mcp.set2_1}}</li>
+          <li>{{mcp.set2_2}}</li>
+          <li>{{mcp.set2_3}}</li>
+          <li>{{mcp.set2_4}}</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="2" hidden>
+      <img data-src="/assets/mcp/einrichten-3-ki-app.webp" alt="{{mcp.set3Alt}}" width="1312" height="980">
+      <figcaption>
+        <h4 id="setupT3">{{mcp.set3Title}}</h4>
+        <p class="howto-note">{{mcp.set3Note}}</p>
+        <ol class="howto-keys">
+          <li>{{mcp.set3_1}}</li>
+          <li>{{mcp.set3_2}}</li>
+          <li class="wichtig">{{mcp.set3_3}}</li>
+          <li>{{mcp.set3_4}}</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="3" hidden>
+      <img data-src="/assets/mcp/einrichten-8a-chat-ki.webp" alt="{{mcp.set4Alt}}" width="1312" height="980">
+      <figcaption>
+        <h4 id="setupT4">{{mcp.set4Title}}</h4>
+        <p class="howto-note">{{mcp.set4Note}}</p>
+        <ol class="howto-keys">
+          <li>{{mcp.set4_1}}</li>
+          <li>{{mcp.set4_2}}</li>
+          <li>{{mcp.set4_3}}</li>
+          <li>{{mcp.set4_4}}</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="4" hidden>
+      <img data-src="/assets/mcp/einrichten-4-installieren.webp" alt="{{mcp.set5Alt}}" width="1312" height="980">
+      <figcaption>
+        <h4 id="setupT5">{{mcp.set5Title}}</h4>
+        <ol class="howto-keys">
+          <li>{{mcp.set5_1}}</li>
+          <li>{{mcp.set5_2}}</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="5" hidden>
+      <img data-src="/assets/mcp/einrichten-5-laeuft.webp" alt="{{mcp.set6Alt}}" width="1312" height="980">
+      <figcaption>
+        <h4 id="setupT6">{{mcp.set6Title}}</h4>
+        <p class="howto-note">{{mcp.set6Note}}</p>
+        <ol class="howto-keys">
+          <li>{{mcp.set6_1}}</li>
+          <li>{{mcp.set6_2}}</li>
+          <li>{{mcp.set6_3}}</li>
+          <li>{{mcp.set6_4}}</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="6" hidden>
+      <img data-src="/assets/mcp/einrichten-8b-anmelden.webp" alt="{{mcp.set7Alt}}" width="1312" height="980">
+      <figcaption>
+        <h4 id="setupT7">{{mcp.set7Title}}</h4>
+        <p class="howto-note">{{mcp.set7Note}}</p>
+        <ol class="howto-keys">
+          <li>{{mcp.set7_1}}</li>
+          <li>{{mcp.set7_2}}</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="7" hidden>
+      <img data-src="/assets/mcp/einrichten-7-apps.webp" alt="{{mcp.set8Alt}}" width="1442" height="760">
+      <figcaption>
+        <h4 id="setupT8">{{mcp.set8Title}}</h4>
+        <p class="howto-note">{{mcp.set8Note}}</p>
+        <ol class="howto-keys">
+          <li>{{mcp.set8_1}}</li>
+          <li>{{mcp.set8_2}}</li>
+          <li>{{mcp.set8_3}}</li>
+          <li>{{mcp.set8_4}}</li>
+          <li class="wichtig">{{mcp.set8_5}}</li>
+        </ol>
+      </figcaption>
+    </figure>
+  </dialog>
+  <dialog class="howto-dialog" id="howtoDialog" aria-labelledby="howtoT1" data-titel="howtoT">
+    <div class="howto-bar">
+      <span class="howto-count" id="howtoCount" aria-live="polite">1 / 4</span>
+      <button class="howto-btn" type="button" id="howtoPrev" data-nav="prev" aria-label="{{mcp.howPrev}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="howto-btn" type="button" id="howtoNext" data-nav="next" aria-label="{{mcp.howNext}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
+      <button class="howto-btn" type="button" id="howtoClose" data-nav="close" aria-label="{{mcp.demoClose}}">×</button>
+    </div>
+    <figure class="howto-slide wide" data-step="0">
+      <img data-src="/assets/mcp/anleitung-1-leiste.webp" alt="{{mcp.how1Alt}}" width="1470" height="403">
+      <figcaption>
+        <h4 id="howtoT1">{{mcp.how1Title}}</h4>
+        <ol class="howto-keys">
+          <li>{{mcp.how1_1}}</li>
+          <li>{{mcp.how1_2}}</li>
+          <li>{{mcp.how1_3}}</li>
+          <li>{{mcp.how1_4}}</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="1" hidden>
+      <img data-src="/assets/mcp/anleitung-2-chat.webp" alt="{{mcp.how2Alt}}" width="875" height="1435">
+      <figcaption>
+        <h4 id="howtoT2">{{mcp.how2Title}}</h4>
+        <p class="howto-note">{{mcp.how2Note}}</p>
+        <ol class="howto-keys">
+          <li>{{mcp.how2_1}}</li>
+          <li>{{mcp.how2_2}}</li>
+          <li>{{mcp.how2_3}}</li>
+          <li>{{mcp.how2_4}}</li>
+          <li>{{mcp.how2_5}}</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide" data-step="2" hidden>
+      <img data-src="/assets/mcp/anleitung-3-angedockt.webp" alt="{{mcp.how3Alt}}" width="740" height="1435">
+      <figcaption>
+        <h4 id="howtoT3">{{mcp.how3Title}}</h4>
+        <ol class="howto-keys">
+          <li>{{mcp.how3_1}}</li>
+          <li>{{mcp.how3_2}}</li>
+          <li>{{mcp.how3_3}}</li>
+          <li>{{mcp.how3_4}}</li>
+        </ol>
+      </figcaption>
+    </figure>
+    <figure class="howto-slide wide" data-step="3" hidden>
+      <img data-src="/assets/mcp/anleitung-4-anzeige.webp" alt="{{mcp.how4Alt}}" width="1190" height="403">
+      <figcaption>
+        <h4 id="howtoT4">{{mcp.how4Title}}</h4>
+        <ol class="howto-keys">
+          <li>{{mcp.how4_1}}</li>
+          <li>{{mcp.how4_2}}</li>
+          <li>{{mcp.how4_3}}</li>
+        </ol>
+      </figcaption>
+    </figure>
   </dialog>
 
   <!-- ============ FOOTER ============ -->
@@ -2398,6 +2628,79 @@
       dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });
       dlg.addEventListener('close', function () { media.innerHTML = ''; });
     })();
+
+    /* ---------- Anleitungen als Galerie ---------- */
+    // Zwei Reihen (Einrichten, Arbeiten), dieselbe Galerie. Bilder laden erst, wenn ihr Schritt (oder der Nachbar) gezeigt wird.
+    function galerie(dlg) {
+      if (!dlg || !dlg.showModal) return;
+      var slides = $$('.howto-slide', dlg);
+      var n = slides.length, cur = 0, opener = null, x0 = null, y0 = 0;
+      var count = $('.howto-count', dlg), titel = dlg.getAttribute('data-titel');
+      function load(i) {
+        var s = slides[(i + n) % n], img = s && s.querySelector('img[data-src]');
+        if (img) { img.src = img.getAttribute('data-src'); img.removeAttribute('data-src'); }
+      }
+      function show(i) {
+        cur = (i + n) % n;
+        slides.forEach(function (s, k) { s.hidden = k !== cur; });
+        load(cur); load(cur + 1); load(cur - 1);
+        count.textContent = (cur + 1) + ' / ' + n;
+        dlg.setAttribute('aria-labelledby', titel + (cur + 1));
+        dlg.scrollTop = 0;
+      }
+      $$('[data-gallery="' + dlg.id + '"]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          opener = b;
+          show(0);
+          dlg.showModal();
+          $('[data-nav="next"]', dlg).focus();
+        });
+      });
+      $('[data-nav="prev"]', dlg).addEventListener('click', function () { show(cur - 1); });
+      $('[data-nav="next"]', dlg).addEventListener('click', function () { show(cur + 1); });
+      $('[data-nav="close"]', dlg).addEventListener('click', function () { dlg.close(); });
+      dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+      dlg.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft') { show(cur - 1); e.preventDefault(); }
+        else if (e.key === 'ArrowRight') { show(cur + 1); e.preventDefault(); }
+      });
+      dlg.addEventListener('touchstart', function (e) {
+        if (e.touches.length === 1) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }
+      }, { passive: true });
+      dlg.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+        x0 = null;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) show(cur + (dx < 0 ? 1 : -1));
+      });
+      dlg.addEventListener('close', function () { if (opener) opener.focus(); });
+    }
+    galerie($('#setupDialog'));
+    // Text fuer die eigene KI kopieren, mit Rueckmeldung. Ohne Zwischenablage wird der Text zum Markieren gezeigt.
+    $$('[data-copy]').forEach(function (b) {
+      var box = b.closest('.ai-help'), status = $('.ai-help-status', box), quelle = document.getElementById(b.getAttribute('data-copy')), uhr = null;
+      function melden(ok) {
+        status.textContent = ok ? '{{js.aiHelpOk}}' : '{{js.aiHelpFail}}';
+        box.classList.toggle('zeigen', !ok);
+        clearTimeout(uhr);
+        if (ok) uhr = setTimeout(function () { status.textContent = ''; }, 2500);
+      }
+      function alt(text) {
+        var t = document.createElement('textarea'), ok = false;
+        t.value = text; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+        box.appendChild(t); t.select();
+        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+        box.removeChild(t); b.focus();
+        return ok;
+      }
+      b.addEventListener('click', function () {
+        var text = quelle.textContent.trim();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () { melden(true); }, function () { melden(alt(text)); });
+        } else melden(alt(text));
+      });
+    });
+    galerie($('#howtoDialog'));
 
     /* ---------- Chat ---------- */
     var chat = $('#chat'), msgs = $('#chatMsgs'), chatHistory = [], greeted = false;

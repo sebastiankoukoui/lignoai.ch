@@ -280,6 +280,47 @@
     .product-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
     .product-foot { margin-top: 18px; font-size: .82rem; color: var(--muted); }
     .product-foot code { font-family: var(--mono); font-size: .78rem; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px; color: var(--ink-2); }
+    .howto-open-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .howto-open { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 11px; border: 1px solid #ddd5f6; border-radius: 999px; background: var(--violet-50); color: var(--violet); font: inherit; font-size: .84rem; font-weight: 600; line-height: 1.3; cursor: pointer; transition: background .2s ease, border-color .2s ease; }
+    .howto-open svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .howto-open:hover { background: #e8e2fa; border-color: #cbbff2; }
+    .howto-open:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+    .howto-open-meta { color: var(--muted); font-weight: 500; }
+    .howto-open-meta::before { content: "\00b7"; margin-right: 8px; }
+    .product .privacy { margin: -12px 0 24px; padding: 12px 16px; gap: 12px; }
+    .product .privacy svg { width: 20px; height: 20px; margin-top: 1px; }
+    .product .privacy p { font-size: .86rem; line-height: 1.45; }
+    .howto-dialog { margin: auto; border: 0; padding: 0; border-radius: 14px; width: min(1100px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow: auto; background: #fff; box-shadow: var(--shadow-lg); overscroll-behavior: contain; }
+    .howto-dialog::backdrop { background: rgba(17, 23, 19, .72); }
+    .howto-bar { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: 8px; padding: 10px 12px 10px 18px; background: #fff; border-bottom: 1px solid var(--line); }
+    .howto-count { margin-right: auto; font-size: .85rem; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .howto-btn { width: 38px; height: 38px; border: 0; border-radius: 50%; background: var(--bg-soft); color: var(--ink); display: grid; place-items: center; cursor: pointer; font: inherit; font-size: 1.3rem; line-height: 1; }
+    .howto-btn svg { width: 18px; height: 18px; }
+    .howto-btn:hover { background: var(--line); }
+    .howto-btn:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+    .howto-slide { margin: 0; padding: 18px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 22px; align-items: start; touch-action: pan-y; }
+    .howto-slide[hidden] { display: none; }
+    .howto-slide.wide { grid-template-columns: minmax(0, 1fr); }
+    .howto-slide img { display: block; max-width: 100%; width: auto; height: auto; max-height: calc(100vh - 150px); margin: 0 auto; border: 1px solid var(--line); border-radius: 10px; background: #3c4350; }
+    .howto-slide.wide img { width: 100%; object-fit: contain; }
+    .howto-slide h4 { font-size: 1.05rem; margin-bottom: 8px; }
+    .howto-note { font-size: .84rem; color: var(--muted); margin-bottom: 10px; }
+    .howto-keys { list-style: none; counter-reset: howto; display: grid; gap: 8px; }
+    .howto-slide.wide .howto-keys { grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .howto-keys li { counter-increment: howto; position: relative; padding-left: 32px; font-size: .92rem; color: var(--ink-2); line-height: 1.5; }
+    .howto-keys li::before { content: counter(howto); position: absolute; left: 0; top: 1px; width: 22px; height: 22px; border-radius: 50%; background: var(--violet); color: #fff; font-size: .74rem; font-weight: 700; display: grid; place-items: center; }
+    .howto-keys li.wichtig { padding: 8px 12px 8px 42px; border-radius: 10px; background: var(--violet-50); color: var(--ink); font-weight: 600; }
+    .howto-keys li.wichtig::before { left: 10px; top: 9px; }
+    .ai-help { margin-top: 16px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg-soft); display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+    .ai-help p { flex: 1 1 260px; font-size: .86rem; color: var(--ink-2); line-height: 1.5; }
+    .ai-help strong { color: var(--ink); }
+    .ai-help-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid #ddd5f6; border-radius: 999px; background: #fff; color: var(--violet); font: inherit; font-size: .84rem; font-weight: 600; cursor: pointer; }
+    .ai-help-btn svg { width: 15px; height: 15px; }
+    .ai-help-btn:hover { background: var(--violet-50); }
+    .ai-help-btn:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+    .ai-help-status { font-size: .82rem; font-weight: 600; color: var(--green-700); }
+    .ai-help-text { display: none; }
+    .ai-help.zeigen .ai-help-text { display: block; flex-basis: 100%; padding: 8px 10px; border-radius: 8px; background: #fff; border: 1px solid var(--line); font-size: .8rem; user-select: all; }
 
     .code {
       display: flex; align-items: center; gap: 12px; margin: 0 0 22px;
@@ -699,6 +740,11 @@
     }
     @media (max-width: 680px) {
       :root { --gutter: 16px; }
+      .howto-open { min-height: 40px; }
+      .howto-dialog { width: calc(100vw - 16px); max-height: calc(100vh - 16px); }
+      .howto-slide, .howto-slide.wide .howto-keys { grid-template-columns: minmax(0, 1fr); }
+      .howto-slide { padding: 14px; gap: 14px; }
+      .howto-slide img { max-height: 58vh; }
       section.block { padding: 72px 0; }
       .hero { padding: 40px 0 64px; }
       .hero-visual { height: 340px; }
