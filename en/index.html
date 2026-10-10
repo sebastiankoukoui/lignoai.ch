@@ -959,7 +959,7 @@
             </ul>
             <div class="privacy">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              <div><strong>Your data stays your data.</strong><p>Open MCP CAD runs entirely on your PC. No account, no LignoAI server in between, LignoAI receives no data. What the AI reads and what you write to it goes only to the AI provider you choose. With a local AI (for example Ollama), everything stays on your computer.</p></div>
+              <div><strong>Your data stays your data.</strong><p>Open MCP CAD runs on your PC. No account, no LignoAI server in between, LignoAI receives no data. What the AI reads and what you write to it goes only to the AI provider you choose. With a local AI (for example Ollama), model and chat data stays on your computer. Once a day, Open MCP CAD checks GitHub for a new version. No model or chat data is sent. GitHub sees the IP address. You can turn off this check in the settings. Only your click on ‘Aktualisieren’ downloads and verifies the package and opens the setup window.</p></div>
             </div>
             <div class="demo">
               <p class="demo-title">Demo: a whole dome in Cadwork</p>
@@ -1010,7 +1010,7 @@
                 </div>
               </div>
             </div>
-            <p class="product-foot">Installation: unzip the ZIP file and double-click <code>1_INSTALLIEREN.cmd</code>. A setup window opens. Click ‘Installieren’ (install) there and you are done. The window sets everything up and connects Open MCP CAD to your AI app. If the PC is missing a component such as Python, it asks first. Requirements: Windows, Cadwork 3D 2026 and Claude Desktop or the ChatGPT app on the PC. Do not copy the source code from GitHub into Cadwork yourself. The <a href="https://github.com/sebastiankoukoui/open-mcp-cad/blob/main/verteilung/ANLEITUNG.en.md" target="_blank" rel="noopener">installation guide</a> is available in German, English, French and Italian.</p>
+            <p class="product-foot">Installation: unzip the ZIP file and double-click <code>1_INSTALLIEREN.cmd</code>. A setup window opens. Click ‘Install’ and you are done. The window sets everything up and connects Open MCP CAD to your AI app. It installs the plugin in all selected Cadwork versions from 2025 onwards. If the PC is missing a component such as Python, it asks first. Requirements: Windows, Cadwork 3D 2025 or 2026 and Claude Desktop or the ChatGPT app on the PC. Both Cadwork versions have been tested. Do not copy the source code from GitHub into Cadwork yourself. The setup window and the <a href="https://github.com/sebastiankoukoui/open-mcp-cad/blob/main/verteilung/ANLEITUNG.en.md" target="_blank" rel="noopener">installation guide</a> are available in German, English, French and Italian.</p>
           </div>
         </article>
 
@@ -1852,6 +1852,7 @@
         </ul>
         <p>Users download Open MCP CAD and the LignoCAD Tragwerk installer directly from GitHub. GitHub’s privacy policy applies to this.</p>
         <p>Open MCP CAD itself does not send any data to LignoAI. The connection to the AI runs directly between you and the AI provider you choose. Its own terms apply. With a local AI (for example Ollama), the data stays on your computer.</p>
+        <p>Once a day, Open MCP CAD checks GitHub for a new version. No model or chat data is sent. GitHub sees the IP address. You can turn off this check in the settings. Only your click on ‘Aktualisieren’ downloads and verifies the package and opens the setup window.</p>
         <p>Some of these providers are based in the USA or process data there. The USA is considered a country with adequate data protection only for companies certified under the Swiss-U.S. Data Privacy Framework. Where this is not the case, we rely on the standard contractual clauses of the European Commission, which have been recognised by the Federal Data Protection and Information Commissioner (FDPIC), or on another safeguard provided for by law.</p>
         <p>Beyond this, we only disclose personal data if required by law or by an authority, if it is necessary to enforce our rights or if a company takes over and continues the software. We do not sell any data.</p>
       </section>
@@ -1971,7 +1972,7 @@
           <p><strong>Let your AI help you.</strong> Already using an AI app on your PC? Copy <button class="ai-help-link" type="button" data-copy="aiHelpPrompt">this text</button> with one click and send it to it. It guides you through the setup step by step.</p>
           <button class="ai-help-btn" type="button" data-copy="aiHelpPrompt" aria-label="Copy text" title="Copy text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
           <span class="ai-help-status" role="status" aria-live="polite"></span>
-          <p class="ai-help-text" id="aiHelpPrompt">Please help me set up Open MCP CAD. It connects Cadwork 3D 2026 with an AI. Guide me step by step, one step at a time, and wait until I have done it. 1) Download the latest ZIP file: https://github.com/sebastiankoukoui/open-mcp-cad/releases/latest 2) Close Cadwork and unzip the ZIP file (right-click, «Extract All»). 3) In the unzipped folder, double-click 1_INSTALLIEREN.cmd and click «Installieren» in the setup window. That is the recommended way. 4) Then quit the AI app completely and start it again. 5) In Cadwork, click «Open MCP CAD» until it says «Bereit». If something does not work, read the file Programmdateien\FUER_KI_ASSISTENTEN.md in the unzipped folder. Do not build your own adapter and do not talk to the plugin's port yourself, everything is already there.</p>
+          <p class="ai-help-text" id="aiHelpPrompt">Please help me set up Open MCP CAD. It connects Cadwork 3D 2025 or 2026 with an AI. Guide me step by step, one step at a time, and wait until I have done it. 1) Download the latest ZIP file: https://github.com/sebastiankoukoui/open-mcp-cad/releases/latest 2) Close Cadwork and unzip the ZIP file (right-click, «Extract All»). 3) In the unzipped folder, double-click 1_INSTALLIEREN.cmd and click «Install» in the setup window. That is the recommended way. 4) Then quit the AI app completely and start it again. 5) In Cadwork, click «Open MCP CAD» until it says «Bereit». If something does not work, read the file Programmdateien\FUER_KI_ASSISTENTEN.md in the unzipped folder. Do not build your own adapter and do not talk to the plugin's port yourself, everything is already there.</p>
         </div>
       </figcaption>
     </figure>
